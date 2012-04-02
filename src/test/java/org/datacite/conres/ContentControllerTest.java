@@ -48,15 +48,22 @@ public class ContentControllerTest extends JerseyTest{
     }
 
     private MediaType[] buildAccept(String[] subtypes, String[] weights) {
-        if (subtypes.length!=weights.length)
+        if (subtypes == null)
+            throw new IllegalArgumentException("subtypes cannot be null");
+
+        if (weights != null && subtypes.length!=weights.length)
             throw new IllegalArgumentException("subtypes and weights must be same size");
 
         MediaType[] result = new MediaType[subtypes.length];
 
         for (int i = 0; i < result.length; i++) {
-            Map<String, String> q = new HashMap<String, String>();
-            q.put("q", weights[i]);
-            result[i] = new MediaType("application", subtypes[i], q);
+            if (weights != null){
+                Map<String, String> q = new HashMap<String, String>();
+                q.put("q", weights[i]);
+                result[i] = new MediaType("application", subtypes[i], q);
+            } else {
+                result[i] = new MediaType("application", subtypes[i]);
+            }
         }
         return result;
     }
@@ -81,6 +88,26 @@ public class ContentControllerTest extends JerseyTest{
         ClientResponse response = webResource.accept(formats).get(ClientResponse.class);
         assertEquals(200, response.getStatus());
         assertEquals("application/x-datacite+xml", response.getType().toString());
+    }
+
+    @Test
+    public void testAcceptNoQ1() {
+        WebResource webResource = resource().path(MockSearchServiceImpl.TEST_DOI);
+        webResource.addFilter(new LoggingFilter());
+        MediaType[] formats = buildAccept(new String[]{"rdf+xml", "unixref+xml", "x-datacite+xml"}, null);
+        ClientResponse response = webResource.accept(formats).get(ClientResponse.class);
+        assertEquals(200, response.getStatus());
+        assertEquals("application/rdf+xml", response.getType().toString());
+    }
+
+    @Test
+    public void testAcceptNoQ2() {
+        WebResource webResource = resource().path(MockSearchServiceImpl.TEST_DOI);
+        webResource.addFilter(new LoggingFilter());
+        MediaType[] formats = buildAccept(new String[]{"fancy+pants", "rdf+xml", "unixref+xml", "x-datacite+xml"},null);
+        ClientResponse response = webResource.accept(formats).get(ClientResponse.class);
+        assertEquals(200, response.getStatus());
+        assertEquals("application/rdf+xml", response.getType().toString());
     }
 
     @Test

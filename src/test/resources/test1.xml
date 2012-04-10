@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns="http://datacite.org/schema/kernel-2.2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://datacite.org/schema/kernel-2.2 http://schema.datacite.org/meta/kernel-2.2/metadata.xsd">
+    <identifier identifierType="DOI">10.9999/AAAA</identifier>
+    <creators>
+        <creator>
+            <creatorName>Sanfilippo, Annika</creatorName>
+        </creator>
+        <creator>
+            <creatorName>Fisher, Robert L</creatorName>
+        </creator>
+        <creator>
+            <creatorName>Bunce, Elizabeth T</creatorName>
+        </creator>
+    </creators>
+    <titles>
+        <title>Radiolaria abundance of Hole 24-232A</title>
+    </titles>
+    <publisher>PANGAEA - Data Publisher for Earth &amp; Environmental Science
+    </publisher>
+    <publicationYear>2005</publicationYear>
+    <subjects>
+        <subject subjectScheme="Parameter">Sample code/label</subject>
+        <subject subjectScheme="Parameter">Radiolarians abundance</subject>
+        <subject subjectScheme="Parameter">Preservation</subject>
+        <subject subjectScheme="Parameter">Stratigraphy</subject>
+        <subject subjectScheme="Parameter">Artophormis gracilis</subject>
+        <subject subjectScheme="Parameter">Artostrobium auritum</subject>
+        <subject subjectScheme="Parameter">Artostrobium doliolum</subject>
+        <subject subjectScheme="Parameter">Artostrobium miralestense</subject>
+        <subject subjectScheme="Parameter">Artostrobium rhinoceros</subject>
+        <subject subjectScheme="Parameter">Bekomiforma mynx</subject>
+        <subject subjectScheme="Parameter">Carpocanarium sp.</subject>
+        <subject subjectScheme="Parameter">Cyclampterium neatum</subject>
+        <subject subjectScheme="Parameter">Lithopera bacca</subject>
+        <subject subjectScheme="Parameter">Lychnodictyum audax</subject>
+        <subject subjectScheme="Parameter">Ommatartus antepenultimus</subject>
+        <subject subjectScheme="Parameter">Ommatartus avitus</subject>
+        <subject subjectScheme="Parameter">Ommatartus hughesi</subject>
+        <subject subjectScheme="Parameter">Ommatartus penultimus</subject>
+        <subject subjectScheme="Parameter">Ommatartus tetrathalamus</subject>
+        <subject subjectScheme="Parameter">Pterocanium prismatium</subject>
+        <subject subjectScheme="Parameter">Siphocampe corbula</subject>
+        <subject subjectScheme="Parameter">Spongodiscus ambus</subject>
+        <subject subjectScheme="Parameter">Spongaster pentas</subject>
+        <subject subjectScheme="Parameter">Spongaster tetras</subject>
+        <subject subjectScheme="Parameter">Stichocorys delmontensis</subject>
+        <subject subjectScheme="Parameter">Stichocorys peregrina</subject>
+        <subject subjectScheme="Parameter">Stichocorys wolfii</subject>
+        <subject subjectScheme="Method">ODP sample designation</subject>
+        <subject subjectScheme="Method">Abundance estimate</subject>
+        <subject subjectScheme="Campaign">Leg24</subject>
+        <subject subjectScheme="Basis">Glomar Challenger</subject>
+        <subject subjectScheme="Project">Deep Sea Drilling Project (DSDP)
+        </subject>
+    </subjects>
+    <language>eng</language>
+    <resourceType resourceTypeGeneral="Dataset">Dataset</resourceType>
+    <relatedIdentifiers>
+        <relatedIdentifier relationType="Cites" relatedIdentifierType="DOI">
+            10.2973/dsdp.proc.24.1974
+        </relatedIdentifier>
+    </relatedIdentifiers>
+    <sizes>
+        <size>204 data points</size>
+    </sizes>
+    <formats>
+        <format>text/tab-separated-values</format>
+    </formats>
+    <rights>Creative Commons Attribution 3.0 Unported (CC-BY)</rights>
+</resource>

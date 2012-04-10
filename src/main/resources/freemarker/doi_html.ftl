@@ -34,25 +34,27 @@ For a landing page of this dataset please follow
   </div>
 </div>
 
-<#--
-
-<% unless @meta.descriptions.nil? || @meta.descriptions.empty?  %>
+<#if descriptions??>
   <div class="block">
     <div class="block-label">Descriptions</div>
-    <% for d in @meta.descriptions %>
-      <div class="label"><%= d[:type] %></div>
-      <div class="content"><%= d[:value] %></div>
-    <% end %>
+    <#list descriptions?keys as d>
+      <div class="label">${d}</div>
+      <div class="content">${descriptions[d]}</div>
+    </#list>
   </div>
-<% end %>
+</#if>
 
-<% unless @meta.resource_type.nil? %>
+<#if resourceType?? >
   <div class="block">
     <div class="block-label">Resource type</div>
-    <div class="label"><%= @meta.resource_type[:type] %>&emsp;</div>
-    <div class="content"><%= @meta.resource_type[:value] %></div>
+    <#list descriptions?keys as d>
+          <div class="label">${d}&emsp;</div>
+          <div class="content">${descriptions[d]}</div>
+    </#list>
   </div>
-<% end %>
+</#if>
+
+<#--
 
 <% unless @meta.subjects.nil? || @meta.subjects.empty?  %>
   <div class="block">

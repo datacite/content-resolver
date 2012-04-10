@@ -14,13 +14,15 @@ import java.util.Map;
 
 public class SearchServiceImpl implements SearchService {
 
-    public static final String SOLR_URL = "http://dev.datacite.org/search/api";
+    //public static final String SOLR_URL = "http://dev.datacite.org/search/api";
+    public static final String SOLR_URL = "http://search.datacite.org/api";
     public static final String DATACITE_DEFAULT_ENCODING = "UTF-8";
     public static final String XML_FACET = "xml";
     public static final String ALLOCATOR_FACET = "allocator";
     public static final String DOI_FACET = "doi";
     public static final String MEDIA_FACET = "media";
-    public static final String SAMPLE_DOI = "10.9999/AAAA";
+    //public static final String SAMPLE_DOI = "10.9999/AAAA";
+    public static final String SAMPLE_DOI = "10.1594/PANGAEA.251240";
 
     private String getUrl(String doi, String facet) throws UnsupportedEncodingException {
         return SOLR_URL +  "?q=doi:%22"+ URLEncoder.encode(doi, DATACITE_DEFAULT_ENCODING) +"%22&fl="

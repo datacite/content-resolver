@@ -22,6 +22,9 @@ public class Metadata {
     private String publicationYear;
     private Map<String, String> titles;
     private String publisher;
+    private Map<String, String> resourceType;
+    private Map<String, String> descriptions;
+
 
     public Metadata(String doi, String xml, Map<MediaType, URI> media) {
         this.doi = doi;
@@ -39,6 +42,8 @@ public class Metadata {
         this.publicationYear = extractText("publicationYear");
         this.titles = extractPairs("title", "titleType");
         this.publisher = extractText("publisher");
+        this.resourceType = extractPairs("resourceType","resourceTypeGeneral");
+        this.descriptions = extractPairs("description", "descriptionType");
     }
 
     private Map<String, String> extractPairs(String elementName, String attributeName) {
@@ -102,6 +107,14 @@ public class Metadata {
 
     public String getPublisher() {
         return publisher;
+    }
+
+    public Map<String, String> getResourceType() {
+        return resourceType;
+    }
+
+    public Map<String, String> getDescriptions() {
+        return descriptions;
     }
 
     public List<String> getAllMedia(){

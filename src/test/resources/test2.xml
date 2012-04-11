@@ -1,0 +1,39 @@
+<resource xmlns="http://datacite.org/schema/kernel-2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://datacite.org/schema/kernel-2.2 http://schema.datacite.org/meta/kernel-2.2/metadata.xsd">
+    <identifier identifierType="DOI">10.5284/1011883</identifier>
+    <creators>
+        <creator>
+            <creatorName>University of Leicester Archaeological Services (ULAS)</creatorName>
+        </creator>
+    </creators>
+    <titles>
+        <title>AN ARCHAEOLOGICAL WATCHING BRIEF FOR THE FORMER CANNON CINEMA, ABINGTON SQUARE, NORTHAMPTON, SP 7592
+            6079
+        </title>
+    </titles>
+    <publisher>Archaeology Data Service</publisher>
+    <publicationYear>2005</publicationYear>
+    <subjects>
+        <subject>Archaeology</subject>
+        <subject>Grey Literature</subject>
+    </subjects>
+    <language>eng</language>
+    <resourceType resourceTypeGeneral="Text">Report</resourceType>
+    <alternateIdentifiers>
+        <alternateIdentifier alternateIdentifierType="ADS Grey Lit ID">12824</alternateIdentifier>
+        <alternateIdentifier alternateIdentifierType="OASIS ID">universi1-17791</alternateIdentifier>
+    </alternateIdentifiers>
+    <relatedIdentifiers>
+        <relatedIdentifier relatedIdentifierType="DOI" relationType="IsPartOf">10.5284/1000328</relatedIdentifier>
+    </relatedIdentifiers>
+    <sizes>
+        <size>1 pdf file</size>
+    </sizes>
+    <formats>
+        <format>PDF</format>
+    </formats>
+    <rights>http://archaeologydataservice.ac.uk/advice/termsOfUseAndAccess</rights>
+    <descriptions>
+        <description descriptionType="Other">A4 COMB BOUND</description>
+    </descriptions>
+</resource>

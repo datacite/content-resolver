@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns="http://datacite.org/schema/kernel-2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://datacite.org/schema/kernel-2.2 http://schema.datacite.org/meta/kernel-2.2/metadata.xsd">
+    <identifier identifierType="DOI">10.1594/PANGAEA.558228</identifier>
+    <creators>
+        <creator>
+            <creatorName>Friedrich, Michael</creatorName>
+        </creator>
+    </creators>
+    <titles>
+        <title>Tree-ring width of Abies alba (Miller) from historical object sample HOH3018-1</title>
+    </titles>
+    <publisher>PANGAEA - Data Publisher for Earth &amp; Environmental Science</publisher>
+    <publicationYear>2007</publicationYear>
+    <subjects>
+        <subject subjectScheme="Parameter">Age</subject>
+        <subject subjectScheme="Parameter">Ring width</subject>
+        <subject subjectScheme="Method">Dendrochronological crossdating</subject>
+        <subject subjectScheme="Campaign">TreeRings_SouthGermany</subject>
+        <subject subjectScheme="Project">Historical and Postglacial Tree Ring Archive of Hohenheim (HISTRA)</subject>
+    </subjects>
+    <contributors>
+        <contributor contributorType="HostingInstitution">
+            <contributorName>Institute of Botany, University of Hohenheim</contributorName>
+        </contributor>
+    </contributors>
+    <language>eng</language>
+    <resourceType resourceTypeGeneral="Dataset">Dataset</resourceType>
+    <sizes>
+        <size>92 data points</size>
+    </sizes>
+    <formats>
+        <format>text/tab-separated-values</format>
+    </formats>
+    <version>1.0</version>
+</resource>

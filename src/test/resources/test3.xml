@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resource xmlns="http://datacite.org/schema/kernel-2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datacite.org/schema/kernel-2.2 http://schema.datacite.org/meta/kernel-2.2/metadata.xsd">
+  <identifier identifierType="DOI">10.3205/000151</identifier>
+  <creators>
+    <creator>
+      <creatorName>Kaiser, Patricia</creatorName>
+    </creator>
+    <creator>
+      <creatorName>Reinauer, Hans</creatorName>
+    </creator>
+  </creators>
+  <titles>
+    <title>
+
+  
+    Diabetes mellitus: The long way of standardization of HbA1c to the level of highest metrological order
+  
+</title>
+  </titles>
+  <publisher>German Medical Science GMS Publishing House</publisher>
+  <publicationYear>2011</publicationYear>
+  <subjects>
+    <subject>HbA1c reference measurement procedure</subject>
+    <subject>LC-IDMS</subject>
+    <subject>standardization</subject>
+    <subject subjectScheme="DDC">610 Medical sciences; Medicine</subject>
+  </subjects>
+  <dates>
+    <date dateType="Available">2011-11-09</date>
+  </dates>
+  <language>eng</language>
+  <resourceType resourceTypeGeneral="Text">JournalArticle</resourceType>
+  <alternateIdentifiers>
+    <alternateIdentifier alternateIdentifierType="URN">urn:nbn:de:0183-0001517</alternateIdentifier>
+    <alternateIdentifier alternateIdentifierType="Doc">000151</alternateIdentifier>
+  </alternateIdentifiers>
+  <formats>
+    <format>text&#x2F;html</format>
+  </formats>
+  <rights>Creative Commons License [CC BY-NC-ND] http://creativecommons.org/licenses/by-nc-nd/3.0/de/</rights>
+  <descriptions>
+    <description descriptionType="Abstract">Glycated haemoglobin (HbA1c) measurements are used in clinical studies and for the management of diabetic patients. Various efforts were made to standardize the HbA1c measurements with consensus standards and standards based on a reference measurement procedure with external calibration. According to ISO 17511 a standard should meet highest accuracy possible, have a defined uncertainty of measurement and the calibration should be traceable to SI units. For HbA1c this has been realized using a LC-ID-MS procedure based on the existing reference measurement procedure.</description>
+    <description descriptionType="SeriesInformation">GMS German Medical Science; 9:Doc28; ISSN 1612-3174</description>
+  </descriptions>
+</resource>

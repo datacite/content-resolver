@@ -8,36 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-class Pair {
-    final String key;
-    final String value;
-
-    Pair(String key, String value) {
-        this.key = key;
-        this.value = value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Pair pair = (Pair) o;
-
-        if (!key.equals(pair.key)) return false;
-        if (!value.equals(pair.value)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = key.hashCode();
-        result = 31 * result + value.hashCode();
-        return result;
-    }
-}
-
 /**
  * Represents metadata record (parsed from XML)
  */
@@ -50,7 +20,7 @@ public class Metadata {
     private String publicationYear;
     private List<Pair> titles;
     private String publisher;
-    private List<Pair> resourceType;
+    private List<Pair> resourceTypes;
     private List<Pair> descriptions;
     private List<Pair> subjects;
     private List<String> sizes;
@@ -79,7 +49,7 @@ public class Metadata {
         this.publicationYear = extractText("publicationYear");
         this.titles = extractPairs("title", "titleType");
         this.publisher = extractText("publisher");
-        this.resourceType = extractPairs("resourceType", "resourceTypeGeneral");
+        this.resourceTypes = extractPairs("resourceType", "resourceTypeGeneral");
         this.descriptions = extractPairs("description", "descriptionType");
         this.subjects = extractPairs("subject", "subjectScheme");
         this.sizes = extractList("size");
@@ -194,8 +164,8 @@ public class Metadata {
         return publisher;
     }
 
-    public List<Pair> getResourceType() {
-        return resourceType;
+    public List<Pair> getResourceTypes() {
+        return resourceTypes;
     }
 
     public List<Pair> getDescriptions() {

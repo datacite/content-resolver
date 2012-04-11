@@ -38,9 +38,9 @@ public class MetadataTest {
         assertEquals(32, m.getSubjects().size());
         assertEquals("Leg24", m.getSubjects().get(29).value);
         assertEquals("eng", m.getLanguage());
-        assertEquals(1, m.getResourceType().size());
-        assertEquals("Dataset", m.getResourceType().get(0).key);
-        assertEquals("Dataset", m.getResourceType().get(0).value);
+        assertEquals(1, m.getResourceTypes().size());
+        assertEquals("Dataset", m.getResourceTypes().get(0).key);
+        assertEquals("Dataset", m.getResourceTypes().get(0).value);
         assertEquals("Cites", m.getRelatedIdentifiers().get(0).key);
         assertEquals("doi:10.2973/dsdp.proc.24.1974", m.getRelatedIdentifiers().get(0).value);
         assertTrue(m.getSizes().get(0).startsWith("204"));
@@ -54,9 +54,9 @@ public class MetadataTest {
         assertTrue(xml.length() != 0);
         Map<MediaType,URI> media = new HashMap<MediaType, URI>();
         Metadata m = new Metadata(MockSearchServiceImpl.TEST_DOI, xml, media);
-        assertEquals(1, m.getResourceType().size());
-        assertEquals("Text", m.getResourceType().get(0).key);
-        assertEquals("Report", m.getResourceType().get(0).value);
+        assertEquals(1, m.getResourceTypes().size());
+        assertEquals("Text", m.getResourceTypes().get(0).key);
+        assertEquals("Report", m.getResourceTypes().get(0).value);
         assertEquals("IsPartOf", m.getRelatedIdentifiers().get(0).key);
         assertEquals("doi:10.5284/1000328", m.getRelatedIdentifiers().get(0).value);
         assertEquals("ADS Grey Lit ID", m.getAlternateIdentifiers().get(0).key);

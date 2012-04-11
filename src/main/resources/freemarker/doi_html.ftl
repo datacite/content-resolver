@@ -1,8 +1,8 @@
+<#escape x as x?html>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
   <title>${doi}</title>
   <link rel="stylesheet" type="text/css" href="../static/main.css" />
@@ -27,139 +27,135 @@ For a landing page of this dataset please follow
 <div class="block">
   <div class="block-label">Citation</div>
   <div class="content">
-  <#list creators as c>${c}; </#list>(${publicationYear}): <#list titles?values as t>${t}; </#list>${publisher}. http://dx.doi.org/${doi}
+  <#list creators! as c>${c}; </#list>(${publicationYear!}): ${titles[0].value}; ${publisher!}. http://dx.doi.org/${doi}
 
   <a title="Export to Reference Manager/EndNote" href="/application/x-research-info-systems/${doi}"><span class="citation-button">RIS</span></a>
   <a title="Export to BibTeX" href="/application/x-bibtex/${doi}"><span class="citation-button">BibTeX</span></a>
   </div>
 </div>
 
-<#if descriptions??>
+<#if (descriptions)?has_content>
   <div class="block">
     <div class="block-label">Descriptions</div>
-    <#list descriptions?keys as d>
-      <div class="label">${d}</div>
-      <div class="content">${descriptions[d]}</div>
+    <#list descriptions! as d>
+      <div class="label">${d.key}</div>
+      <div class="content">${d.value}</div>
     </#list>
   </div>
 </#if>
 
-<#if resourceType?? >
+<#if (resourceTypes)?has_content>
   <div class="block">
     <div class="block-label">Resource type</div>
-    <#list descriptions?keys as d>
-          <div class="label">${d}&emsp;</div>
-          <div class="content">${descriptions[d]}</div>
+    <#list resourceTypes! as d>
+          <div class="label">${d.key}&emsp;</div>
+          <div class="content">${d.value}</div>
     </#list>
   </div>
 </#if>
 
-<#--
-
-<% unless @meta.subjects.nil? || @meta.subjects.empty?  %>
+<#if (subjects)?has_content>
   <div class="block">
     <div class="block-label">Subjects</div>
-    <% idx = 0 %>
-    <% for d in @meta.subjects %>
-      <% if idx > 0 || (!d[:type].nil? && !d[:type].empty?) %>
-        <div class="label"><%= d[:type] %>&emsp;</div>
-      <% end %>
-      <div class="content"><%= d[:value] %></div>
-      <% idx += 1 %>
-    <% end %>
+    <#assign more = 0>
+    <#list subjects as d>
+      <#if (more > 0) || (d.key)?has_content>
+        <div class="label">${d.key}&emsp;</div>
+      </#if>
+      <div class="content">${d.value}</div>
+      <#assign more = 1>
+    </#list>
   </div>
-<% end %>
+</#if>
 
-<% unless @meta.rights.nil? || @meta.rights.empty?  %>
+<#if (rights)?has_content>
   <div class="block">
     <div class="block-label">License</div>
-    <div class="content"><%= @meta.rights %></div>
+    <div class="content">${rights}</div>
   </div>
-<% end %>
+</#if>
 
-<% unless @meta.sizes.nil? || @meta.sizes.empty?  %>
+<#if (sizes)?has_content>
   <div class="block">
     <div class="block-label">Size</div>
-    <% idx = 0 %>
-    <% for d in @meta.sizes %>
-      <% if idx > 0  %>
+    <#assign more = 0>
+    <#list sizes as d>
+      <#if (more > 0)>
         <div class="label">&emsp;</div>
-      <% end %>
-      <div class="content"><%= d%></div>
-      <% idx += 1 %>
-    <% end %>
+      </#if>
+      <div class="content">${d}</div>
+      <#assign more = 1>
+    </#list>
   </div>
-<% end %>
+</#if>
 
-<% unless @meta.language.nil? || @meta.language.empty?  %>
+<#if (language)?has_content>
   <div class="block">
     <div class="block-label">Language</div>
-    <div class="content"><%= @meta.language %></div>
+    <div class="content">${language}</div>
   </div>
-<% end %>
+</#if>
 
-<% unless @meta.dates.nil? || @meta.dates.empty?  %>
+<#if (dates)?has_content>
   <div class="block">
     <div class="block-label">Dates</div>
-    <% for d in @meta.dates %>
-      <div class="label"><%= d[:type] %>&emsp;</div>
-      <div class="content"><%= d[:value] %></div>
-    <% end %>
+    <#list dates! as d>
+          <div class="label">${d.key}&emsp;</div>
+          <div class="content">${d.value}</div>
+    </#list>
   </div>
-<% end %>
+</#if>
 
-<% unless @meta.version.nil? || @meta.version.empty?  %>
+<#if (version)?has_content>
   <div class="block">
     <div class="block-label">Version</div>
-    <div class="content"><%= @meta.version %></div>
+    <div class="content">${version}</div>
   </div>
-<% end %>
+</#if>
 
-<% unless @meta.formats.nil? || @meta.formats.empty?  %>
+<#if (formats)?has_content>
   <div class="block">
     <div class="block-label">Formats</div>
-    <% idx = 0 %>
-    <% for d in @meta.formats %>
-      <% if idx > 0  %>
+    <#assign more = 0>
+    <#list formats as d>
+      <#if (more > 0)>
         <div class="label">&emsp;</div>
-      <% end %>
-      <div class="content"><%= d%></div>
-      <% idx += 1 %>
-    <% end %>
+      </#if>
+      <div class="content">${d}</div>
+      <#assign more = 1>
+    </#list>
   </div>
-<% end %>
+</#if>
 
-<% unless @meta.alternate_identifiers.nil? || @meta.alternate_identifiers.empty?  %>
+<#if (alternateIdentifiers)?has_content>
   <div class="block">
     <div class="block-label">Alternate identifiers</div>
-    <% for d in @meta.alternate_identifiers %>
-      <div class="label"><%= d[:type] %>&emsp;</div>
-      <div class="content"><%= d[:value] %></div>
-    <% end %>
+    <#list alternateIdentifiers! as d>
+          <div class="label">${d.key}&emsp;</div>
+          <div class="content">${d.value}</div>
+    </#list>
   </div>
-<% end %>
+</#if>
 
-<% unless @meta.related_identifiers.nil? || @meta.related_identifiers.empty?  %>
+<#if (relatedIdentifiers)?has_content>
   <div class="block">
     <div class="block-label">Related identifiers</div>
-    <% for d in @meta.related_identifiers %>
-      <div class="label"><%= d[:relation_type] %>&emsp;</div>
-      <div class="content"><%= d[:identifier_type].downcase %>:<%= d[:value] %></div>
-    <% end %>
-</div>
-<% end %>
+    <#list relatedIdentifiers! as d>
+          <div class="label">${d.key}&emsp;</div>
+          <div class="content">${d.value}</div>
+    </#list>
+  </div>
+</#if>
 
-<% unless @meta.contributors.nil? || @meta.contributors.empty?  %>
+<#if (contributors)?has_content>
   <div class="block">
     <div class="block-label">Contributors</div>
-    <% for d in @meta.contributors %>
-      <div class="label"><%= d[:type] %>&emsp;</div>
-      <div class="content"><%= d[:value] %></div>
-    <% end %>
+    <#list contributors! as d>
+          <div class="label">${d.key}&emsp;</div>
+          <div class="content">${d.value}</div>
+    </#list>
   </div>
-<% end %>
-
--->
+</#if>
 
 <div class="block">
   <div class="block-label">Other formats</div>
@@ -170,7 +166,7 @@ For a landing page of this dataset please follow
 </div>
 
 </div>
-
-
 </body>
 </html>
+
+</#escape>

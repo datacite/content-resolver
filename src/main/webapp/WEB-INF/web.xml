@@ -2,9 +2,13 @@
 <!-- This web.xml file is not required when using Servlet 3.0 container, 
      see implementation details http://jersey.java.net/nonav/documentation/latest/jax-rs.html#d4e194 -->
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-    <servlet>
-        <servlet-name>Jersey Web Application</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <filter>
+        <filter-name>jersey</filter-name>
+        <filter-class>com.sun.jersey.spi.container.servlet.ServletContainer</filter-class>
+        <init-param>
+            <param-name>com.sun.jersey.config.property.WebPageContentRegex</param-name>
+            <param-value>/(static|(WEB-INF/jsp))/.*</param-value>
+        </init-param>
         <init-param>
             <param-name>com.sun.jersey.config.property.packages</param-name>
             <param-value>org.datacite.conres</param-value>
@@ -13,17 +17,13 @@
             <param-name>com.sun.jersey.freemarker.templateBasePath</param-name>
             <param-value>freemarker</param-value>
         </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Jersey Web Application</servlet-name>
+        <init-param>
+            <param-name>com.sun.jersey.config.property.JSPTemplatesBasePath</param-name>
+            <param-value>/WEB-INF/jsp</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>jersey</filter-name>
         <url-pattern>/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>default</servlet-name>
-        <url-pattern>/static/*</url-pattern>
-    </servlet-mapping>
-    <welcome-file-list>
-        <welcome-file>/static/index.jsp</welcome-file>
-    </welcome-file-list>
+    </filter-mapping>
 </web-app>

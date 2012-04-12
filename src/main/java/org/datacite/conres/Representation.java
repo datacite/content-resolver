@@ -23,13 +23,13 @@ public enum Representation {
     }),
     APPLICATION_RDF_XML ("application","rdf+xml", new Transformer() {
         @Override public Object transform(Metadata mr) {
-            return "";
+            return RdfRepresentation.writeXML(mr);
         }
     }),
     RDF_TURTLE ("text","turtle", new Transformer() {
         @Override
         public Object transform(Metadata mr) {
-            return "";
+            return RdfRepresentation.writeTurtle(mr);
         }
     }),
     BIBTEX ("application","x-bibtex", new Transformer() {

@@ -19,13 +19,14 @@ public class LinkController extends AbstractController {
 
     public LinkController(@PathParam("type")String type,
                           @PathParam("subtype")String subtype,
-                          @PathParam("doi")String doi){
-        super(doi);
+                          @PathParam("doi")String doi,
+                          @Context UriInfo uriInfo){
+        super(doi, uriInfo);
         requestedMedia = new MediaType(type, subtype);
     }
 
     @GET
-    public Response get(@Context UriInfo uriInfo){
+    public Response get(){
         if (!doiRegistered)
             return Response.status(404).build();
 
@@ -42,13 +43,8 @@ public class LinkController extends AbstractController {
         if (xml==null || "".equals(xml))
             return Response.noContent().build();
 
-        String contextPath = uriInfo.getBaseUri().getPath();
-        Metadata bean = new Metadata(doi,
-                xml,
-                userMedia,
-                contextPath.substring(0, contextPath.length() - 1),
-                allocatorName,
-                datacentreName);
-        return Response.ok(representation.render(bean)).type(requestedMedia).build();
+        Metadata model = buildModel(xml);
+        Object entity = representation.render(model);
+        return Response.ok(entity).type(requestedMedia).build();
     }
 }

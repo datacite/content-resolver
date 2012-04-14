@@ -15,12 +15,12 @@ import java.util.List;
 @Path("/{doi: 10\\..*}")
 public class ContentController extends AbstractController{
 
-    public ContentController(@PathParam("doi")String doi){
-        super(doi);
+    public ContentController(@PathParam("doi")String doi, @Context UriInfo uriInfo){
+        super(doi, uriInfo);
     }
 
     @GET
-    public Response get(@Context Request request, @Context UriInfo uriInfo) {
+    public Response get(@Context Request request) {
         if (!doiRegistered)
             return Response.status(404).build();
 
@@ -34,20 +34,16 @@ public class ContentController extends AbstractController{
             if (userMedia.keySet().contains(requestedMedia))
                 return Response.seeOther(userMedia.get(requestedMedia)).build();
 
+            Representation representation = Representation.valueOf(requestedMedia);
+
             // TODO is this the right thing to do?
             String xml = service.getXml(doi);
             if (xml==null || "".equals(xml))
                 return Response.noContent().build();
 
-            Representation representation = Representation.valueOf(requestedMedia);
-            String contextPath = uriInfo.getBaseUri().getPath();
-            Metadata bean = new Metadata(doi,
-                    xml,
-                    userMedia,
-                    contextPath.substring(0, contextPath.length() - 1),
-                    allocatorName,
-                    datacentreName);
-            return Response.ok(representation.render(bean)).type(requestedMedia).build();
+            Metadata model = buildModel(xml);
+            Object entity = representation.render(model);
+            return Response.ok(entity).type(requestedMedia).build();
         }
     }
 }

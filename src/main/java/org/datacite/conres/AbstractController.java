@@ -1,6 +1,7 @@
 package org.datacite.conres;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Variant;
 import java.net.URI;
 import java.util.ArrayList;
@@ -14,9 +15,11 @@ public abstract class AbstractController {
     protected boolean doiRegistered;
     protected String allocatorName;
     protected String datacentreName;
+    protected UriInfo uriInfo;
 
-    public AbstractController(String doi) {
+    public AbstractController(String doi, UriInfo uriInfo) {
         this.doi = doi;
+        this.uriInfo = uriInfo;
         String doiPrefix = doi.substring(0, doi.indexOf("/"));
         service = SearchServiceFactory.getInstance(doiPrefix);
         doiRegistered = service.isDoiRegistered(doi);
@@ -25,6 +28,16 @@ public abstract class AbstractController {
             allocatorName = service.getAllocatorName(doi);
             datacentreName = service.getDatacentreName(doi);
         }
+    }
+
+    protected Metadata buildModel(String xml) {
+        String contextPath = uriInfo.getBaseUri().getPath();
+        return new Metadata(doi,
+                xml,
+                userMedia,
+                contextPath.substring(0, contextPath.length() - 1),
+                allocatorName,
+                datacentreName);
     }
 
     public List<Variant> allSupportedTypes() {

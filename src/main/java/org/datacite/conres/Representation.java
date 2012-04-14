@@ -3,6 +3,7 @@ package org.datacite.conres;
 import com.sun.jersey.api.view.Viewable;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Variant;
 
 public enum Representation {
     TEXT_HTML("text","html", new Transformer() {
@@ -65,9 +66,9 @@ public enum Representation {
         return mediaType;
     }
 
-    public static Representation valueOf(MediaType mimeType){
+    public static Representation valueOf(Variant v){
         for (Representation representation : values()) {
-            if(representation.asMediaType().equals(mimeType))
+            if(representation.asMediaType().equals(v.getMediaType()))
                 return representation;
         }
         return null;

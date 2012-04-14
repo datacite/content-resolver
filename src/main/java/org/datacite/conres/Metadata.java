@@ -35,6 +35,7 @@ public class Metadata {
     private String contextPath;
     private String allocatorName;
     private String datacentreName;
+    private boolean xmlPresent;
 
     public Metadata(String doi, String xml,
                     Map<MediaType, URI> media,
@@ -43,6 +44,7 @@ public class Metadata {
                     String datacentreName) {
         this.doi = doi;
         this.xml = xml;
+        this.xmlPresent = xml!=null && !"".equals(xml);
         this.media = media;
         this.contextPath = contextPath;
         this.allocatorName = allocatorName;
@@ -232,6 +234,10 @@ public class Metadata {
 
     public String getDatacentreName() {
         return datacentreName;
+    }
+
+    public boolean isXmlPresent() {
+        return xmlPresent;
     }
 
     public List<String> getAllMedia(){

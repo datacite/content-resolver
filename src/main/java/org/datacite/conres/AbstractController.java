@@ -1,6 +1,7 @@
 package org.datacite.conres;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Variant;
 import java.net.URI;
@@ -51,5 +52,29 @@ public abstract class AbstractController {
 
         MediaType[] allSupportedMedia = allSupportedTypes.toArray(new MediaType[allSupportedTypes.size()]);
         return Variant.mediaTypes(allSupportedMedia).add().build();
+    }
+
+    protected Response buildResponse(Variant v){
+        if (v == null)
+            return Response.notAcceptable(allSupportedTypes()).build();
+
+        // is it just redirect...?
+        MediaType requestedMedia = v.getMediaType();
+        if(userMedia.keySet().contains(requestedMedia)){
+            return Response.seeOther(userMedia.get(requestedMedia)).build();
+        }
+
+        // ...no, we have to act accordingly
+        Representation r;
+        if ((r = Representation.valueOf(v)) == null)
+            return Response.notAcceptable(allSupportedTypes()).build();
+
+        String xml = service.getXml(doi);
+        if (r == Representation.TEXT_HTML || !(xml==null || "".equals(xml))) {
+            Metadata model = buildModel(xml);
+            Object entity = r.render(model);
+            return Response.ok(entity).type(r.asMediaType()).build();
+        } else
+            return Response.noContent().build();
     }
 }

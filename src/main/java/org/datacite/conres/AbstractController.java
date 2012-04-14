@@ -17,6 +17,7 @@ public abstract class AbstractController {
     protected String allocatorName;
     protected String datacentreName;
     protected UriInfo uriInfo;
+    private List<Variant> allVariants;
 
     public AbstractController(String doi, UriInfo uriInfo) {
         this.doi = doi;
@@ -42,6 +43,9 @@ public abstract class AbstractController {
     }
 
     protected List<Variant> allSupportedTypes() {
+        if (allVariants != null)
+            return allVariants;
+
         List<MediaType> allSupportedTypes = new ArrayList<MediaType>();
         for (MediaType m : userMedia.keySet()) {
             allSupportedTypes.add(m);
@@ -51,7 +55,8 @@ public abstract class AbstractController {
         }
 
         MediaType[] allSupportedMedia = allSupportedTypes.toArray(new MediaType[allSupportedTypes.size()]);
-        return Variant.mediaTypes(allSupportedMedia).add().build();
+        allVariants = Variant.mediaTypes(allSupportedMedia).add().build();
+        return allVariants;
     }
 
     protected Response buildResponse(Variant v){

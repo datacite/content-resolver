@@ -31,7 +31,7 @@ public abstract class AbstractController {
         }
     }
 
-    protected Metadata buildModel(String xml) {
+    private Metadata buildModel(String xml) {
         String contextPath = uriInfo.getBaseUri().getPath();
         return new Metadata(doi,
                 xml,
@@ -41,7 +41,7 @@ public abstract class AbstractController {
                 datacentreName);
     }
 
-    public List<Variant> allSupportedTypes() {
+    protected List<Variant> allSupportedTypes() {
         List<MediaType> allSupportedTypes = new ArrayList<MediaType>();
         for (MediaType m : userMedia.keySet()) {
             allSupportedTypes.add(m);

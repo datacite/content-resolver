@@ -56,6 +56,11 @@ public class MockSearchServiceImpl implements SearchService {
     }
 
     @Override
+    public String getDatacentreName(String doi) {
+        return "UK Data Archive";
+    }
+
+    @Override
     public String getXml(String doi) {
         if (doi.equals(TEST_DOI))
             return TEST_XML;

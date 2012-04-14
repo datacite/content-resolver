@@ -19,6 +19,7 @@ public class SearchServiceImpl implements SearchService {
     public static final String DATACITE_DEFAULT_ENCODING = "UTF-8";
     public static final String XML_FACET = "xml";
     public static final String ALLOCATOR_FACET = "allocator";
+    public static final String DATACENTRE_FACET = "datacentre";
     public static final String DOI_FACET = "doi";
     public static final String MEDIA_FACET = "media";
     //public static final String SAMPLE_DOI = "10.9999/AAAA";
@@ -57,7 +58,14 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public String getAllocatorName(String doi) {
-        return getFacet(doi, ALLOCATOR_FACET);
+        String n = getFacet(doi, ALLOCATOR_FACET);
+        return n.substring(n.indexOf("-") + 1).trim();
+    }
+
+    @Override
+    public String getDatacentreName(String doi) {
+        String n = getFacet(doi, DATACENTRE_FACET);
+        return n.substring(n.indexOf("-") + 1).trim();
     }
 
     @Override

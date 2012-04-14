@@ -12,14 +12,19 @@ public abstract class AbstractController {
     protected String doi;
     protected Map<MediaType,URI> userMedia;
     protected boolean doiRegistered;
+    protected String allocatorName;
+    protected String datacentreName;
 
     public AbstractController(String doi) {
         this.doi = doi;
         String doiPrefix = doi.substring(0, doi.indexOf("/"));
         service = SearchServiceFactory.getInstance(doiPrefix);
         doiRegistered = service.isDoiRegistered(doi);
-        if (doiRegistered)
+        if (doiRegistered) {
             userMedia = service.getMedia(doi);
+            allocatorName = service.getAllocatorName(doi);
+            datacentreName = service.getDatacentreName(doi);
+        }
     }
 
     public List<Variant> allSupportedTypes() {

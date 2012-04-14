@@ -4,6 +4,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.*;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class ContentController extends AbstractController{
     }
 
     @GET
-    public Response get(@Context Request request) {
+    public Response get(@Context Request request, @Context UriInfo uriInfo) {
         if (!doiRegistered)
             return Response.status(404).build();
 
@@ -39,7 +40,13 @@ public class ContentController extends AbstractController{
                 return Response.noContent().build();
 
             Representation representation = Representation.valueOf(requestedMedia);
-            Metadata bean = new Metadata(doi, xml, userMedia);
+            String contextPath = uriInfo.getBaseUri().getPath();
+            Metadata bean = new Metadata(doi,
+                    xml,
+                    userMedia,
+                    contextPath.substring(0, contextPath.length() - 1),
+                    allocatorName,
+                    datacentreName);
             return Response.ok(representation.render(bean)).type(requestedMedia).build();
         }
     }

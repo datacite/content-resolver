@@ -5,16 +5,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <title>${doi}</title>
-  <link rel="stylesheet" type="text/css" href="../static/main.css" />
+  <link rel="stylesheet" type="text/css" href="${contextPath}/static/main.css" />
   <#list allMedia as media>
-  <link rel="meta" type="${media}" href="/${media}/${doi}" />
+  <link rel="meta" type="${media}" href="${contextPath}/${media}/${doi}" />
   </#list>
 </head>
 
 <body>
 <div id="header">
 <h1>
-  <img src="../static/dc-logo.gif" alt="DataCite logo" /> DataCite Content Service <small>Beta</small>
+  <img src="${contextPath}/static/dc-logo.gif" alt="DataCite logo" /> DataCite Content Service <small>Beta</small>
 </h1>
 <h2>doi:${doi}</h2>
 <p>This page represents DataCite's metadata for <em>doi:${doi}</em>.
@@ -29,8 +29,8 @@ For a landing page of this dataset please follow
   <div class="content">
   <#list creators! as c>${c}; </#list>(${publicationYear!}): ${titles[0].value}; ${publisher!}. http://dx.doi.org/${doi}
 
-  <a title="Export to Reference Manager/EndNote" href="/application/x-research-info-systems/${doi}"><span class="citation-button">RIS</span></a>
-  <a title="Export to BibTeX" href="/application/x-bibtex/${doi}"><span class="citation-button">BibTeX</span></a>
+  <a title="Export to Reference Manager/EndNote" href="${contextPath}/application/x-research-info-systems/${doi}"><span class="citation-button">RIS</span></a>
+  <a title="Export to BibTeX" href="${contextPath}/application/x-bibtex/${doi}"><span class="citation-button">BibTeX</span></a>
   </div>
 </div>
 
@@ -161,11 +161,12 @@ For a landing page of this dataset please follow
   <div class="block-label">Other formats</div>
   <#list allMedia as media>
     <div class="label">&emsp;</div>
-    <div class="content"><a href="../${media}/${doi}">${media}</a></div>
+    <div class="content"><a href="${contextPath}/${media}/${doi}">${media}</a></div>
   </#list>
 </div>
 
 </div>
+<p>This metadata record was deposited by ${datacentreName} in co-operation with ${allocatorName}.</p>
 </body>
 </html>
 

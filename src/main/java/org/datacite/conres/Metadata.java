@@ -32,11 +32,21 @@ public class Metadata {
     private List<Pair> alternateIdentifiers;
     private List<Pair> relatedIdentifiers;
     private List<Pair> contributors;
+    private String contextPath;
+    private String allocatorName;
+    private String datacentreName;
 
-    public Metadata(String doi, String xml, Map<MediaType, URI> media) {
+    public Metadata(String doi, String xml,
+                    Map<MediaType, URI> media,
+                    String contextPath,
+                    String allocatorName,
+                    String datacentreName) {
         this.doi = doi;
         this.xml = xml;
         this.media = media;
+        this.contextPath = contextPath;
+        this.allocatorName = allocatorName;
+        this.datacentreName = datacentreName;
 
         Builder parser = new Builder();
         try {
@@ -210,6 +220,18 @@ public class Metadata {
 
     public List<Pair> getContributors() {
         return contributors;
+    }
+
+    public String getContextPath() {
+        return contextPath;
+    }
+
+    public String getAllocatorName() {
+        return allocatorName;
+    }
+
+    public String getDatacentreName() {
+        return datacentreName;
     }
 
     public List<String> getAllMedia(){

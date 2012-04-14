@@ -29,7 +29,7 @@ public class MetadataTest {
         assertNotNull(xml);
         assertTrue(xml.length() != 0);
         Map<MediaType,URI> media = new HashMap<MediaType, URI>();
-        Metadata m = new Metadata(MockSearchServiceImpl.TEST_DOI, xml, media);
+        Metadata m = new Metadata(MockSearchServiceImpl.TEST_DOI, xml, media, null, null, null);
         assertEquals(3, m.getCreators().size());
         assertEquals(1, m.getTitles().size());
         assertEquals("Radiolaria abundance of Hole 24-232A", m.getTitles().get(0).getValue());
@@ -53,7 +53,7 @@ public class MetadataTest {
         assertNotNull(xml);
         assertTrue(xml.length() != 0);
         Map<MediaType,URI> media = new HashMap<MediaType, URI>();
-        Metadata m = new Metadata(MockSearchServiceImpl.TEST_DOI, xml, media);
+        Metadata m = new Metadata(MockSearchServiceImpl.TEST_DOI, xml, media, null, null, null);
         assertEquals(1, m.getResourceTypes().size());
         assertEquals("Text", m.getResourceTypes().get(0).getKey());
         assertEquals("Report", m.getResourceTypes().get(0).getValue());
@@ -76,7 +76,7 @@ public class MetadataTest {
         assertNotNull(xml);
         assertTrue(xml.length() != 0);
         Map<MediaType,URI> media = new HashMap<MediaType, URI>();
-        Metadata m = new Metadata(MockSearchServiceImpl.TEST_DOI, xml, media);
+        Metadata m = new Metadata(MockSearchServiceImpl.TEST_DOI, xml, media, null, null, null);
         assertTrue(m.getTitles().get(0).getValue().startsWith("Diabetes"));
         assertEquals(2, m.getDescriptions().size());
         assertTrue(m.getDescriptions().get(0).getValue().length() != 0);
@@ -91,7 +91,7 @@ public class MetadataTest {
         assertNotNull(xml);
         assertTrue(xml.length() != 0);
         Map<MediaType,URI> media = new HashMap<MediaType, URI>();
-        Metadata m = new Metadata(MockSearchServiceImpl.TEST_DOI, xml, media);
+        Metadata m = new Metadata(MockSearchServiceImpl.TEST_DOI, xml, media, null, null, null);
         assertEquals("HostingInstitution", m.getContributors().get(0).getKey());
         assertTrue(m.getContributors().get(0).getValue().startsWith("Institute"));
         assertEquals("1.0", m.getVersion());

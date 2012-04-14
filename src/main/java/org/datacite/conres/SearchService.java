@@ -18,9 +18,16 @@ public interface SearchService {
     /**
      * Returns DataCite's member name for given DOI
      * @param doi identifier of dataset
-     * @return full name from the organisation
+     * @return full name of the organisation
      */
     String getAllocatorName(String doi);
+
+    /**
+     * Returns DataCite's registered datacentre name for given DOI
+     * @param doi identifier of dataset
+     * @return full name of the organisation
+     */
+    String getDatacentreName(String doi);
 
     /**
      * Retrieves native DataCite metadata XML

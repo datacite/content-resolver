@@ -1,8 +1,12 @@
 package org.datacite.conres;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * Deals with link requests
@@ -21,7 +25,7 @@ public class LinkController extends AbstractController {
     }
 
     @GET
-    public Response get(){
+    public Response get(@Context UriInfo uriInfo){
         if (!doiRegistered)
             return Response.status(404).build();
 
@@ -38,7 +42,13 @@ public class LinkController extends AbstractController {
         if (xml==null || "".equals(xml))
             return Response.noContent().build();
 
-        Metadata bean = new Metadata(doi, xml, userMedia);
+        String contextPath = uriInfo.getBaseUri().getPath();
+        Metadata bean = new Metadata(doi,
+                xml,
+                userMedia,
+                contextPath.substring(0, contextPath.length() - 1),
+                allocatorName,
+                datacentreName);
         return Response.ok(representation.render(bean)).type(requestedMedia).build();
     }
 }

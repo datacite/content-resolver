@@ -37,7 +37,7 @@ public enum Representation {
     BIBTEX ("application","x-bibtex", new Transformer() {
         @Override
         public Object transform(Metadata mr) {
-            return "";
+            return new Viewable("/doi_bibtex", mr);
         }
     }),
     RIS ("application","x-research-info-systems", new Transformer() {

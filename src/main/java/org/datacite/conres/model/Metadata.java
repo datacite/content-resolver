@@ -8,6 +8,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Represents metadata record (parsed from XML)
@@ -37,6 +38,7 @@ public class Metadata {
     private String allocatorName;
     private String datacentreName;
     private boolean xmlPresent;
+    private String randomId;
 
     public Metadata(String doi, String xml,
                     Map<MediaType, URI> media,
@@ -44,6 +46,7 @@ public class Metadata {
                     String allocatorName,
                     String datacentreName) {
         this.doi = doi;
+        this.randomId = UUID.randomUUID().toString();
         this.xml = xml;
         this.xmlPresent = xml!=null && !"".equals(xml);
         this.media = media;
@@ -239,6 +242,10 @@ public class Metadata {
 
     public boolean isXmlPresent() {
         return xmlPresent;
+    }
+
+    public String getRandomId() {
+        return randomId;
     }
 
     public List<String> getAllMedia(){

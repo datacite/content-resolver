@@ -1,11 +1,11 @@
-package org.datacite.conres;
+package org.datacite.conres.view;
 
-import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.OWL;
+import org.datacite.conres.model.Metadata;
 
 import java.io.StringWriter;
 

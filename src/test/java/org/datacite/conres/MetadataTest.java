@@ -1,16 +1,17 @@
 package org.datacite.conres;
 
-import org.junit.*;
+import org.datacite.conres.model.Metadata;
+import org.datacite.conres.service.impl.MockSearchServiceImpl;
+import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;
-
-import static org.junit.Assert.*;
-
 import java.io.InputStream;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
+import static org.junit.Assert.*;
 
 public class MetadataTest {
     public String loadData(String fileName){

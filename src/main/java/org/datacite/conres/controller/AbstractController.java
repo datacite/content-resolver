@@ -1,4 +1,9 @@
-package org.datacite.conres;
+package org.datacite.conres.controller;
+
+import org.datacite.conres.model.Metadata;
+import org.datacite.conres.service.SearchService;
+import org.datacite.conres.service.SearchServiceFactory;
+import org.datacite.conres.view.Representation;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

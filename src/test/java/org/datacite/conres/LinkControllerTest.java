@@ -4,6 +4,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.test.framework.JerseyTest;
+import org.datacite.conres.service.impl.MockSearchServiceImpl;
+import org.datacite.conres.view.Representation;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

@@ -1,4 +1,4 @@
-package org.datacite.conres;
+package org.datacite.conres.model;
 
 public class Pair {
     private final String key;

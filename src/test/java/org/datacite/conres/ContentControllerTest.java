@@ -7,6 +7,8 @@ import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.freemarker.FreemarkerViewProcessor;
 import com.sun.jersey.test.framework.JerseyTest;
 import com.sun.jersey.test.framework.WebAppDescriptor;
+import org.datacite.conres.service.impl.MockSearchServiceImpl;
+import org.datacite.conres.view.Representation;
 import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;

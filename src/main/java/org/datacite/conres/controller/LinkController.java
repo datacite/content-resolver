@@ -1,4 +1,4 @@
-package org.datacite.conres;
+package org.datacite.conres.controller;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

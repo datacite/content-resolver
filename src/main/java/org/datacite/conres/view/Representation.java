@@ -1,6 +1,7 @@
-package org.datacite.conres;
+package org.datacite.conres.view;
 
 import com.sun.jersey.api.view.Viewable;
+import org.datacite.conres.model.Metadata;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Variant;

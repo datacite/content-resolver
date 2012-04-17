@@ -6,6 +6,8 @@ import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.freemarker.FreemarkerViewProcessor;
 import com.sun.jersey.test.framework.JerseyTest;
 import com.sun.jersey.test.framework.WebAppDescriptor;
+import org.datacite.conres.service.impl.SearchServiceImpl;
+import org.datacite.conres.view.Representation;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

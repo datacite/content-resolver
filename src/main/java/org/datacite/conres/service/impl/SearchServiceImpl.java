@@ -1,7 +1,8 @@
-package org.datacite.conres;
+package org.datacite.conres.service.impl;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
+import org.datacite.conres.service.SearchService;
 
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.DatatypeConverter;

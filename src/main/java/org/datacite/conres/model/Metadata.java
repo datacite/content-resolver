@@ -1,6 +1,7 @@
-package org.datacite.conres;
+package org.datacite.conres.model;
 
 import nu.xom.*;
+import org.datacite.conres.view.Representation;
 
 import javax.ws.rs.core.MediaType;
 import java.net.URI;

@@ -1,4 +1,6 @@
-package org.datacite.conres;
+package org.datacite.conres.service.impl;
+
+import org.datacite.conres.service.SearchService;
 
 import javax.ws.rs.core.MediaType;
 import java.net.URI;

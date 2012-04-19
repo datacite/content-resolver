@@ -15,8 +15,8 @@ import java.util.Map;
 
 public class SearchServiceImpl implements SearchService {
 
-    //public static final String SOLR_URL = "http://dev.datacite.org/search/api";
-    public static final String SOLR_URL = "http://search.datacite.org/api";
+    public static final String SOLR_URL = "http://test.datacite.org/search/api";
+//    public static final String SOLR_URL = "http://search.datacite.org/api";
     public static final String DATACITE_DEFAULT_ENCODING = "UTF-8";
     public static final String XML_FACET = "xml";
     public static final String ALLOCATOR_FACET = "allocator";

@@ -46,7 +46,13 @@ public enum Representation {
             return new Viewable("/doi_ris", mr);
         }
     }),
-    CSL_JSON("application", "citeproc+json", new Transformer() {
+    CITEPROC_JSON("application", "citeproc+json", new Transformer() {
+        @Override
+        public Object transform(Metadata mr) {
+            return CslJsonRepresentation.writeJSON(mr);
+        }
+    }),
+    CSL_JSON("application", "vnd.citationstyles.csl+json", new Transformer() {
         @Override
         public Object transform(Metadata mr) {
             return CslJsonRepresentation.writeJSON(mr);

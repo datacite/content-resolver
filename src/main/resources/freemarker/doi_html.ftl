@@ -17,17 +17,20 @@
   <img src="${contextPath}/static/dc-logo.gif" alt="DataCite logo" /> DataCite Content Service <small>Beta</small>
 </h1>
 <h2>doi:${doi}</h2>
-<p>This page represents DataCite's metadata for <em>doi:${doi}</em>.
-For a landing page of this dataset please follow
+<#if xmlPresent><p>This page represents DataCite's metadata for <em>doi:${doi}</em>.</p></#if>
+<p>For a landing page of this dataset please follow
 <a href="http://dx.doi.org/${doi}">http://dx.doi.org/${doi}</a></p>
 </div>
+
+
+<#if xmlPresent>
 
 <div id="metadata">
 
 <div class="block">
   <div class="block-label">Citation</div>
   <div class="content">
-  <#list creators! as c>${c}; </#list>(${publicationYear!}): ${titles[0].value}; ${publisher!}. http://dx.doi.org/${doi}
+  <#list creators! as c>${c}; </#list>(${publicationYear!}): ${firstTitle!}; ${publisher!}. http://dx.doi.org/${doi}
 
   <a title="Export to Reference Manager/EndNote" href="${contextPath}/application/x-research-info-systems/${doi}"><span class="citation-button">RIS</span></a>
   <a title="Export to BibTeX" href="${contextPath}/application/x-bibtex/${doi}"><span class="citation-button">BibTeX</span></a>
@@ -157,16 +160,20 @@ For a landing page of this dataset please follow
   </div>
 </#if>
 
-<div class="block">
-  <div class="block-label">Other formats</div>
-  <#list allMedia as media>
-    <div class="label">&emsp;</div>
-    <div class="content"><a href="${contextPath}/${media}/${doi}">${media}</a></div>
-  </#list>
-</div>
+</#if>
+
+<#if (allMedia)?has_content>
+    <div class="block">
+      <div class="block-label">Other formats</div>
+      <#list allMedia as media>
+        <div class="label">&emsp;</div>
+        <div class="content"><a href="${contextPath}/${media}/${doi}">${media}</a></div>
+      </#list>
+    </div>
+</#if>
 
 </div>
-<p>This metadata record was deposited by ${datacentreName} in co-operation with ${allocatorName}.</p>
+<p>This<#if xmlPresent> metadata</#if> record was deposited by ${datacentreName} in co-operation with ${allocatorName}.</p>
 </body>
 </html>
 

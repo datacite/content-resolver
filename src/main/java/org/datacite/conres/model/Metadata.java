@@ -54,29 +54,31 @@ public class Metadata {
         this.allocatorName = allocatorName;
         this.datacentreName = datacentreName;
 
-        Builder parser = new Builder();
-        try {
-            document = parser.build(xml, null);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        if (xml != null && !"".equals(xml)){
+            Builder parser = new Builder();
+            try {
+                document = parser.build(xml, null);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
 
-        this.creators = extractList("creatorName");
-        this.publicationYear = extractText("publicationYear");
-        this.titles = extractPairs("title", "titleType");
-        this.publisher = extractText("publisher");
-        this.resourceTypes = extractPairs("resourceType", "resourceTypeGeneral");
-        this.descriptions = extractPairs("description", "descriptionType");
-        this.subjects = extractPairs("subject", "subjectScheme");
-        this.sizes = extractList("size");
-        this.rights = extractText("rights");
-        this.dates = extractPairs("date", "dateType");
-        this.language = extractText("language");
-        this.formats = extractList("format");
-        this.version = extractText("version");
-        this.alternateIdentifiers = extractPairs("alternateIdentifier", "alternateIdentifierType");
-        this.relatedIdentifiers = extractRelatedIds();
-        this.contributors = extractContributors();
+            this.creators = extractList("creatorName");
+            this.publicationYear = extractText("publicationYear");
+            this.titles = extractPairs("title", "titleType");
+            this.publisher = extractText("publisher");
+            this.resourceTypes = extractPairs("resourceType", "resourceTypeGeneral");
+            this.descriptions = extractPairs("description", "descriptionType");
+            this.subjects = extractPairs("subject", "subjectScheme");
+            this.sizes = extractList("size");
+            this.rights = extractText("rights");
+            this.dates = extractPairs("date", "dateType");
+            this.language = extractText("language");
+            this.formats = extractList("format");
+            this.version = extractText("version");
+            this.alternateIdentifiers = extractPairs("alternateIdentifier", "alternateIdentifierType");
+            this.relatedIdentifiers = extractRelatedIds();
+            this.contributors = extractContributors();
+        }
     }
 
     private List<Pair> extractRelatedIds() {
@@ -247,15 +249,23 @@ public class Metadata {
     public String getRandomId() {
         return randomId;
     }
+    
+    public String getFirstTitle() {
+        if (titles == null || titles.size() == 0)
+            return null;
+        return titles.get(0).getValue();
+    }
 
     public List<String> getAllMedia(){
         List<String> allSupportedTypes = new ArrayList<String >();
         for (MediaType m : media.keySet()) {
             allSupportedTypes.add(m.toString());
         }
-        for(Representation c: Representation.values()) {
-            allSupportedTypes.add(c.toString());
-        }
+
+        if (xmlPresent)
+            for(Representation c: Representation.values()) {
+                allSupportedTypes.add(c.toString());
+            }
 
         return allSupportedTypes;
     }

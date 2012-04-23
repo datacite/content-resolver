@@ -1,4 +1,5 @@
 .idea/*
 *.iml
 target/*
+src/main/resources/solr.properties
 .DS_Store

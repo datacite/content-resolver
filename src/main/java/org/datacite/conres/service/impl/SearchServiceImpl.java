@@ -6,28 +6,47 @@ import org.datacite.conres.service.SearchService;
 
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.DatatypeConverter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class SearchServiceImpl implements SearchService {
+    public static final String SOLR_BASE_URL;
+    public static final String SOLR_API_URL;
+    public static final String SOLR_STATUS_URL;
 
-    public static final String SOLR_URL = "http://test.datacite.org/search/api";
-//    public static final String SOLR_URL = "http://search.datacite.org/api";
+    static {
+        Properties prop = new Properties();
+        InputStream in = SearchServiceImpl.class.getResourceAsStream("/solr.properties");
+        if (in == null)
+            throw new RuntimeException("Please setup valid solr.properties.template");
+        try {
+            prop.load(in);
+            SOLR_BASE_URL = (String) prop.get("solr.base.url");
+            SOLR_API_URL = SOLR_BASE_URL + "/api";
+            SOLR_STATUS_URL = SOLR_BASE_URL + "/status";
+            in.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static final String DATACITE_DEFAULT_ENCODING = "UTF-8";
     public static final String XML_FACET = "xml";
     public static final String ALLOCATOR_FACET = "allocator";
     public static final String DATACENTRE_FACET = "datacentre";
     public static final String DOI_FACET = "doi";
     public static final String MEDIA_FACET = "media";
-    //public static final String SAMPLE_DOI = "10.9999/AAAA";
     public static final String SAMPLE_DOI = "10.1594/PANGAEA.251240";
 
     private String getUrl(String doi, String facet) throws UnsupportedEncodingException {
-        return SOLR_URL +  "?q=doi:%22"+ URLEncoder.encode(doi, DATACITE_DEFAULT_ENCODING) +"%22&fl="
+        return SOLR_API_URL +  "?q=doi:%22"+ URLEncoder.encode(doi, DATACITE_DEFAULT_ENCODING) +"%22&fl="
                 + facet + "&wt=csv&csv.header=false";
     }
 

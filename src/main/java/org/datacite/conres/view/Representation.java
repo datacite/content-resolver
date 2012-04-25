@@ -2,6 +2,8 @@ package org.datacite.conres.view;
 
 import com.sun.jersey.api.view.Viewable;
 import org.datacite.conres.model.Metadata;
+import org.datacite.conres.service.CslFormatterService;
+import org.datacite.conres.service.CslFormatterServiceFactory;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Variant;
@@ -57,12 +59,21 @@ public enum Representation {
         public Object transform(Metadata mr) {
             return CslJsonRepresentation.writeJSON(mr);
         }
+    }),
+    TEXT_BIBLIOGRAPHY("text", "bibliography", new Transformer() {
+        @Override
+        public Object transform(Metadata mr) {
+            return cslFormatterService.format(CslJsonRepresentation.writeJSON(mr),
+                    mr.getCslStyle(),
+                    mr.getCslLocale());
+        }
     });
 
     private final String type;
     private final String subtype;
     private final MediaType mediaType;
     private final Transformer transformer;
+    private static CslFormatterService cslFormatterService = CslFormatterServiceFactory.getInstance();
 
     Representation(String type, String subtype, Transformer mt) {
         this.type = type;

@@ -39,12 +39,16 @@ public class Metadata {
     private String datacentreName;
     private boolean xmlPresent;
     private String randomId;
+    private String cslStyle;
+    private String cslLocale;
 
     public Metadata(String doi, String xml,
                     Map<MediaType, URI> media,
                     String contextPath,
                     String allocatorName,
-                    String datacentreName) {
+                    String datacentreName,
+                    String cslStyle,
+                    String cslLocale) {
         this.doi = doi;
         this.randomId = UUID.randomUUID().toString();
         this.xml = xml;
@@ -53,6 +57,8 @@ public class Metadata {
         this.contextPath = contextPath;
         this.allocatorName = allocatorName;
         this.datacentreName = datacentreName;
+        this.cslStyle = cslStyle;
+        this.cslLocale = cslLocale;
 
         if (xml != null && !"".equals(xml)){
             Builder parser = new Builder();
@@ -249,7 +255,15 @@ public class Metadata {
     public String getRandomId() {
         return randomId;
     }
-    
+
+    public String getCslStyle() {
+        return cslStyle;
+    }
+
+    public String getCslLocale() {
+        return cslLocale;
+    }
+
     public String getFirstTitle() {
         if (titles == null || titles.size() == 0)
             return null;

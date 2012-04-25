@@ -3,10 +3,7 @@ package org.datacite.conres.controller;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Request;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 
 /**
  * Deals with content negotiation requests
@@ -16,8 +13,10 @@ import javax.ws.rs.core.UriInfo;
 @Path("/{doi: 10\\..*}")
 public class ContentController extends AbstractController{
 
-    public ContentController(@PathParam("doi")String doi, @Context UriInfo uriInfo){
-        super(doi, uriInfo);
+    public ContentController(@PathParam("doi")String doi,
+                             @Context UriInfo uriInfo,
+                             @Context HttpHeaders headers){
+        super(doi, uriInfo, headers);
     }
 
     @GET

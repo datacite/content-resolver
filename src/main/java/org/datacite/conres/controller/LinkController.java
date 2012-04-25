@@ -17,8 +17,9 @@ public class LinkController extends AbstractController {
     public LinkController(@PathParam("type")String type,
                           @PathParam("subtype")String subtype,
                           @PathParam("doi")String doi,
-                          @Context UriInfo uriInfo){
-        super(doi, uriInfo);
+                          @Context UriInfo uriInfo,
+                          @Context HttpHeaders headers){
+        super(doi, uriInfo, headers);
         requestedMedia = new MediaType(type, subtype);
     }
 

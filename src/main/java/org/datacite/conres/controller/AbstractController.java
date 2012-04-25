@@ -5,10 +5,7 @@ import org.datacite.conres.service.SearchService;
 import org.datacite.conres.service.SearchServiceFactory;
 import org.datacite.conres.view.Representation;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.core.Variant;
+import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +20,16 @@ public abstract class AbstractController {
     protected String datacentreName;
     protected UriInfo uriInfo;
     private List<Variant> allVariants;
+    private String acceptHeader;
 
-    public AbstractController(String doi, UriInfo uriInfo) {
+    public AbstractController(String doi, UriInfo uriInfo, HttpHeaders httpHeaders) {
         this.doi = doi;
         this.uriInfo = uriInfo;
+        List<String> acceptList = httpHeaders.getRequestHeader("Accept");
+        if (acceptList.size() > 0)
+            acceptHeader = acceptList.get(0);
+        else
+            acceptHeader = null;
         String doiPrefix = doi.substring(0, doi.indexOf("/"));
         service = SearchServiceFactory.getInstance(doiPrefix);
         doiRegistered = service.isDoiRegistered(doi);
@@ -44,7 +47,26 @@ public abstract class AbstractController {
                 userMedia,
                 contextPath.substring(0, contextPath.length() - 1),
                 allocatorName,
-                datacentreName);
+                datacentreName,
+                extractBiblioAttr(acceptHeader, "style"),
+                extractBiblioAttr(acceptHeader, "locale"));
+    }
+
+    private String extractBiblioAttr(String header, String attr) {
+        String result = "";
+        for(String h : header.split(",")){
+            if (h.trim().startsWith(Representation.TEXT_BIBLIOGRAPHY.toString())){
+                for(String s : h.split(";")) {
+                    if (s.trim().startsWith(attr)){
+                        String[] l = s.split("=");
+                        result = l.length == 2 ? l[1].trim() : "";
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        return result;
     }
 
     protected List<Variant> allSupportedTypes() {

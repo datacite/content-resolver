@@ -23,9 +23,10 @@ public class SearchServiceImpl implements SearchService {
     public static final String SOLR_BASE_URL;
     public static final String SOLR_API_URL;
     public static final String SOLR_STATUS_URL;
+    public static final Properties prop; // TODO move to Application class maybe
 
     static {
-        Properties prop = new Properties();
+        prop = new Properties();
         InputStream in = SearchServiceImpl.class.getResourceAsStream("/solr.properties");
         if (in == null)
             throw new RuntimeException("Please setup valid solr.properties");
@@ -50,6 +51,30 @@ public class SearchServiceImpl implements SearchService {
         return SOLR_API_URL +  "?q=doi:%22"+ URLEncoder.encode(doi, DATACITE_DEFAULT_ENCODING) +
                 "%22&fl=allocator,datacentre,media,xml&wt=xml";
     }
+
+/*    private String getRawMetadata2(String doi){
+        InputStream in;
+        int http_status;
+        HttpURLConnection conn = null;
+        try {
+            URL url = new URL(getUrl(doi));
+            conn = (HttpURLConnection) url.openConnection();
+            in = conn.getInputStream();
+            http_status = conn.getResponseCode();
+            if (http_status != 200) {
+                return null;
+            }
+            StringWriter sw = new StringWriter();
+            sw.a
+        } catch (IOException e) {
+            return null;
+        } finally {
+            if (conn != null)
+                conn.disconnect();
+        }
+
+
+    }*/
 
     private String getRawMetadata(String doi) {
         String result;

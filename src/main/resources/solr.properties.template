@@ -1,1 +1,2 @@
 solr.base.url=http://search.datacite.org
+citeproc.server.url=http://dev.datacite.org/citeproc

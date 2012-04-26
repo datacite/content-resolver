@@ -16,7 +16,7 @@ import java.util.UUID;
 public class Metadata {
     private String xml;
     private String doi;
-    private Map<MediaType, URI> media;
+    private Map<MediaType, URI> userMedia;
     private Document document;
     private List<String> creators;
     private String publicationYear;
@@ -34,16 +34,18 @@ public class Metadata {
     private List<Pair> alternateIdentifiers;
     private List<Pair> relatedIdentifiers;
     private List<Pair> contributors;
-    private String contextPath;
     private String allocatorName;
     private String datacentreName;
     private boolean xmlPresent;
     private String randomId;
+
+    private String contextPath;
     private String cslStyle;
     private String cslLocale;
 
-    public Metadata(String doi, String xml,
-                    Map<MediaType, URI> media,
+    public Metadata(String doi,
+                    String xml,
+                    Map<MediaType, URI> userMedia,
                     String contextPath,
                     String allocatorName,
                     String datacentreName,
@@ -53,7 +55,7 @@ public class Metadata {
         this.randomId = UUID.randomUUID().toString();
         this.xml = xml;
         this.xmlPresent = xml!=null && !"".equals(xml);
-        this.media = media;
+        this.userMedia = userMedia;
         this.contextPath = contextPath;
         this.allocatorName = allocatorName;
         this.datacentreName = datacentreName;
@@ -264,6 +266,10 @@ public class Metadata {
         return cslLocale;
     }
 
+    public Map<MediaType, URI> getUserMedia() {
+        return userMedia;
+    }
+
     public String getFirstTitle() {
         if (titles == null || titles.size() == 0)
             return null;
@@ -272,7 +278,7 @@ public class Metadata {
 
     public List<String> getAllMedia(){
         List<String> allSupportedTypes = new ArrayList<String >();
-        for (MediaType m : media.keySet()) {
+        for (MediaType m : userMedia.keySet()) {
             allSupportedTypes.add(m.toString());
         }
 

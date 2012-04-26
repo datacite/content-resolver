@@ -1,5 +1,6 @@
 package org.datacite.conres.service.impl;
 
+import org.datacite.conres.model.Metadata;
 import org.datacite.conres.service.SearchService;
 
 import javax.ws.rs.core.MediaType;
@@ -47,23 +48,7 @@ public class MockSearchServiceImpl implements SearchService {
         }
     }
 
-    @Override
-    public boolean isDoiRegistered(String doi) {
-        return doi.equals(TEST_DOI) || doi.equals(TEST_DOI_NO_XML);
-    }
-
-    @Override
-    public String getAllocatorName(String doi) {
-        return "The British Library";
-    }
-
-    @Override
-    public String getDatacentreName(String doi) {
-        return "UK Data Archive";
-    }
-
-    @Override
-    public String getXml(String doi) {
+    private String getXml(String doi) {
         if (doi.equals(TEST_DOI))
             return TEST_XML;
         else if (doi.equals(TEST_DOI_NO_XML))
@@ -72,8 +57,7 @@ public class MockSearchServiceImpl implements SearchService {
             return null;
     }
 
-    @Override
-    public Map<MediaType, URI> getMedia(String doi) {
+    private Map<MediaType, URI> getMedia() {
         Map<MediaType, URI> media = new HashMap<MediaType, URI>();
         media.put(APPLICATION_PDF, HTTP_EXAMPLE_COM_A_PDF);
         try {
@@ -81,5 +65,20 @@ public class MockSearchServiceImpl implements SearchService {
         } catch (URISyntaxException e) {
         }
         return media;
+    }
+
+    @Override
+    public Metadata getMetadata(String doi, String contextPath, String acceptHeader) {
+        if (doi.equals(TEST_DOI_NON_EXISTENT))
+            return null;
+        else
+            return new Metadata(doi,
+                    getXml(doi),
+                    getMedia(),
+                    contextPath.substring(0, contextPath.length() - 1),
+                    "DataCite member",
+                    "DataCite datacentre",
+                    null,
+                    null);
     }
 }

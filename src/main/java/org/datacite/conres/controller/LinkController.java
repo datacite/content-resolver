@@ -25,7 +25,7 @@ public class LinkController extends AbstractController {
 
     @GET
     public Response get() {
-        if (!doiRegistered)
+        if (model == null)
             return Response.status(404).build();
 
         return buildResponse(new Variant(requestedMedia, null, null));

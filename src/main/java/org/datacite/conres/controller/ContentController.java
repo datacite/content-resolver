@@ -21,7 +21,7 @@ public class ContentController extends AbstractController{
 
     @GET
     public Response get(@Context Request r) {
-        if (!doiRegistered)
+        if (model == null)
             return Response.status(404).build();
 
         return buildResponse(r.selectVariant(allSupportedTypes()));

@@ -2,7 +2,10 @@ package org.datacite.conres.service.impl;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
+import nu.xom.*;
+import org.datacite.conres.model.Metadata;
 import org.datacite.conres.service.SearchService;
+import org.datacite.conres.view.Representation;
 
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.DatatypeConverter;
@@ -38,29 +41,26 @@ public class SearchServiceImpl implements SearchService {
     }
 
     public static final String DATACITE_DEFAULT_ENCODING = "UTF-8";
-    public static final String XML_FACET = "xml";
-    public static final String ALLOCATOR_FACET = "allocator";
-    public static final String DATACENTRE_FACET = "datacentre";
-    public static final String DOI_FACET = "doi";
-    public static final String MEDIA_FACET = "media";
     public static final String SAMPLE_DOI = "10.1594/PANGAEA.251240";
+    private Document document;
 
-    private String getUrl(String doi, String facet) throws UnsupportedEncodingException {
-        return SOLR_API_URL +  "?q=doi:%22"+ URLEncoder.encode(doi, DATACITE_DEFAULT_ENCODING) +"%22&fl="
-                + facet + "&wt=csv&csv.header=false";
+    private static Client client = Client.create();
+
+    private String getUrl(String doi) throws UnsupportedEncodingException {
+        return SOLR_API_URL +  "?q=doi:%22"+ URLEncoder.encode(doi, DATACITE_DEFAULT_ENCODING) +
+                "%22&fl=allocator,datacentre,media,xml&wt=xml";
     }
 
-    private String getFacet(String doi, String facetName){
-        Client c = Client.create();
+    private String getRawMetadata(String doi) {
         String result;
         WebResource r;
         String url;
         try {
-            url = getUrl(doi, facetName);
+            url = getUrl(doi);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-        r = c.resource(url);
+        r = client.resource(url);
         result = r.get(String.class);
 
         return result;
@@ -71,53 +71,7 @@ public class SearchServiceImpl implements SearchService {
         return new MediaType(subtypes[0],subtypes[1]);
     }
 
-    @Override
-    public boolean isDoiRegistered(String doi) {
-        return getFacet(doi, DOI_FACET).length() !=0;
-    }
-
-    @Override
-    public String getAllocatorName(String doi) {
-        String n = getFacet(doi, ALLOCATOR_FACET);
-        return n.substring(n.indexOf("-") + 1).trim();
-    }
-
-    @Override
-    public String getDatacentreName(String doi) {
-        String n = getFacet(doi, DATACENTRE_FACET);
-        return n.substring(n.indexOf("-") + 1).trim();
-    }
-
-    @Override
-    public String getXml(String doi) {
-        try {
-            return new String(DatatypeConverter.parseBase64Binary(getFacet(doi, XML_FACET)), DATACITE_DEFAULT_ENCODING);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public Map<MediaType, URI> getMedia(String doi) {
-        HashMap<MediaType, URI> result = new HashMap<MediaType, URI>();
-        String allMedia = getFacet(doi, MEDIA_FACET).trim();
-
-        if (!allMedia.startsWith("\"")) {
-            registerMedia(result, allMedia);
-        }
-        else if (allMedia.length() > 3) {
-            allMedia = allMedia.substring(1);
-            allMedia = allMedia.substring(0, allMedia.length() - 1);
-            String[] mediaList = allMedia.split(",");
-            for (String media : mediaList) {
-                registerMedia(result, media);
-            }
-        }
-
-        return result;
-    }
-
-    private void registerMedia(HashMap<MediaType, URI> result, String media) {
+    private void registerMedia(Map<MediaType, URI> result, String media) {
         int firstComma = media.indexOf(":");
         URI uri = null;
         try {
@@ -132,4 +86,82 @@ public class SearchServiceImpl implements SearchService {
         }
     }
 
+    @Override
+    public Metadata getMetadata(String doi, String contextPath, String acceptHeader) {
+        String rawMetadata = getRawMetadata(doi);
+
+        if (rawMetadata != null && !"".equals(rawMetadata)){
+            Builder parser = new Builder();
+            try {
+                document = parser.build(rawMetadata, null);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } else
+            return null;
+
+        if (extractNumFound() == 0)
+            return null;
+
+        String allocatorName = "";
+        String datacentreName = "";
+        String xml = "";
+        Map<MediaType, URI> userMedia = new HashMap<MediaType, URI>();
+        Nodes nodes = document.query("//*[local-name() = 'str']");
+        for(int i = 0; i < nodes.size(); i++){
+            Node node = nodes.get(i);
+            Element el = (Element) node;
+            Attribute attr = el.getAttribute("name");
+            if(attr == null){ // media type
+                registerMedia(userMedia, el.getValue());
+            } else if (attr.getValue().equals("allocator")){
+                allocatorName = el.getValue().substring(el.getValue().indexOf("-") + 1).trim();
+            } else if (attr.getValue().equals("datacentre")){
+                datacentreName = el.getValue().substring(el.getValue().indexOf("-") + 1).trim();
+            } else if (attr.getValue().equals("xml")){
+                try {
+                    xml = new String(
+                            DatatypeConverter.parseBase64Binary(el.getValue()),
+                            DATACITE_DEFAULT_ENCODING);
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        return new Metadata(doi,
+                xml,
+                userMedia,
+                contextPath.substring(0, contextPath.length() - 1),
+                allocatorName,
+                datacentreName,
+                extractBiblioAttr(acceptHeader, "style"),
+                extractBiblioAttr(acceptHeader, "locale"));
+    }
+
+    private int extractNumFound() {
+        Nodes nodes = document.query("//*[local-name() = 'result']");
+        if (nodes.size() == 1){
+            Element el = (Element) nodes.get(0);
+            Attribute attr = el.getAttribute("numFound");
+            return Integer.valueOf(attr.getValue());
+        } else return 0;
+    }
+
+    private String extractBiblioAttr(String header, String attr) {
+        String result = "";
+        for(String h : header.split(",")){
+            if (h.trim().startsWith(Representation.TEXT_BIBLIOGRAPHY.toString())){
+                for(String s : h.split(";")) {
+                    if (s.trim().startsWith(attr)){
+                        String[] l = s.split("=");
+                        result = l.length == 2 ? l[1].trim() : "";
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        return result;
+    }
 }

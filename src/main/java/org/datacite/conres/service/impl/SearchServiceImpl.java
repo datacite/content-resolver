@@ -27,9 +27,9 @@ public class SearchServiceImpl implements SearchService {
 
     static {
         prop = new Properties();
-        InputStream in = SearchServiceImpl.class.getResourceAsStream("/solr.properties");
+        InputStream in = SearchServiceImpl.class.getResourceAsStream("/config.properties");
         if (in == null)
-            throw new RuntimeException("Please setup valid solr.properties");
+            throw new RuntimeException("Please setup valid config.properties");
         try {
             prop.load(in);
             SOLR_BASE_URL = (String) prop.get("solr.base.url");

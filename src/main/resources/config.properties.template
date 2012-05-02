@@ -1,0 +1,2 @@
+solr.base.url=http://search.datacite.org
+citeproc.server.url=http://crosscite.org/citeproc/format

@@ -16,7 +16,6 @@ public class CslFormatterServiceImpl implements CslFormatterService {
     @Override
     public String format(JSONObject cslJson, String cslStyle, String cslLocale) {
         String url = (String) SearchServiceImpl.prop.get("citeproc.server.url");
-        // TODO handle default values for CSL style and locale
         WebResource r = null;
         try {
             r = client.resource(url +

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
 <log4j:configuration>
-
 	<appender name="file"
 		class="org.apache.log4j.RollingFileAppender">
 		<param name="maxFileSize" value="1000KB" />
 		<param name="maxBackupIndex" value="7" />
-		<param name="File" value="/var/log/tomcat6/conres.log" />
+		<param name="File" value="/var/log/tomcat7/conres.log" />
 		<param name="threshold" value="info" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern"
@@ -18,7 +17,7 @@
 		class="org.apache.log4j.RollingFileAppender">
 		<param name="maxFileSize" value="1000KB" />
 		<param name="maxBackupIndex" value="7" />
-		<param name="File" value="/var/log/tomcat6/conres-debug.log" />
+		<param name="File" value="/var/log/tomcat7/conres-debug.log" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern"
 				value="%d [%t] %-5p %c - %m%n" />
@@ -37,5 +36,4 @@
 		<appender-ref ref="debugfile" />
 		<appender-ref ref="file" />
 	</root>
-
 </log4j:configuration>

@@ -15,6 +15,12 @@ public class CslFormatterServiceImpl implements CslFormatterService {
 
     @Override
     public String format(JSONObject cslJson, String cslStyle, String cslLocale) {
+        if (cslStyle == null || cslStyle.equals(""))
+            cslStyle = "springer-author-date";
+
+        if (cslLocale == null || cslLocale.equals(""))
+            cslLocale = "en-US";
+
         String url = (String) SearchServiceImpl.prop.get("citeproc.server.url");
         WebResource r = null;
         try {

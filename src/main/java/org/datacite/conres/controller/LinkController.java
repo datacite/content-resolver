@@ -19,7 +19,7 @@ public class LinkController extends BaseController {
                           @PathParam("doi")String doi,
                           @Context UriInfo uriInfo,
                           @Context HttpHeaders headers){
-        super(doi, uriInfo, headers);
+        super(doi, headers);
         requestedMedia = new MediaType(type, subtype);
         log4j.debug("New request for " + uriInfo.getPath());
     }

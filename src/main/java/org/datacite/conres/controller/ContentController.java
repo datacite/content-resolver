@@ -13,9 +13,8 @@ import javax.ws.rs.core.*;
 @Path("/{doi: 10\\..*}")
 public class ContentController extends BaseController {
     public ContentController(@PathParam("doi")String doi,
-                             @Context UriInfo uriInfo,
                              @Context HttpHeaders headers){
-        super(doi, uriInfo, headers);
+        super(doi, headers);
         log4j.debug("New request for " + doi + " as " + acceptHeader);
     }
 

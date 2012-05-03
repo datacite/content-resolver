@@ -75,7 +75,7 @@ public class MockSearchServiceImpl implements SearchService {
             return new Metadata(doi,
                     getXml(doi),
                     getMedia(),
-                    contextPath.substring(0, contextPath.length() - 1),
+                    contextPath,
                     "DataCite member",
                     "DataCite datacentre",
                     null,

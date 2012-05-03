@@ -7,7 +7,10 @@ import org.datacite.conres.service.SearchServiceFactory;
 import org.datacite.conres.service.impl.SearchServiceImpl;
 import org.datacite.conres.view.Representation;
 
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Variant;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +21,7 @@ public abstract class BaseController {
     protected Metadata model;
     protected final String acceptHeader;
 
-    public BaseController(String doi, UriInfo uriInfo, HttpHeaders httpHeaders) {
+    public BaseController(String doi, HttpHeaders httpHeaders) {
         acceptHeader = getAcceptHeader(httpHeaders);
         String doiPrefix = doi.substring(0, doi.indexOf("/"));
         SearchService service = SearchServiceFactory.getInstance(doiPrefix);

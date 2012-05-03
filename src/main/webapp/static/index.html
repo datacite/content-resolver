@@ -13,60 +13,10 @@
 	<p>
 		This service exposes metadata stored in the <a
 			href="http://mds.datacite.org">DataCite Metadata Store (MDS)</a>
-		using multiple formats. In the future we plan to add serving content
-		(data and custom metadata) direcly from data centres who participate
-		in <a href="http://www.datacite.org">DataCite</a>.
+		using multiple formats. In addition, data centres who participate
+        in <a href="http://www.datacite.org">DataCite</a> can provide their own formats,
+        both for data and metadata.
 	</p>
-	<p>Currently we support the following formats:</p>
-	<table class="gridtable">
-		<tr>
-			<th>Format</th>
-			<th>Mime type</th>
-		</tr>
-		<tr>
-			<td><a href="http://schema.datacite.org">DataCite XML</a>
-			</td>
-			<td><code>application/x-datacite+xml</code>
-			</td>
-		</tr>
-		<tr>
-			<td>DataCite text citation i.e. Creator (PublicationYear):
-				Title. Publisher. Identifier</td>
-			<td><code>application/x-datacite+text</code>
-			</td>
-		</tr>
-		<tr>
-			<td><a href="http://www.w3.org/TR/rdf-primer/#rdfxml">RDF/XML</a>
-			</td>
-			<td><code>application/rdf+xml</code>
-			</td>
-		</tr>
-		<tr>
-			<td><a href="http://www.w3.org/TeamSubmission/turtle">RDF
-					Turtle</a>
-			</td>
-			<td><code>text/turtle</code>
-			</td>
-		</tr>
-		<tr>
-			<td><a href="http://en.wikipedia.org/wiki/BibTeX">BibTex</a>
-			</td>
-			<td><code>application/x-bibtex</code>
-			</td>
-		</tr>
-		<tr>
-			<td><a href="http://en.wikipedia.org/wiki/RIS_(file_format)">RIS</a>
-			</td>
-			<td><code>application/x-research-info-systems</code>
-			</td>
-		</tr>
-		<tr>
-			<td><a href="http://en.wikipedia.org/wiki/HTML">HTML</a>
-			</td>
-			<td><code>text/html</code>
-			</td>
-		</tr>
-	</table>
 	<p>
 		There are two ways of using this service: <a
 			href="http://en.wikipedia.org/wiki/Content_negotiation">HTTP
@@ -80,32 +30,11 @@
 			href="http://dx.doi.org">dx.doi.org</a> using an HTTP client (not
 		your regular web browser!) which allows you to specify <a
 			href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">HTTP
-			Accept header</a>. For example we can use <a href="http://curl.haxx.se">curl</a>
-		and request citation text format for 10.5524/100005:
-	</p>
-	<p>
-		<code>curl -L -H "Accept: application/x-datacite+text"
-			"http://dx.doi.org/10.5524/100005"</code>
-	</p>
-	<p>the result will be:</p>
-	<p>
-		<code>Li, j; Zhang, G; Lambert, D; Wang, J (2011): Genomic data
-			from Emperor penguin. GigaScience. http://dx.doi.org/10.5524/100005</code>
-	</p>
-	<p>Please note that this method relies on DOI resolver being aware
-		of this service thus not all DataCite prefixes can be used at the
-		moment. If you find out that the prefix of interest is not enabled
-		plase let us know.</p>
-	<p>
-		This part of our implementation is inspired by similar service
-		provided by <a
-			href="http://www.crossref.org/CrossTech/2011/04/content_negotiation_for_crossr.html">CrossRef</a>
-		and the important point is: for standards like RDF which are not
-		specific for any <a
-			href="http://www.doi.org/registration_agencies.html">IDF
-			Registration Agency</a> you resolve DOI with Accept header to get the
-		metadata the same way you resolve DOI to get to the landing page i.e.
-		without need to know where the DOI was registered in the first place.
+			Accept header</a>.
+        Content negotiation for DOI manes is a collaborative effort of
+        <a href="http://www.crossref.org">CrossRef</a> and
+        <a href="http://www.datacite.org">DataCite</a>. Please be sure to check the
+        <a href="http://www.crosscite.org/cn">DOI Content Negotiation documentation</a>.
 	</p>
 	<h3>HTML links</h3>
 

@@ -19,7 +19,18 @@ public enum Representation {
             return mr.getXml();
         }
     }),
+    APPLICATION_VND_DATACITE_XML ("application","vnd.datacite.datacite+xml", new Transformer() {
+        @Override public Object transform(Metadata mr) {
+            return mr.getXml();
+        }
+    }),
     DATACITE_TEXT ("application","x-datacite+text", new Transformer() {
+        @Override
+        public Object transform(Metadata mr) {
+            return new Viewable("/doi_text", mr);
+        }
+    }),
+    DATACITE_VND_TEXT ("application","vnd.datacite.datacite+text", new Transformer() {
         @Override
         public Object transform(Metadata mr) {
             return new Viewable("/doi_text", mr);
@@ -60,7 +71,7 @@ public enum Representation {
             return CslJsonRepresentation.writeJSON(mr);
         }
     }),
-    TEXT_BIBLIOGRAPHY("text", "bibliography", new Transformer() {
+    TEXT_BIBLIOGRAPHY("text", "x-bibliography", new Transformer() {
         @Override
         public Object transform(Metadata mr) {
             return cslFormatterService.format(CslJsonRepresentation.writeJSON(mr),

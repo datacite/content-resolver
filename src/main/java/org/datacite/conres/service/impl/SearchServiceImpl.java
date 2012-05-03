@@ -23,6 +23,7 @@ public class SearchServiceImpl implements SearchService {
     public static final String SOLR_BASE_URL;
     public static final String SOLR_API_URL;
     public static final String SOLR_STATUS_URL;
+    public static final String APP_CONTEXT;
     public static final Properties prop; // TODO move to Application class maybe
 
     static {
@@ -35,6 +36,7 @@ public class SearchServiceImpl implements SearchService {
             SOLR_BASE_URL = (String) prop.get("solr.base.url");
             SOLR_API_URL = SOLR_BASE_URL + "/api";
             SOLR_STATUS_URL = SOLR_BASE_URL + "/status";
+            APP_CONTEXT = (String) prop.get("app.context");
             in.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -157,7 +159,7 @@ public class SearchServiceImpl implements SearchService {
         return new Metadata(doi,
                 xml,
                 userMedia,
-                contextPath.substring(0, contextPath.length() - 1),
+                contextPath,//.substring(0, contextPath.length() - 1),
                 allocatorName,
                 datacentreName,
                 extractBiblioAttr(acceptHeader, "style"),

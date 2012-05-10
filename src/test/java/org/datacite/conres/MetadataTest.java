@@ -16,12 +16,7 @@ import static org.junit.Assert.*;
 public class MetadataTest {
     public String loadData(String fileName){
         InputStream is = getClass().getResourceAsStream(fileName);
-        Scanner scanner = new Scanner(is, "UTF-8");
-        StringBuilder sb = new StringBuilder();
-        while(scanner.hasNextLine())
-            sb.append(scanner.nextLine());
-
-        return sb.toString();
+        return new Scanner(is, "UTF-8").useDelimiter("\\A").next();
     }
     
     @Test

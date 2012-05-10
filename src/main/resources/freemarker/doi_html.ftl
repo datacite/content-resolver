@@ -52,7 +52,7 @@
     <div class="block-label">Resource type</div>
     <#list resourceTypes! as d>
           <div class="label">${d.key}&emsp;</div>
-          <div class="content">${d.value}</div>
+          <div class="content">${d.value}&emsp;</div>
     </#list>
   </div>
 </#if>

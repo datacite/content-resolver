@@ -147,9 +147,16 @@ public class SearchServiceImpl implements SearchService {
                 datacentreName = el.getValue().substring(el.getValue().indexOf("-") + 1).trim();
             } else if (attr.getValue().equals("xml")){
                 try {
-                    xml = new String(
-                            DatatypeConverter.parseBase64Binary(el.getValue()),
-                            DATACITE_DEFAULT_ENCODING);
+                    byte[] bytes = DatatypeConverter.parseBase64Binary(el.getValue());
+                    int len = bytes.length;
+                    if (len > 3 &&
+                            bytes[0] == (byte) 0xef &&
+                            bytes[1] == (byte) 0xbb &&
+                            bytes[2] == (byte) 0xbf) { // UTF-8 BOM, remove
+                        len -= 3;
+                        System.arraycopy(bytes, 3, bytes, 0, len);
+                    }
+                    xml = new String(bytes, 0, len,  DATACITE_DEFAULT_ENCODING);
                 } catch (UnsupportedEncodingException e) {
                     throw new RuntimeException(e);
                 }

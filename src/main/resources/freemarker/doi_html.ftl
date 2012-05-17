@@ -6,6 +6,7 @@
 <head>
   <title>${doi}</title>
   <link rel="stylesheet" type="text/css" href="${contextPath}/static/main.css" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
   <#list allMedia as media>
   <link rel="meta" type="${media}" href="${contextPath}/${media}/${doi}" />
   </#list>

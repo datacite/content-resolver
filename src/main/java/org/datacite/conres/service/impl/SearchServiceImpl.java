@@ -147,7 +147,6 @@ public class SearchServiceImpl implements SearchService {
                 datacentreName = el.getValue().substring(el.getValue().indexOf("-") + 1).trim();
             } else if (attr.getValue().equals("xml")){
                 xml = DatatypeConverter.parseBase64Binary(el.getValue());
-                System.out.println("FOOBAR");
             }
         }
 

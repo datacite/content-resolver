@@ -1,10 +1,14 @@
 package org.datacite.conres;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.datacite.conres.model.Metadata;
 import org.datacite.conres.service.impl.MockSearchServiceImpl;
 import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.HashMap;
@@ -14,16 +18,20 @@ import java.util.Scanner;
 import static org.junit.Assert.*;
 
 public class MetadataTest {
-    public String loadData(String fileName){
+    public byte[] loadData(String fileName){
         InputStream is = getClass().getResourceAsStream(fileName);
-        return new Scanner(is, "UTF-8").useDelimiter("\\A").next();
+        try {
+            return IOUtils.toByteArray(is);
+        } catch (IOException e) {
+            return null;
+        }
     }
     
     @Test
     public void parsingTest1(){
-        String xml = loadData("/test1.xml");
+        byte[] xml = loadData("/test1.xml");
         assertNotNull(xml);
-        assertTrue(xml.length() != 0);
+        assertTrue(xml.length != 0);
         Map<MediaType,URI> media = new HashMap<MediaType, URI>();
         Metadata m = new Metadata(MockSearchServiceImpl.TEST_DOI, xml, media, null, null, null, null, null);
         assertEquals(3, m.getCreators().size());
@@ -45,9 +53,9 @@ public class MetadataTest {
 
     @Test
     public void parsingTest2(){
-        String xml = loadData("/test2.xml");
+        byte[] xml = loadData("/test2.xml");
         assertNotNull(xml);
-        assertTrue(xml.length() != 0);
+        assertTrue(xml.length != 0);
         Map<MediaType,URI> media = new HashMap<MediaType, URI>();
         Metadata m = new Metadata(MockSearchServiceImpl.TEST_DOI, xml, media, null, null, null, null, null);
         assertEquals(1, m.getResourceTypes().size());
@@ -68,9 +76,9 @@ public class MetadataTest {
 
     @Test
     public void parsingTest3(){
-        String xml = loadData("/test3.xml");
+        byte[] xml = loadData("/test3.xml");
         assertNotNull(xml);
-        assertTrue(xml.length() != 0);
+        assertTrue(xml.length != 0);
         Map<MediaType,URI> media = new HashMap<MediaType, URI>();
         Metadata m = new Metadata(MockSearchServiceImpl.TEST_DOI, xml, media, null, null, null, null, null);
         assertTrue(m.getTitles().get(0).getValue().startsWith("Diabetes"));
@@ -83,9 +91,9 @@ public class MetadataTest {
     
     @Test
     public void parsingTest4(){
-        String xml = loadData("/test4.xml");
+        byte[] xml = loadData("/test4.xml");
         assertNotNull(xml);
-        assertTrue(xml.length() != 0);
+        assertTrue(xml.length != 0);
         Map<MediaType,URI> media = new HashMap<MediaType, URI>();
         Metadata m = new Metadata(MockSearchServiceImpl.TEST_DOI, xml, media, null, null, null, null, null);
         assertEquals("HostingInstitution", m.getContributors().get(0).getKey());

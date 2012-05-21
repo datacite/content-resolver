@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -118,7 +119,7 @@ public class ContentControllerTest extends JerseyTest{
         webResource.addFilter(new LoggingFilter());
         ClientResponse response = webResource.accept(Representation.APPLICATION_DATACITE_XML.asMediaType()).get(ClientResponse.class);
         assertEquals(Representation.APPLICATION_DATACITE_XML.asMediaType(), response.getType());
-        assertEquals(MockSearchServiceImpl.TEST_XML, response.getEntity(String.class));
+        assertArrayEquals(MockSearchServiceImpl.TEST_XML, response.getEntity(byte[].class));
     }
 
     @Test

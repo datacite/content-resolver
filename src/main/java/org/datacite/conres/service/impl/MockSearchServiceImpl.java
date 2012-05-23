@@ -4,10 +4,10 @@ import org.datacite.conres.model.Metadata;
 import org.datacite.conres.service.SearchService;
 
 import javax.ws.rs.core.MediaType;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -87,6 +87,7 @@ public class MockSearchServiceImpl implements SearchService {
                     "DataCite member",
                     "DataCite datacentre",
                     null,
-                    null);
+                    null,
+                    new Date());
     }
 }

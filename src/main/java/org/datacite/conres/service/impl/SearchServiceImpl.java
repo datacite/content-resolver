@@ -6,6 +6,8 @@ import nu.xom.*;
 import org.datacite.conres.model.Metadata;
 import org.datacite.conres.service.SearchService;
 import org.datacite.conres.view.Representation;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.DatatypeConverter;
@@ -15,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -25,6 +28,7 @@ public class SearchServiceImpl implements SearchService {
     public static final String SOLR_STATUS_URL;
     public static final String APP_CONTEXT;
     public static final Properties prop; // TODO move to Application class maybe
+    static DateTimeFormatter dateTimeFormatter = ISODateTimeFormat.dateTimeParser();
 
     static {
         prop = new Properties();
@@ -51,32 +55,8 @@ public class SearchServiceImpl implements SearchService {
 
     private String getUrl(String doi) throws UnsupportedEncodingException {
         return SOLR_API_URL +  "?q=doi:%22"+ URLEncoder.encode(doi, DATACITE_DEFAULT_ENCODING) +
-                "%22&fl=allocator,datacentre,media,xml&wt=xml";
+                "%22&fl=allocator,datacentre,media,xml,uploaded&wt=xml";
     }
-
-/*    private String getRawMetadata2(String doi){
-        InputStream in;
-        int http_status;
-        HttpURLConnection conn = null;
-        try {
-            URL url = new URL(getUrl(doi));
-            conn = (HttpURLConnection) url.openConnection();
-            in = conn.getInputStream();
-            http_status = conn.getResponseCode();
-            if (http_status != 200) {
-                return null;
-            }
-            StringWriter sw = new StringWriter();
-            sw.a
-        } catch (IOException e) {
-            return null;
-        } finally {
-            if (conn != null)
-                conn.disconnect();
-        }
-
-
-    }*/
 
     private String getRawMetadata(String doi) {
         String result;
@@ -150,14 +130,26 @@ public class SearchServiceImpl implements SearchService {
             }
         }
 
+        Nodes dates = document.query("//*[local-name() = 'date']");
+        Date uploaded = null;
+        for(int i = 0; i < dates.size(); i++){
+            Node node = dates.get(i);
+            Element el = (Element) node;
+            Attribute attr = el.getAttribute("name");
+            if (attr.getValue().equals("uploaded")){
+                uploaded = dateTimeFormatter.parseDateTime(el.getValue()).toDate();
+            }
+        }
+
         return new Metadata(doi,
                 xml,
                 userMedia,
-                contextPath,//.substring(0, contextPath.length() - 1),
+                contextPath,
                 allocatorName,
                 datacentreName,
                 extractBiblioAttr(acceptHeader, "style"),
-                extractBiblioAttr(acceptHeader, "locale"));
+                extractBiblioAttr(acceptHeader, "locale"),
+                uploaded);
     }
 
     private int extractNumFound() {

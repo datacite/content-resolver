@@ -7,10 +7,7 @@ import org.datacite.conres.service.SearchServiceFactory;
 import org.datacite.conres.service.impl.SearchServiceImpl;
 import org.datacite.conres.view.Representation;
 
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Variant;
+import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +74,13 @@ public abstract class BaseController {
         if (r == Representation.TEXT_HTML || model.isXmlPresent()) {
             Object entity = r.render(model);
             log4j.info("Rendering: " +  model.getDoi() + " as " + type);
-            return Response.ok(entity).type(type).build();
+            CacheControl cc = new CacheControl();
+            cc.setMaxAge(12*60*60);
+            return Response.ok(entity).
+                    type(type).
+                    cacheControl(cc).
+                    lastModified(model.getUploaded()).
+                    build();
         } else {
             log4j.info("No metadata for: " +  model.getDoi() + " as " + type);
             return Response.noContent().build();

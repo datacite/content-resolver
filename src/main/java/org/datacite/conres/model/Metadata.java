@@ -4,14 +4,10 @@ import nu.xom.*;
 import org.datacite.conres.view.Representation;
 
 import javax.ws.rs.core.MediaType;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Represents metadata record (parsed from XML)
@@ -45,6 +41,7 @@ public class Metadata {
     private String contextPath;
     private String cslStyle;
     private String cslLocale;
+    private Date uploaded;
 
     public Metadata(String doi,
                     byte[] xml,
@@ -53,7 +50,8 @@ public class Metadata {
                     String allocatorName,
                     String datacentreName,
                     String cslStyle,
-                    String cslLocale) {
+                    String cslLocale,
+                    Date uploaded) {
         this.doi = doi;
         this.randomId = UUID.randomUUID().toString();
         this.xml = xml;
@@ -64,6 +62,7 @@ public class Metadata {
         this.datacentreName = datacentreName;
         this.cslStyle = cslStyle;
         this.cslLocale = cslLocale;
+        this.uploaded = uploaded;
 
         if (xml != null && xml.length > 0){
             Builder parser = new Builder();
@@ -292,5 +291,9 @@ public class Metadata {
             }
 
         return allSupportedTypes;
+    }
+
+    public Date getUploaded() {
+        return uploaded;
     }
 }

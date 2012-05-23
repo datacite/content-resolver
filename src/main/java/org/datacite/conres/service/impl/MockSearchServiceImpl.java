@@ -4,6 +4,8 @@ import org.datacite.conres.model.Metadata;
 import org.datacite.conres.service.SearchService;
 
 import javax.ws.rs.core.MediaType;
+
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -15,7 +17,7 @@ public class MockSearchServiceImpl implements SearchService {
     public static final String TEST_DOI_NON_EXISTENT = "10.5072/2";
     public static final String TEST_DOI_NO_XML = "10.5072/3";
 
-    public static final String TEST_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+    private static final String TEST_XML_STR = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
             "<resource xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
             " xsi:schemaLocation=\"http://datacite.org/schema/kernel-2.2 http://schema.datacite.org/meta/kernel-2.2/metadata.xsd\"" +
             " xmlns=\"http://datacite.org/schema/kernel-2.2\"" +
@@ -36,6 +38,7 @@ public class MockSearchServiceImpl implements SearchService {
             "<publisher>UK Data Archive, University of Essex</publisher>" +
             "<publicationYear>2011</publicationYear>" +
             "</resource>";
+    public static byte[] TEST_XML;
 
     public static final MediaType APPLICATION_PDF = new MediaType("application","pdf");
     public static URI HTTP_EXAMPLE_COM_A_PDF;
@@ -46,13 +49,18 @@ public class MockSearchServiceImpl implements SearchService {
         } catch (URISyntaxException e) {
             HTTP_EXAMPLE_COM_A_PDF = null;
         }
+        try {
+            TEST_XML = TEST_XML_STR.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private String getXml(String doi) {
+    private byte[] getXml(String doi) {
         if (doi.equals(TEST_DOI))
             return TEST_XML;
         else if (doi.equals(TEST_DOI_NO_XML))
-            return "";
+            return null;
         else
             return null;
     }

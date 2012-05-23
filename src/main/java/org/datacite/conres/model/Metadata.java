@@ -4,6 +4,9 @@ import nu.xom.*;
 import org.datacite.conres.view.Representation;
 
 import javax.ws.rs.core.MediaType;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +17,7 @@ import java.util.UUID;
  * Represents metadata record (parsed from XML)
  */
 public class Metadata {
-    private String xml;
+    private byte[] xml;
     private String doi;
     private Map<MediaType, URI> userMedia;
     private Document document;
@@ -44,7 +47,7 @@ public class Metadata {
     private String cslLocale;
 
     public Metadata(String doi,
-                    String xml,
+                    byte[] xml,
                     Map<MediaType, URI> userMedia,
                     String contextPath,
                     String allocatorName,
@@ -62,10 +65,11 @@ public class Metadata {
         this.cslStyle = cslStyle;
         this.cslLocale = cslLocale;
 
-        if (xml != null && !"".equals(xml)){
+        if (xml != null && xml.length > 0){
             Builder parser = new Builder();
             try {
-                document = parser.build(xml, null);
+                InputStream inputStream = new ByteArrayInputStream(xml);
+                document = parser.build(inputStream, null);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -170,7 +174,7 @@ public class Metadata {
         return doi;
     }
 
-    public String getXml() {
+    public byte[] getXml() {
         return xml;
     }
 

@@ -1,19 +1,16 @@
 package org.datacite.conres;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
+import com.google.common.io.ByteStreams;
 import org.datacite.conres.model.Metadata;
 import org.datacite.conres.service.impl.MockSearchServiceImpl;
 import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 import static org.junit.Assert.*;
 
@@ -21,7 +18,7 @@ public class MetadataTest {
     public byte[] loadData(String fileName){
         InputStream is = getClass().getResourceAsStream(fileName);
         try {
-            return IOUtils.toByteArray(is);
+            return ByteStreams.toByteArray(is);
         } catch (IOException e) {
             return null;
         }

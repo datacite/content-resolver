@@ -100,7 +100,7 @@
       <#if (more > 0)>
         <div class="label">&emsp;</div>
       </#if>
-      <div class="content">${d}</div>
+      <div class="content">${d}&emsp;</div>
       <#assign more = 1>
     </#list>
   </div>

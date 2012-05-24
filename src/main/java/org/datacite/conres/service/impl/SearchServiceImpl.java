@@ -1,5 +1,8 @@
 package org.datacite.conres.service.impl;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import nu.xom.*;
@@ -21,6 +24,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 public class SearchServiceImpl implements SearchService {
     public static final String SOLR_BASE_URL;
@@ -29,6 +34,15 @@ public class SearchServiceImpl implements SearchService {
     public static final String APP_CONTEXT;
     public static final Properties prop; // TODO move to Application class maybe
     static DateTimeFormatter dateTimeFormatter = ISODateTimeFormat.dateTimeParser();
+
+    static LoadingCache<String, String> solrResponsesCache = CacheBuilder.newBuilder()
+            .maximumSize(1000)
+            .expireAfterWrite(60, TimeUnit.MINUTES)
+            .build(new CacheLoader<String, String>() {
+                        public String load(String key) {
+                            return getRawMetadata(key);
+                        }
+            });
 
     static {
         prop = new Properties();
@@ -53,12 +67,12 @@ public class SearchServiceImpl implements SearchService {
 
     private static Client client = Client.create();
 
-    private String getUrl(String doi) throws UnsupportedEncodingException {
+    private static String getUrl(String doi) throws UnsupportedEncodingException {
         return SOLR_API_URL +  "?q=doi:%22"+ URLEncoder.encode(doi, DATACITE_DEFAULT_ENCODING) +
                 "%22&fl=allocator,datacentre,media,xml,uploaded&wt=xml";
     }
 
-    private String getRawMetadata(String doi) {
+    private static String getRawMetadata(String doi) {
         String result;
         WebResource r;
         String url;
@@ -67,7 +81,11 @@ public class SearchServiceImpl implements SearchService {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-        r = client.resource(url);
+        try {
+            r = client.resource(url);
+        } catch (Exception e) {
+            throw new RuntimeException("could not reach search service");
+        }
         result = r.get(String.class);
 
         return result;
@@ -95,7 +113,12 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public Metadata getMetadata(String doi, String contextPath, String acceptHeader) {
-        String rawMetadata = getRawMetadata(doi);
+        String rawMetadata = null;
+        try {
+            rawMetadata = solrResponsesCache.get(doi);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
 
         if (rawMetadata != null && !"".equals(rawMetadata)){
             Builder parser = new Builder();

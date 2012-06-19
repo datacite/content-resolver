@@ -1,13 +1,10 @@
 package org.datacite.conres;
 
-import com.google.common.io.ByteStreams;
 import org.datacite.conres.model.Metadata;
 import org.datacite.conres.service.impl.MockSearchServiceImpl;
 import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,18 +12,10 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 public class MetadataTest {
-    public byte[] loadData(String fileName){
-        InputStream is = getClass().getResourceAsStream(fileName);
-        try {
-            return ByteStreams.toByteArray(is);
-        } catch (IOException e) {
-            return null;
-        }
-    }
-    
+
     @Test
     public void parsingTest1(){
-        byte[] xml = loadData("/test1.xml");
+        byte[] xml = TestUtil.loadData(getClass(), "/test1.xml");
         assertNotNull(xml);
         assertTrue(xml.length != 0);
         Map<MediaType,URI> media = new HashMap<MediaType, URI>();
@@ -50,7 +39,7 @@ public class MetadataTest {
 
     @Test
     public void parsingTest2(){
-        byte[] xml = loadData("/test2.xml");
+        byte[] xml = TestUtil.loadData(getClass(), "/test2.xml");
         assertNotNull(xml);
         assertTrue(xml.length != 0);
         Map<MediaType,URI> media = new HashMap<MediaType, URI>();
@@ -73,7 +62,7 @@ public class MetadataTest {
 
     @Test
     public void parsingTest3(){
-        byte[] xml = loadData("/test3.xml");
+        byte[] xml = TestUtil.loadData(getClass(), "/test3.xml");
         assertNotNull(xml);
         assertTrue(xml.length != 0);
         Map<MediaType,URI> media = new HashMap<MediaType, URI>();
@@ -88,7 +77,7 @@ public class MetadataTest {
     
     @Test
     public void parsingTest4(){
-        byte[] xml = loadData("/test4.xml");
+        byte[] xml = TestUtil.loadData(getClass(), "/test4.xml");
         assertNotNull(xml);
         assertTrue(xml.length != 0);
         Map<MediaType,URI> media = new HashMap<MediaType, URI>();

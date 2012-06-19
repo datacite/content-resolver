@@ -6,7 +6,7 @@ import com.google.common.cache.LoadingCache;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import nu.xom.*;
-import org.datacite.conres.model.Metadata;
+import org.datacite.conres.model.Model;
 import org.datacite.conres.service.SearchService;
 import org.datacite.conres.view.Representation;
 import org.joda.time.format.DateTimeFormatter;
@@ -112,7 +112,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public Metadata getMetadata(String doi, String contextPath, String acceptHeader) {
+    public Model getMetadata(String doi, String contextPath, String acceptHeader) {
         String rawMetadata = null;
         try {
             rawMetadata = solrResponsesCache.get(doi);
@@ -164,7 +164,7 @@ public class SearchServiceImpl implements SearchService {
             }
         }
 
-        return new Metadata(doi,
+        return new Model(doi,
                 xml,
                 userMedia,
                 contextPath,

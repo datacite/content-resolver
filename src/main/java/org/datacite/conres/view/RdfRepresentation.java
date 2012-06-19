@@ -1,31 +1,30 @@
 package org.datacite.conres.view;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.OWL;
-import org.datacite.conres.model.Metadata;
+import org.datacite.conres.model.Model;
 
 import java.io.StringWriter;
 
 public class RdfRepresentation {
-    public static String writeXML(Metadata m){
-        Model model = getRdfModel(m);
+    public static String writeXML(Model m){
+        com.hp.hpl.jena.rdf.model.Model model = getRdfModel(m);
         StringWriter writer = new StringWriter();
         model.write(writer, "RDF/XML");
         return writer.toString();
     }
 
-    public static String writeTurtle(Metadata m){
-        Model model = getRdfModel(m);
+    public static String writeTurtle(Model m){
+        com.hp.hpl.jena.rdf.model.Model model = getRdfModel(m);
         StringWriter writer = new StringWriter();
         model.write(writer, "TURTLE");
         return writer.toString();
     }
 
-    private static Model getRdfModel(Metadata m) {
-        Model model = ModelFactory.createDefaultModel();
+    private static com.hp.hpl.jena.rdf.model.Model getRdfModel(Model m) {
+        com.hp.hpl.jena.rdf.model.Model model = ModelFactory.createDefaultModel();
         String doiUri = "http://dx.doi.org/" + m.getDoi();
         String doi = "doi:" + m.getDoi();
         String infoDoi = "info:doi/" + m.getDoi();

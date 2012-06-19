@@ -1,7 +1,7 @@
 package org.datacite.conres.view;
 
-import org.datacite.conres.model.Metadata;
+import org.datacite.conres.model.Model;
 
 public interface Transformer {
-    Object transform(Metadata mr);
+    Object transform(Model mr);
 }

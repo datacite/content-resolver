@@ -1,6 +1,6 @@
 package org.datacite.conres.service.impl;
 
-import org.datacite.conres.model.Metadata;
+import org.datacite.conres.model.Model;
 import org.datacite.conres.service.SearchService;
 
 import javax.ws.rs.core.MediaType;
@@ -76,11 +76,11 @@ public class MockSearchServiceImpl implements SearchService {
     }
 
     @Override
-    public Metadata getMetadata(String doi, String contextPath, String acceptHeader) {
+    public Model getMetadata(String doi, String contextPath, String acceptHeader) {
         if (doi.equals(TEST_DOI_NON_EXISTENT))
             return null;
         else
-            return new Metadata(doi,
+            return new Model(doi,
                     getXml(doi),
                     getMedia(),
                     contextPath,

@@ -1,12 +1,12 @@
 package org.datacite.conres.service;
 
-import org.datacite.conres.model.Metadata;
+import org.datacite.conres.model.Model;
 
 /**
  * Responsible for retrieving information from Search service
  */
 public interface SearchService {
-    Metadata getMetadata(String doi, String contextPath, String acceptHeader);
+    Model getMetadata(String doi, String contextPath, String acceptHeader);
     /**
      * Check is DOI is registered in Search service
      * @param doi identifier of a dataset

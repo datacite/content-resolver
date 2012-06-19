@@ -1,7 +1,7 @@
 package org.datacite.conres.controller;
 
 import org.apache.log4j.Logger;
-import org.datacite.conres.model.Metadata;
+import org.datacite.conres.model.Model;
 import org.datacite.conres.service.SearchService;
 import org.datacite.conres.service.SearchServiceFactory;
 import org.datacite.conres.service.impl.SearchServiceImpl;
@@ -15,7 +15,7 @@ import java.util.List;
 public abstract class BaseController {
     static final Logger log4j = Logger.getLogger(BaseController.class);
     private List<Variant> allVariants;
-    protected Metadata model;
+    protected Model model;
     protected final String acceptHeader;
 
     public BaseController(String doi, HttpHeaders httpHeaders) {

@@ -3,10 +3,10 @@ package org.datacite.conres.view;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.datacite.conres.model.Metadata;
+import org.datacite.conres.model.Model;
 
 public class CslJsonRepresentation {
-    public static JSONObject writeJSON(Metadata mr) {
+    public static JSONObject writeJSON(Model mr) {
         try {
             JSONArray authors = new JSONArray();
             for (String  p : mr.getCreators()) {

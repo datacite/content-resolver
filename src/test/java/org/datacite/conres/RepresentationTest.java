@@ -2,7 +2,7 @@ package org.datacite.conres;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.datacite.conres.model.Metadata;
+import org.datacite.conres.model.Model;
 import org.datacite.conres.service.impl.MockSearchServiceImpl;
 import org.datacite.conres.view.Representation;
 import org.junit.Test;
@@ -23,7 +23,7 @@ public class RepresentationTest {
         assertNotNull(xml);
         assertTrue(xml.length != 0);
         Map<MediaType,URI> media = new HashMap<MediaType, URI>();
-        Metadata m = new Metadata(MockSearchServiceImpl.TEST_DOI, xml, media, null, null, null, null, null, null);
+        Model m = new Model(MockSearchServiceImpl.TEST_DOI, xml, media, null, null, null, null, null, null);
 
         JSONObject csl = (JSONObject) r.render(m);
         assertEquals(csl.get("DOI"), MockSearchServiceImpl.TEST_DOI);

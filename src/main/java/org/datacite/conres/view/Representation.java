@@ -1,7 +1,7 @@
 package org.datacite.conres.view;
 
 import com.sun.jersey.api.view.Viewable;
-import org.datacite.conres.model.Metadata;
+import org.datacite.conres.model.Model;
 import org.datacite.conres.service.CslFormatterService;
 import org.datacite.conres.service.CslFormatterServiceFactory;
 
@@ -10,70 +10,70 @@ import javax.ws.rs.core.Variant;
 
 public enum Representation {
     TEXT_HTML("text","html", new Transformer() {
-        @Override public Object transform(Metadata mr) {
+        @Override public Object transform(Model mr) {
             return new Viewable("/doi_html", mr);
         }
     }),
     APPLICATION_DATACITE_XML ("application","x-datacite+xml", new Transformer() {
-        @Override public Object transform(Metadata mr) {
+        @Override public Object transform(Model mr) {
             return mr.getXml();
         }
     }),
     APPLICATION_VND_DATACITE_XML ("application","vnd.datacite.datacite+xml", new Transformer() {
-        @Override public Object transform(Metadata mr) {
+        @Override public Object transform(Model mr) {
             return mr.getXml();
         }
     }),
     DATACITE_TEXT ("application","x-datacite+text", new Transformer() {
         @Override
-        public Object transform(Metadata mr) {
+        public Object transform(Model mr) {
             return new Viewable("/doi_text", mr);
         }
     }),
     DATACITE_VND_TEXT ("application","vnd.datacite.datacite+text", new Transformer() {
         @Override
-        public Object transform(Metadata mr) {
+        public Object transform(Model mr) {
             return new Viewable("/doi_text", mr);
         }
     }),
     APPLICATION_RDF_XML ("application","rdf+xml", new Transformer() {
-        @Override public Object transform(Metadata mr) {
+        @Override public Object transform(Model mr) {
             return RdfRepresentation.writeXML(mr);
         }
     }),
     RDF_TURTLE ("text","turtle", new Transformer() {
         @Override
-        public Object transform(Metadata mr) {
+        public Object transform(Model mr) {
             return RdfRepresentation.writeTurtle(mr);
         }
     }),
     BIBTEX ("application","x-bibtex", new Transformer() {
         @Override
-        public Object transform(Metadata mr) {
+        public Object transform(Model mr) {
             return new Viewable("/doi_bibtex", mr);
         }
     }),
     RIS ("application","x-research-info-systems", new Transformer() {
         @Override
-        public Object transform(Metadata mr) {
+        public Object transform(Model mr) {
             return new Viewable("/doi_ris", mr);
         }
     }),
     CITEPROC_JSON("application", "citeproc+json", new Transformer() {
         @Override
-        public Object transform(Metadata mr) {
+        public Object transform(Model mr) {
             return CslJsonRepresentation.writeJSON(mr);
         }
     }),
     CSL_JSON("application", "vnd.citationstyles.csl+json", new Transformer() {
         @Override
-        public Object transform(Metadata mr) {
+        public Object transform(Model mr) {
             return CslJsonRepresentation.writeJSON(mr);
         }
     }),
     TEXT_BIBLIOGRAPHY("text", "x-bibliography", new Transformer() {
         @Override
-        public Object transform(Metadata mr) {
+        public Object transform(Model mr) {
             return cslFormatterService.format(CslJsonRepresentation.writeJSON(mr),
                     mr.getCslStyle(),
                     mr.getCslLocale());
@@ -93,7 +93,7 @@ public enum Representation {
         this.transformer = mt;
     }
 
-    public Object render(Metadata mr){
+    public Object render(Model mr){
         return transformer.transform(mr);
     }
 

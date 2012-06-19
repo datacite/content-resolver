@@ -10,9 +10,9 @@ import java.net.URI;
 import java.util.*;
 
 /**
- * Represents metadata record (parsed from XML)
+ * Represents model passed to Representation
  */
-public class Metadata {
+public class Model {
     private byte[] xml;
     private String doi;
     private Map<MediaType, URI> userMedia;
@@ -43,15 +43,15 @@ public class Metadata {
     private String cslLocale;
     private Date uploaded;
 
-    public Metadata(String doi,
-                    byte[] xml,
-                    Map<MediaType, URI> userMedia,
-                    String contextPath,
-                    String allocatorName,
-                    String datacentreName,
-                    String cslStyle,
-                    String cslLocale,
-                    Date uploaded) {
+    public Model(String doi,
+                 byte[] xml,
+                 Map<MediaType, URI> userMedia,
+                 String contextPath,
+                 String allocatorName,
+                 String datacentreName,
+                 String cslStyle,
+                 String cslLocale,
+                 Date uploaded) {
         this.doi = doi;
         this.randomId = UUID.randomUUID().toString();
         this.xml = xml;

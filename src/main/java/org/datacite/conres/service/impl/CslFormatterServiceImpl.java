@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import org.codehaus.jettison.json.JSONObject;
+import org.datacite.conres.Configuration;
 import org.datacite.conres.service.CslFormatterService;
 
 import javax.ws.rs.core.MediaType;
@@ -22,7 +23,7 @@ public class CslFormatterServiceImpl implements CslFormatterService {
         if (cslLocale == null || cslLocale.equals(""))
             cslLocale = "en-US";
 
-        String url = (String) SearchServiceImpl.prop.get("citeproc.server.url");
+        String url = (String) Configuration.prop.get("citeproc.server.url");
         WebResource r = null;
         try {
             r = client.resource(url +

@@ -1,10 +1,10 @@
 package org.datacite.conres.controller;
 
 import org.apache.log4j.Logger;
+import org.datacite.conres.Configuration;
 import org.datacite.conres.model.Model;
 import org.datacite.conres.service.SearchService;
 import org.datacite.conres.service.SearchServiceFactory;
-import org.datacite.conres.service.impl.SearchServiceImpl;
 import org.datacite.conres.view.Representation;
 
 import javax.ws.rs.core.*;
@@ -22,7 +22,7 @@ public abstract class BaseController {
         acceptHeader = getAcceptHeader(httpHeaders);
         String doiPrefix = doi.substring(0, doi.indexOf("/"));
         SearchService service = SearchServiceFactory.getInstance(doiPrefix);
-        model = service.getMetadata(doi, SearchServiceImpl.APP_CONTEXT, acceptHeader);
+        model = service.getMetadata(doi, Configuration.APP_CONTEXT, acceptHeader);
     }
 
     private String getAcceptHeader(HttpHeaders httpHeaders) {

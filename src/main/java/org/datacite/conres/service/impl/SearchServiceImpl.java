@@ -7,6 +7,7 @@ import com.google.common.cache.LoadingCache;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import nu.xom.*;
+import org.datacite.conres.Configuration;
 import org.datacite.conres.model.Model;
 import org.datacite.conres.service.SearchService;
 import org.datacite.conres.view.Representation;
@@ -15,8 +16,6 @@ import org.joda.time.format.ISODateTimeFormat;
 
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.DatatypeConverter;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -24,16 +23,10 @@ import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public class SearchServiceImpl implements SearchService {
-    public static final String SOLR_BASE_URL;
-    public static final String SOLR_API_URL;
-    public static final String SOLR_STATUS_URL;
-    public static final String APP_CONTEXT;
-    public static final Properties prop; // TODO move to Application class maybe
     static DateTimeFormatter dateTimeFormatter = ISODateTimeFormat.dateTimeParser();
 
     static LoadingCache<String, String> solrResponsesCache = CacheBuilder.newBuilder()
@@ -45,30 +38,14 @@ public class SearchServiceImpl implements SearchService {
                         }
             });
 
-    static {
-        prop = new Properties();
-        InputStream in = SearchServiceImpl.class.getResourceAsStream("/config.properties");
-        if (in == null)
-            throw new RuntimeException("Please setup valid config.properties");
-        try {
-            prop.load(in);
-            SOLR_BASE_URL = (String) prop.get("solr.base.url");
-            SOLR_API_URL = SOLR_BASE_URL + "/api";
-            SOLR_STATUS_URL = SOLR_BASE_URL + "/status";
-            APP_CONTEXT = (String) prop.get("app.context");
-            in.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    public static final String SAMPLE_DOI = "10.1594/PANGAEA.251240";
+
     private Document document;
 
     private static Client client = Client.create();
 
     private static String getUrl(String doi) throws UnsupportedEncodingException {
-        return SOLR_API_URL +  "?q=doi:%22"+ URLEncoder.encode(doi, Charsets.UTF_8.name()) +
+        return Configuration.SOLR_API_URL +  "?q=doi:%22"+ URLEncoder.encode(doi, Charsets.UTF_8.name()) +
                 "%22&fl=allocator,datacentre,media,xml,uploaded&wt=xml";
     }
 

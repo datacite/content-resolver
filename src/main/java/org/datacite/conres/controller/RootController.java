@@ -6,6 +6,9 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+/**
+ * Controller to show welcome page when no DOI is present in the path
+ */
 @Path("/")
 public class RootController {
 

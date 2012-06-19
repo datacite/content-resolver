@@ -1,5 +1,6 @@
 package org.datacite.conres.service.impl;
 
+import com.google.common.base.Charsets;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -61,14 +62,13 @@ public class SearchServiceImpl implements SearchService {
         }
     }
 
-    public static final String DATACITE_DEFAULT_ENCODING = "UTF-8";
     public static final String SAMPLE_DOI = "10.1594/PANGAEA.251240";
     private Document document;
 
     private static Client client = Client.create();
 
     private static String getUrl(String doi) throws UnsupportedEncodingException {
-        return SOLR_API_URL +  "?q=doi:%22"+ URLEncoder.encode(doi, DATACITE_DEFAULT_ENCODING) +
+        return SOLR_API_URL +  "?q=doi:%22"+ URLEncoder.encode(doi, Charsets.UTF_8.name()) +
                 "%22&fl=allocator,datacentre,media,xml,uploaded&wt=xml";
     }
 

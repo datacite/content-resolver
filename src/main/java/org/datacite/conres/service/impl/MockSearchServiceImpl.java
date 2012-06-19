@@ -1,10 +1,10 @@
 package org.datacite.conres.service.impl;
 
+import com.google.common.base.Charsets;
 import org.datacite.conres.model.Model;
 import org.datacite.conres.service.SearchService;
 
 import javax.ws.rs.core.MediaType;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
@@ -49,11 +49,8 @@ public class MockSearchServiceImpl implements SearchService {
         } catch (URISyntaxException e) {
             HTTP_EXAMPLE_COM_A_PDF = null;
         }
-        try {
-            TEST_XML = TEST_XML_STR.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+
+        TEST_XML = TEST_XML_STR.getBytes(Charsets.UTF_8);
     }
 
     private byte[] getXml(String doi) {

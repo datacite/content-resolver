@@ -1,5 +1,6 @@
 package org.datacite.conres.service.impl;
 
+import com.google.common.base.Charsets;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import org.codehaus.jettison.json.JSONObject;
@@ -25,8 +26,8 @@ public class CslFormatterServiceImpl implements CslFormatterService {
         WebResource r = null;
         try {
             r = client.resource(url +
-                    "?style=" + URLEncoder.encode(cslStyle, SearchServiceImpl.DATACITE_DEFAULT_ENCODING)+
-                    "&lang=" + URLEncoder.encode(cslLocale, SearchServiceImpl.DATACITE_DEFAULT_ENCODING));
+                    "?style=" + URLEncoder.encode(cslStyle, Charsets.UTF_8.name())+
+                    "&lang=" + URLEncoder.encode(cslLocale, Charsets.UTF_8.name()));
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }

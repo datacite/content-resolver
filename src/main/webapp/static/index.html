@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>DataCite Content Service Beta</title>
+    <title>DataCite Content Resolver Beta</title>
     <link rel="stylesheet" type="text/css" href="main.css" />
     <script type="text/javascript">
 
@@ -20,15 +20,16 @@
 <body>
 	<h1>
 		<img src="dc-logo.gif"
-			alt="DataCite logo"> DataCite Content Service <small>Beta</small>
+			alt="DataCite logo"> DataCite Content Resolver <small>Beta</small>
 	</h1>
 	<h2>What is this service?</h2>
 	<p>
-		This service exposes metadata stored in the <a
+		Firstly, this service exposes metadata stored in the <a
 			href="http://mds.datacite.org">DataCite Metadata Store (MDS)</a>
-		using multiple formats. In addition, data centres who participate
-        in <a href="http://www.datacite.org">DataCite</a> can provide their own formats,
-        both for data and metadata.
+		using <a href="http://www.crosscite.org/cn">multiple formats</a>. Secondly, data centres who participate
+        in <a href="http://www.datacite.org">DataCite</a> can define their own formats,
+        both for data and metadata. In short, DataCite data centres can submit multiple URLs (associated with MIME types)
+        per registered dataset. This service will allow you to access those URL by providing MIME type and DOI.
 	</p>
 	<p>
 		There are two ways of using this service: <a
@@ -44,32 +45,44 @@
 		your regular web browser!) which allows you to specify <a
 			href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">HTTP
 			Accept header</a>.
-        Content negotiation for DOI manes is a collaborative effort of
+        Content negotiation for DOI names is a collaborative effort of
         <a href="http://www.crossref.org">CrossRef</a> and
-        <a href="http://www.datacite.org">DataCite</a>. Please be sure to check the
-        <a href="http://www.crosscite.org/cn">DOI Content Negotiation documentation</a>.
+        <a href="http://www.datacite.org">DataCite</a> and it is endorsed by <a href="http://doi.org">IDF</a>.
+        For details on how to use DOI Content Negotiation documentation please be sure to check
+        <a href="http://www.crosscite.org/cn">our documentation</a>.
 	</p>
 	<h3>HTML links</h3>
 
 	<p>This method can be used with a regular web browser. In order to
 		get a specific format please construct URL following this pattern:
-	<p>
-
+	</p>
 		<code>http://data.datacite.org/MIME_TYPE/DOI</code>
-	<p>for example, a counterpart for the above citation can be
-		obtained by linking to:</p>
+	<h4>Examples:</h4>
+
+    <p>Let's take dataset <a href="http://data.datacite.org/10.5284/1000418">10.5284/1000418</a>.
+        An RDF representation of its metadata can be obtained by linking to:</p>
 	<code>
-		<a
-			href="http://data.datacite.org/text/x-bibliography/10.5524/100005">http://data.datacite.org/application/x-datacite+text/10.5524/100005</a>
+		<a href="http://data.datacite.org/application/rdf+xml/10.5284/1000418">http://data.datacite.org/application/rdf+xml/10.5284/1000418</a>
 	</code>
-  <p><em>Shortcut</em>: if you omit mime type in the link you will get by default HTML representation:</p>
-  <code>
-		<a
-			href="http://data.datacite.org/10.5524/100005">http://data.datacite.org/10.5524/100005</a>
-	</code>
-	<h2>Help</h2>
+    <p>This dataset was also registered with additional format, namely <a href="https://confluence.ucop.edu/display/Curation/BagIt">BagIt</a>,
+        which was serialised by compressing with ZIP. The MIME media type for ZIP is <code>application/zip</code>. In this case the HTML link will be:</p>
+    <code>
+        <a href="http://data.datacite.org/application/zip/10.5284/1000418">http://data.datacite.org/application/zip/10.5284/1000418</a>
+    </code>
+    <p>This method allows DataCite data centres to link additional metadata and data itself using custom
+        URLs, thus using the primary URL for DOI to point at the landing page of a data set.</p>
+    <p>For example <a href="http://dx.doi.org/10.5284/1015681">10.5284/1015681</a> is a report (grey literature).
+     This data set is a PDF essentially. Recommended practice is to point the DOI to a landing page
+        and link to a document itself as follows: </p>
+    <code>
+        <a href="http://data.datacite.org/application/pdf/10.5284/1015681">http://data.datacite.org/application/pdf/10.5284/1015681</a>
+    </code>
+
+    <h2>Source code</h2>
+    <p> This project is hosted on <a href="https://github.com/datacite/content-resolver">GitHub</a>. </p>
+    <h2>Help</h2>
 	<p>
-		If you have questions please contact
+		If you have questions or problems please email us:
 		<script>
 			var m_ = "mailto:";
 			var a_ = "@";
@@ -77,11 +90,6 @@
 			var t_ = 'tech' + a_ + 'datacite' + d_ + 'org';
 			document.write('<a href="' + m_ + t_ +'">' + t_ + '</a>');
 		</script>
-		.
-	</p>
-	<h2>Source code</h2>
-	<p>
-		This project is hosted on <a href="https://github.com/datacite">GitHub</a>.
 	</p>
 </body>
 </html>

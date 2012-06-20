@@ -27,22 +27,17 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public class SearchServiceImpl implements SearchService {
+    private static Client client = Client.create();
     static DateTimeFormatter dateTimeFormatter = ISODateTimeFormat.dateTimeParser();
-
     static LoadingCache<String, String> solrResponsesCache = CacheBuilder.newBuilder()
-            .maximumSize(1000)
-            .expireAfterWrite(60, TimeUnit.MINUTES)
+            .maximumSize(Configuration.SOLR_CACHE_SIZE)
+            .expireAfterWrite(60, TimeUnit.SECONDS)
             .build(new CacheLoader<String, String>() {
                         public String load(String key) {
                             return getRawMetadata(key);
                         }
             });
-
-
-
     private Document document;
-
-    private static Client client = Client.create();
 
     private static String getUrl(String doi) throws UnsupportedEncodingException {
         return Configuration.SOLR_API_URL +  "?q=doi:%22"+ URLEncoder.encode(doi, Charsets.UTF_8.name()) +

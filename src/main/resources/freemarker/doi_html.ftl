@@ -4,9 +4,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
   <title>${doi}</title>
   <link rel="stylesheet" type="text/css" href="${contextPath}/static/main.css" />
-  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <#list allMedia as media>
   <link rel="meta" type="${media}" href="${contextPath}/${media}/${doi}" />
   </#list>
@@ -188,6 +189,7 @@
 
 </div>
 <p>This<#if xmlPresent> metadata</#if> record was deposited by ${datacentreName} in co-operation with ${allocatorName}.</p>
+<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a> </p>
 </body>
 </html>
 

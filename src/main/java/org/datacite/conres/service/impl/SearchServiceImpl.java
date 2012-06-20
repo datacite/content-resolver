@@ -28,10 +28,11 @@ import java.util.concurrent.TimeUnit;
 
 public class SearchServiceImpl implements SearchService {
     private static Client client = Client.create();
-    static DateTimeFormatter dateTimeFormatter = ISODateTimeFormat.dateTimeParser();
-    static LoadingCache<String, String> solrResponsesCache = CacheBuilder.newBuilder()
+    private static DateTimeFormatter dateTimeFormatter = ISODateTimeFormat.dateTimeParser();
+    public static LoadingCache<String, String> solrResponsesCache = CacheBuilder.newBuilder()
             .maximumSize(Configuration.SOLR_CACHE_SIZE)
             .expireAfterWrite(60, TimeUnit.SECONDS)
+            .recordStats()
             .build(new CacheLoader<String, String>() {
                         public String load(String key) {
                             return getRawMetadata(key);

@@ -1,3 +1,6 @@
 solr.base.url=http://search.datacite.org
+solr.cache.size.items=10000
+solr.cache.expire.seconds=3600
+cache.control.max.age.seconds=3600
 citeproc.server.url=http://crosscite.org/citeproc/format
 app.context=/

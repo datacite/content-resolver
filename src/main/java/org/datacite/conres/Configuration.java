@@ -14,8 +14,9 @@ public class Configuration {
     public static final String APP_CONTEXT;
     public static final Properties prop;
     public static final String SAMPLE_DOI = "10.1594/PANGAEA.251240";
-    public static final Integer SOLR_CACHE_SIZE;
-    public static final Integer SOLR_CACHE_EXPIRE;
+    public static final int SOLR_CACHE_SIZE;
+    public static final int SOLR_CACHE_EXPIRE;
+    public static final int CACHE_CONTROL_MAX_AGE;
 
     static {
         prop = new Properties();
@@ -30,9 +31,11 @@ public class Configuration {
             APP_CONTEXT = (String) Configuration.prop.get("app.context");
             SOLR_CACHE_SIZE = Integer.parseInt((String) Configuration.prop.get("solr.cache.size.items"));
             SOLR_CACHE_EXPIRE = Integer.parseInt((String) Configuration.prop.get("solr.cache.expire.seconds"));
+            CACHE_CONTROL_MAX_AGE = Integer.parseInt((String) Configuration.prop.get("cache.control.max.age.seconds"));
             in.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 }

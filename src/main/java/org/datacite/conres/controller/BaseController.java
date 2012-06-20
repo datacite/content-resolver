@@ -75,7 +75,7 @@ public abstract class BaseController {
             Object entity = r.render(model);
             log4j.info("Rendering: " +  model.getDoi() + " as " + type);
             CacheControl cc = new CacheControl();
-            cc.setMaxAge(12*60*60);
+            cc.setMaxAge(Configuration.CACHE_CONTROL_MAX_AGE);
             return Response.ok(entity).
                     type(type).
                     cacheControl(cc).

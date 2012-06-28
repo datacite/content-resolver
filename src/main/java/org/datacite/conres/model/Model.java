@@ -54,7 +54,6 @@ public class Model {
                  Date uploaded) {
         this.doi = doi;
         this.randomId = UUID.randomUUID().toString();
-        this.xml = xml;
         this.xmlPresent = xml!=null && !"".equals(xml);
         this.userMedia = userMedia;
         this.contextPath = contextPath;
@@ -65,9 +64,11 @@ public class Model {
         this.uploaded = uploaded;
 
         if (xml != null && xml.length > 0){
+            this.xml = new byte[xml.length];
+            System.arraycopy(xml, 0, this.xml , 0, xml.length);
             Builder parser = new Builder();
             try {
-                InputStream inputStream = new ByteArrayInputStream(xml);
+                InputStream inputStream = new ByteArrayInputStream(this.xml);
                 document = parser.build(inputStream, null);
             } catch (Exception e) {
                 throw new RuntimeException(e);

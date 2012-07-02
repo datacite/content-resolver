@@ -28,7 +28,7 @@ public abstract class BaseController {
     private String getAcceptHeader(HttpHeaders httpHeaders) {
         List<String> acceptList = httpHeaders.getRequestHeader("Accept");
         String acceptHeader;
-        if (acceptList.size() > 0)
+        if (acceptList != null && acceptList.size() > 0)
             acceptHeader = acceptList.get(0);
         else
             acceptHeader = null;

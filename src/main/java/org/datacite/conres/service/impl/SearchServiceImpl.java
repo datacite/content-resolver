@@ -158,6 +158,9 @@ public class SearchServiceImpl implements SearchService {
     }
 
     private String extractBiblioAttr(String header, String attr) {
+        if (header == null || attr == null) {
+            return "";
+        }
         String result = "";
         for(String h : header.split(",")){
             if (h.trim().startsWith(Representation.TEXT_BIBLIOGRAPHY.toString())){

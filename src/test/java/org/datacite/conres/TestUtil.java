@@ -5,7 +5,7 @@ import com.google.common.io.ByteStreams;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class TestUtil {
+public abstract class TestUtil {
     public static byte[] loadData(Class clazz, String fileName){
         InputStream is = clazz.getResourceAsStream(fileName);
         try {

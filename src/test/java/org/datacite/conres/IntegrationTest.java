@@ -14,6 +14,8 @@ import static org.junit.Assert.assertTrue;
 
 public class IntegrationTest  extends JerseyTest {
 
+    private final String SAMPLE_DOI = "10.1594/PANGAEA.251240";
+
     public IntegrationTest()throws Exception {
         super(new WebAppDescriptor.Builder("org.datacite.conres")
                 .initParam(FreemarkerViewProcessor.FREEMARKER_TEMPLATES_BASE_PATH, "freemarker")
@@ -22,7 +24,7 @@ public class IntegrationTest  extends JerseyTest {
 
     @Test
     public void testContentDataCiteXML() {
-        WebResource webResource = resource().path(Configuration.SAMPLE_DOI);
+        WebResource webResource = resource().path(SAMPLE_DOI);
         webResource.addFilter(new LoggingFilter());
         ClientResponse response = webResource.accept(Representation.APPLICATION_DATACITE_XML.asMediaType()).get(ClientResponse.class);
         assertEquals(Representation.APPLICATION_DATACITE_XML.asMediaType(), response.getType());
@@ -33,7 +35,7 @@ public class IntegrationTest  extends JerseyTest {
     @Test
     public void testLinkDataCiteXML() {
         WebResource webResource = resource().path(Representation.APPLICATION_DATACITE_XML
-                + "/" + Configuration.SAMPLE_DOI);
+                + "/" + SAMPLE_DOI);
         webResource.addFilter(new LoggingFilter());
         ClientResponse response = webResource.get(ClientResponse.class);
         assertEquals(Representation.APPLICATION_DATACITE_XML.asMediaType(), response.getType());

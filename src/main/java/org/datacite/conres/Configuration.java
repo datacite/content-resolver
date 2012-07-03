@@ -13,7 +13,6 @@ public class Configuration {
     public static final String SOLR_STATUS_URL;
     public static final String APP_CONTEXT;
     public static final Properties prop;
-    public static final String SAMPLE_DOI = "10.1594/PANGAEA.251240";
     public static final int SOLR_CACHE_SIZE;
     public static final int SOLR_CACHE_EXPIRE;
     public static final int CACHE_CONTROL_MAX_AGE;

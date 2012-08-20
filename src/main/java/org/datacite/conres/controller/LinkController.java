@@ -10,7 +10,7 @@ import javax.ws.rs.core.*;
  *
  * @see ContentController
  */
-@Path("/{type}/{subtype}/{doi: 10\\..*}")
+@Path("/{type}/{subtype}/{doi: 10\\.[0-9]{4}/.+}")
 public class LinkController extends BaseController {
     private MediaType requestedMedia;
 

@@ -20,7 +20,7 @@ public abstract class BaseController {
 
     public BaseController(String doi, HttpHeaders httpHeaders) {
         acceptHeader = getAcceptHeader(httpHeaders);
-        String doiPrefix = doi.substring(0, doi.indexOf("/"));
+        String doiPrefix = doi.substring(0, 7);
         SearchService service = SearchServiceFactory.getInstance(doiPrefix);
         model = service.getMetadata(doi, Configuration.APP_CONTEXT, acceptHeader);
     }

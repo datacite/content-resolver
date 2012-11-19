@@ -145,12 +145,29 @@
   </div>
 </#if>
 
+<#macro linkIdentifier value>
+  <#assign match = value?matches("([^:]+):(.+)")>
+  <#assign type = match?groups[1]>
+  <#assign identifier = match?groups[2]>
+  <#assign href = "">
+  <#switch type>
+    <#case "doi"><#assign href = "http://dx.doi.org/" + identifier><#break>
+    <#case "handle"><#assign href = "http://hdl.handle.net/" + identifier><#break>
+    <#case "url"><#assign href = identifier><#break>
+  </#switch>
+  <#if href != "">
+     ${type}:<a href="${href}">${identifier}</a>
+  <#else>
+     ${value}
+  </#if>
+</#macro>
+
 <#if (alternateIdentifiers)?has_content>
   <div class="block">
     <div class="block-label">Alternate identifiers</div>
     <#list alternateIdentifiers! as d>
           <div class="label">${d.key}&emsp;</div>
-          <div class="content">${d.value}</div>
+          <div class="content"><@linkIdentifier d.value/></div>
     </#list>
   </div>
 </#if>
@@ -160,7 +177,7 @@
     <div class="block-label">Related identifiers</div>
     <#list relatedIdentifiers! as d>
           <div class="label">${d.key}&emsp;</div>
-          <div class="content">${d.value}</div>
+          <div class="content"><@linkIdentifier d.value/></div>
     </#list>
   </div>
 </#if>

@@ -71,6 +71,7 @@ public class ModelTest {
         assertEquals(2, m.getDescriptions().size());
         assertTrue(m.getDescriptions().get(0).getValue().length() != 0);
         assertTrue(m.getDescriptions().get(1).getValue().length() != 0);
+        assertEquals("Chapter 1<br />Chapter 2", m.getDescriptions().get(1).getValue());
         assertEquals("Available", m.getDates().get(0).getKey());
         assertEquals("2011-11-09", m.getDates().get(0).getValue());
     }

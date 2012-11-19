@@ -140,10 +140,18 @@ public class Model {
             String attr = "";
             if (attribute != null)
                 attr = attribute.getValue();
-            result.add(new Pair(attr, node.getValue().trim()));
+            result.add(new Pair(attr, getInnerXML(node).trim()));
         }
 
         return result;
+    }
+    
+    private String getInnerXML(Node node) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < node.getChildCount(); i++) {
+            sb.append(node.getChild(i).toXML());
+        }
+        return sb.toString();
     }
 
     private String extractText(String elementName) {

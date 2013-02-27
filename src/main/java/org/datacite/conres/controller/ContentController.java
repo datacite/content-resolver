@@ -10,7 +10,7 @@ import javax.ws.rs.core.*;
  *
  * @see LinkController
  */
-@Path("/{doi: 10\\.[0-9]{4}/.+}")
+@Path("/{doi: 10\\..+/.+}")
 public class ContentController extends BaseController {
     public ContentController(@PathParam("doi")String doi,
                              @Context HttpHeaders headers){

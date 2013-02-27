@@ -57,7 +57,7 @@
     <div class="block-label">Descriptions</div>
     <#list descriptions! as d>
       <div class="label">${d.key}</div>
-      <div class="content">${d.value}</div>
+      <div class="content"><#noescape>${d.value}</#noescape></div>
     </#list>
   </div>
 </#if>

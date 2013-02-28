@@ -167,7 +167,7 @@
     <div class="block-label">Alternate identifiers</div>
     <#list alternateIdentifiers! as d>
           <div class="label">${d.key}&emsp;</div>
-          <div class="content"><@linkIdentifier d.value/></div>
+          <div class="content">${d.value}</div>
     </#list>
   </div>
 </#if>

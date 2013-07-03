@@ -88,7 +88,7 @@
 
 <#if (rights)?has_content>
   <div class="block">
-    <div class="block-label">License</div>
+    <div class="block-label">Rights</div>
     <div class="content">${rights}</div>
   </div>
 </#if>

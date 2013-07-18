@@ -153,7 +153,7 @@
 </#if>
 
 <#macro linkIdentifier value>
-  <#assign match = value?matches("([^:]+):(.+)")>
+  <#assign match = value?matches("([^:]*):(.*)")>
   <#assign type = match?groups[1]>
   <#assign identifier = match?groups[2]>
   <#assign href = "">

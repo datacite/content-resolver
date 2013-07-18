@@ -55,7 +55,7 @@ public class ModelTest {
         assertEquals("universi1-17791", m.getAlternateIdentifiers().get(1).getValue());
         assertTrue(m.getSizes().get(0).startsWith("1"));
         assertEquals("PDF", m.getFormats().get(0));
-        assertTrue(m.getRights().startsWith("http"));
+        assertTrue(m.getRights().get(0).startsWith("http"));
         assertEquals("Other", m.getDescriptions().get(0).getKey());
         assertTrue(m.getDescriptions().get(0).getValue().startsWith("A4"));
     }

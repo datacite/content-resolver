@@ -25,7 +25,7 @@ public class Model {
     private List<Pair> descriptions;
     private List<Pair> subjects;
     private List<String> sizes;
-    private String rights;
+    private List<String> rights;
     private List<Pair> dates;
     private String language;
     private List<String> formats;
@@ -82,7 +82,7 @@ public class Model {
             this.descriptions = extractPairs("description", "descriptionType");
             this.subjects = extractPairs("subject", "subjectScheme");
             this.sizes = extractList("size");
-            this.rights = extractText("rights");
+            this.rights = extractList("rights");
             this.dates = extractPairs("date", "dateType");
             this.language = extractText("language");
             this.formats = extractList("format");
@@ -218,7 +218,7 @@ public class Model {
         return sizes;
     }
 
-    public String getRights() {
+    public List<String> getRights() {
         return rights;
     }
 

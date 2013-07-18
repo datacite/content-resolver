@@ -89,7 +89,14 @@
 <#if (rights)?has_content>
   <div class="block">
     <div class="block-label">Rights</div>
-    <div class="content">${rights}</div>
+    <#assign more = 0>
+    <#list rights as d>
+      <#if (more > 0)>
+        <div class="label">&emsp;</div>
+      </#if>
+      <div class="content">${d}&emsp;</div>
+      <#assign more = 1>
+    </#list>
   </div>
 </#if>
 

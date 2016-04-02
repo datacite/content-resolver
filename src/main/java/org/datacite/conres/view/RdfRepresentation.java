@@ -25,7 +25,7 @@ public class RdfRepresentation {
 
     private static com.hp.hpl.jena.rdf.model.Model getRdfModel(Model m) {
         com.hp.hpl.jena.rdf.model.Model model = ModelFactory.createDefaultModel();
-        String doiUri = "http://dx.doi.org/" + m.getDoi();
+        String doiUri = "https://doi.org/" + m.getDoi();
         String doi = "doi:" + m.getDoi();
         String infoDoi = "info:doi/" + m.getDoi();
         Resource dataset = model.createResource(doiUri)

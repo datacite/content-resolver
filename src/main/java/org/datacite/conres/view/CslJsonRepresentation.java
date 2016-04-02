@@ -25,7 +25,7 @@ public class CslJsonRepresentation {
             return new JSONObject()
                     .put("type", type)
                     .put("DOI", mr.getDoi())
-                    .put("URL", "http://dx.doi.org/" + mr.getDoi())
+                    .put("URL", "https://doi.org/" + mr.getDoi())
                     .put("title", mr.getTitles().get(0).getValue())
                     .put("publisher", mr.getPublisher())
                     .put("issued", new JSONObject().put("raw", mr.getPublicationYear()))

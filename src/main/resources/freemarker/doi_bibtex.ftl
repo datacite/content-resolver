@@ -1,4 +1,4 @@
-@data{${randomId},
+@misc{${randomId},
   doi = {${doi}},
   url = {http://dx.doi.org/${doi}},
   author = {<#list creators! as c>${c}; </#list>},

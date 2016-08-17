@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  data:
+    env_file: .env
+    image: datacite/content-resolver
+    ports:
+      - "8080:8080"
+    volumes:
+      - ~/.m2:/root/.m2

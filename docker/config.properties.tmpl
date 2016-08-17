@@ -1,0 +1,6 @@
+solr.base.url={{ .Env.SOLR_URL }}/public
+solr.cache.size.items=10000
+solr.cache.expire.seconds=3600
+cache.control.max.age.seconds=3600
+citeproc.server.url={{ .Env.CITEPROC_URL }}
+app.context=/{{ .Env.CONTEXT_NAME }}

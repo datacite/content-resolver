@@ -4,7 +4,7 @@ cache:
   directories:
     - $HOME/.m2
 script:
-  - mvn clean test -B -Droot.dir=build/ -Dindex.html=index.html
+  - mvn clean test
 
 notifications:
   slack: datacite:Wt8En0ALoTA6Kjc5EOKNDWxN

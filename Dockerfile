@@ -55,9 +55,12 @@ COPY docker/ntp.conf /etc/ntp.conf
 COPY . /home/app/
 WORKDIR /home/app
 
+# Copy server configuration (for context path)
+COPY docker/server.xml /etc/tomcat7/server.xml
+
 # Add Runit script for tomcat
 RUN mkdir /etc/service/tomcat
-ADD docker/tomcat.sh /etc/service/tomcat/run
+COPY docker/tomcat.sh /etc/service/tomcat/run
 
 # Run additional scripts during container startup (i.e. not at build time)
 # Process templates using ENV variables

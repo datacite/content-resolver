@@ -1,3 +1,3 @@
 #!/bin/sh
-mvn clean compile war:war
+mvn clean deploy
 cp /home/app/target/*.war /var/lib/tomcat7/webapps/

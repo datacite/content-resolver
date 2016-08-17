@@ -99,6 +99,11 @@
             <artifactId>jersey-json</artifactId>
             <version>${jersey-version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.bugsnag</groupId>
+            <version>[2.0,3.0)</version>
+            <artifactId>bugsnag</artifactId>
+        </dependency>
     </dependencies>
     <properties>
         <jersey-version>1.12</jersey-version>

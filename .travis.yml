@@ -3,6 +3,16 @@ jdk: oraclejdk8
 cache:
   directories:
     - $HOME/.m2
+env:
+  - DOCKERIZE_VERSION=v0.2.0
+
+before_install:
+  - wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+  - tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+  - rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+  - dockerize -template docker/config.properties.tmpl:src/main/resources/config.properties
+  - dockerize -template docker/log4j.xml.tmpl:src/main/resources/log4j.xml
+
 script:
   - mvn clean test
 

@@ -1,5 +1,6 @@
-DataCite Content Resolver
-=========================
+# DataCite Content Resolver
+
+[![Build Status](https://travis-ci.org/datacite/content-resolver.svg?branch=master)](https://travis-ci.org/datacite/content-resolver)
 
 This software is deployed at [https://data.datacite.org](https://data.datacite.org)
 

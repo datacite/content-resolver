@@ -1,0 +1,10 @@
+language: java
+jdk: oraclejdk8
+cache:
+  directories:
+    - $HOME/.m2
+script:
+  - mvn clean test -B -Droot.dir=build/ -Dindex.html=index.html
+
+notifications:
+  slack: datacite:Wt8En0ALoTA6Kjc5EOKNDWxN

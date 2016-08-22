@@ -36,7 +36,6 @@ public class Model {
     private String allocatorName;
     private String datacentreName;
     private boolean xmlPresent;
-    private String randomId;
 
     private String contextPath;
     private String cslStyle;
@@ -53,7 +52,6 @@ public class Model {
                  String cslLocale,
                  Date uploaded) {
         this.doi = doi;
-        this.randomId = UUID.randomUUID().toString();
         this.xmlPresent = xml!=null && !"".equals(xml);
         this.userMedia = userMedia;
         this.contextPath = contextPath;
@@ -145,7 +143,7 @@ public class Model {
 
         return result;
     }
-    
+
     private String getInnerXML(Node node) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < node.getChildCount(); i++) {
@@ -264,10 +262,6 @@ public class Model {
 
     public boolean isXmlPresent() {
         return xmlPresent;
-    }
-
-    public String getRandomId() {
-        return randomId;
     }
 
     public String getCslStyle() {

@@ -77,12 +77,18 @@ public abstract class BaseController {
             CacheControl cc = new CacheControl();
             cc.setMaxAge(Configuration.CACHE_CONTROL_MAX_AGE);
 
-            // handle special cases of character encoding
+            // character encoding
             String charset = "";
-            if (type.toString().equals("application/vnd.citationstyles.csl+json")) {
-                charset = "; charset=UTF-8";
-            } else if (type.toString().equals("application/x-research-info-systems")) {
-                charset = "; charset=charset=windows-1252";
+            switch(type.toString()) {
+                case "text/x-bibliography" :
+                    charset = "; charset=iso-8859-1";
+                    break;
+                case "application/vnd.citationstyles.csl+json" :
+                case "text/turtle" :
+                    charset = "; charset=UTF-8";
+                    break;
+                case "application/x-research-info-systems" :
+                    charset = "; charset=charset=windows-1252";
             }
 
             return Response.ok(entity).

@@ -5,3 +5,7 @@ src/main/resources/config.properties
 src/main/resources/log4j.xml
 .DS_Store
 *.log
+.env
+.env.*
+!.env.example
+!.env.travis

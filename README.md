@@ -1,35 +1,37 @@
-DataCite Content Resolver
-=========================
+# DataCite Content Resolver
+
+[![Build Status](https://travis-ci.org/datacite/content-resolver.svg?branch=master)](https://travis-ci.org/datacite/content-resolver)
 
 This software is deployed at [https://data.datacite.org](https://data.datacite.org)
 
 For documentation please check [http://crosscite.org/cn](http://crosscite.org/cn])
 
-Building and running locally
-----------------------------
+## Installation
 
-### Check out the code and adjust configuration parameters:
+Using Docker.
 
-    cp src/main/resources/config.properties.template src/main/resources/config.properties
-    vi src/main/resources/config.properties
+```
+docker run -p 8080:8080 datacite/content-resolver
+```
 
-### Check if all test are ok:
+You can now point your browser to `http://localhost:8080` and use the application.
 
-    mvn test
+For a more detailed configuration, including serving the application from the host for live editing, look at `docker-compose.yml` in the root folder.
 
-### Run locally:
+## Development
 
-    mvn tomcat7:run
+Follow along via [Github Issues](https://github.com/datacite/content-resolver/issues).
 
-### If you want to debug:
+### Note on Patches/Pull Requests
 
-    export MAVEN_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"
-    mvn tomcat7:run
+* Fork the project
+* Write tests for your new feature or a test that reproduces a bug
+* Implement your feature or make a bug fix
+* Do not mess with Rakefile, version or history
+* Commit, push and make a pull request. Bonus points for topical branches.
 
-and connect with your debugger
+## License
+**Content Resolver** is released under the [Apache 2 License](https://github.com/datacite/content-resolver/blob/master/LICENSE).
 
-### Build .war (for deployment in your web container)
-
-    mvn package
 
 

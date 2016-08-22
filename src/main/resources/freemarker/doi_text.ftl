@@ -1,1 +1,1 @@
-<#list creators! as c>${c}; </#list>(${publicationYear!}): ${titles[0].value}; ${publisher!}. http://dx.doi.org/${doi}
+<#list creators! as c>${c}; </#list>(${publicationYear!}): ${titles[0].value}; ${publisher!}. https://doi.org/${doi}

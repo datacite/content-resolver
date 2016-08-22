@@ -1,4 +1,4 @@
-@data{https://doi.org/${doi},
+@misc{https://doi.org/${doi},
   doi = {${doi}},
   url = {https://doi.org/${doi}},
   author = {<#list creators! as c>${c}; </#list>},

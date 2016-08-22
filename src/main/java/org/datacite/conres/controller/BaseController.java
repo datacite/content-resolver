@@ -76,10 +76,20 @@ public abstract class BaseController {
             log4j.info("Rendering: " +  model.getDoi() + " as " + type);
             CacheControl cc = new CacheControl();
             cc.setMaxAge(Configuration.CACHE_CONTROL_MAX_AGE);
+
+            // handle special cases of character encoding
+            String charset = "";
+            if (type.toString().equals("application/vnd.citationstyles.csl+json")) {
+                charset = "; charset=UTF-8";
+            } else if (type.toString().equals("application/x-research-info-systems")) {
+                charset = "; charset=charset=windows-1252";
+            }
+
             return Response.ok(entity).
                     type(type).
                     cacheControl(cc).
                     lastModified(model.getUploaded()).
+                    header(HttpHeaders.CONTENT_TYPE, type + charset).
                     build();
         } else {
             log4j.info("No metadata for: " +  model.getDoi() + " as " + type);

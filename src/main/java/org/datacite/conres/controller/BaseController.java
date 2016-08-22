@@ -84,6 +84,7 @@ public abstract class BaseController {
                     charset = "; charset=iso-8859-1";
                     break;
                 case "application/vnd.citationstyles.csl+json" :
+                case "application/citeproc+json" :
                 case "text/turtle" :
                     charset = "; charset=UTF-8";
                     break;

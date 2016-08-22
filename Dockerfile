@@ -56,9 +56,6 @@ COPY docker/ntp.conf /etc/ntp.conf
 COPY . /home/app/
 WORKDIR /home/app
 
-# Copy server configuration (for context path)
-COPY docker/server.xml /etc/tomcat7/server.xml
-
 # Add Runit script for tomcat
 RUN mkdir /etc/service/tomcat
 COPY docker/tomcat.sh /etc/service/tomcat/run

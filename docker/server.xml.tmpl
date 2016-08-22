@@ -142,7 +142,7 @@
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
                prefix="localhost_access_log." suffix=".txt"
                pattern="%h %l %u %t &quot;%r&quot; %s %b" />
-        <Context path="" docBase="content-resolver">
+        <Context path="" docBase="{{ default .Env.CONTEXT_PATH "content-resolver" }}">
         <!-- Default set of monitored resources -->
                <WatchedResource>WEB-INF/web.xml</WatchedResource>
         </Context>

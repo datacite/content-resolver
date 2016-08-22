@@ -356,7 +356,8 @@ public class Model {
 
                 case '\u00DF': sb.append("{\\ss}"); break;
                 case '\u00A0': sb.append('~'); break; // &nbsp;
-                case '\u00BA': sb.append("{\\textdegree}"); break;
+                case '\u00BA':
+                case '\u00B0': sb.append("{\\textdegree}"); break;
                 case '"': sb.append("{\"}"); break;
 
                 case 13:
@@ -379,11 +380,14 @@ public class Model {
                 case '{':
                 case '}':
                 case '_':
-                    sb.append('\\');
-                    sb.append(ch);
+                    sb.append('\\').append(ch);
                     break;
                 default:
-                    sb.append( (ch<0x80)?ch:'?' );
+                    if (ch<0x80) {
+                        sb.append(ch);
+                    } else {
+                        sb.append(String.format(Locale.ROOT, "{\\char\"%04X}", Integer.valueOf(ch)));
+                    }
             }
         }
         return sb.toString();

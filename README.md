@@ -11,7 +11,7 @@ For documentation please check [http://crosscite.org/cn](http://crosscite.org/cn
 Using Docker.
 
 ```
-docker run -p 8080:8080 datacite/content-resolver
+docker run -p 8080:8080 --env-file .env.example datacite/content-resolver
 ```
 
 You can now point your browser to `http://localhost:8080` and use the application.

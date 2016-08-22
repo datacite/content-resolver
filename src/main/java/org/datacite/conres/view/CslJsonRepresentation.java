@@ -14,6 +14,10 @@ public class CslJsonRepresentation {
                 authors.put(new JSONObject().put("literal", p));
             }
 
+            JSONObject issued = new JSONObject();
+            Integer year = Integer.valueOf(mr.getPublicationYear());
+            issued.put("date-parts", new JSONArray().put(new JSONArray().put(year)));
+
             String type = "misc";
             for (Pair p : mr.getResourceTypes()){
                 if (p.getKey().toUpperCase().equals("DATASET")){
@@ -23,13 +27,13 @@ public class CslJsonRepresentation {
             }
 
             return new JSONObject()
-                    .put("type", type)
-                    .put("DOI", mr.getDoi())
-                    .put("URL", "https://doi.org/" + mr.getDoi())
-                    .put("title", mr.getTitles().get(0).getValue())
-                    .put("publisher", mr.getPublisher())
-                    .put("issued", new JSONObject().put("raw", mr.getPublicationYear()))
-                    .put("author", authors);
+                .put("type", type)
+                .put("DOI", mr.getDoi())
+                .put("URL", "https://doi.org/" + mr.getDoi())
+                .put("title", mr.getTitles().get(0).getValue())
+                .put("publisher", mr.getPublisher())
+                .put("issued", issued)
+                .put("author", authors);
         } catch (JSONException je) {
             return null;
         }

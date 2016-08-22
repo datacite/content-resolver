@@ -6,12 +6,22 @@ import org.codehaus.jettison.json.JSONObject;
 import org.datacite.conres.model.Model;
 import org.datacite.conres.model.Pair;
 
+import java.util.List;
+import java.util.Arrays;
+
 public class CslJsonRepresentation {
     public static JSONObject writeJSON(Model mr) {
         try {
             JSONArray authors = new JSONArray();
             for (String  p : mr.getCreators()) {
-                authors.put(new JSONObject().put("literal", p));
+                if (p.contains(",")) {
+                    List<String> pList = Arrays.asList(p.split(", ", 2));
+                    authors.put(new JSONObject()
+                        .put("family", pList.get(0))
+                        .put("given", pList.get(1)));
+                } else {
+                    authors.put(new JSONObject().put("literal", p));
+                }
             }
 
             JSONObject issued = new JSONObject();
@@ -19,8 +29,8 @@ public class CslJsonRepresentation {
             issued.put("date-parts", new JSONArray().put(new JSONArray().put(year)));
 
             String type = "misc";
-            for (Pair p : mr.getResourceTypes()){
-                if (p.getKey().toUpperCase().equals("DATASET")){
+            for (Pair p : mr.getResourceTypes()) {
+                if (p.getKey().toUpperCase().equals("DATASET")) {
                     type = "dataset";
                     break;
                 }

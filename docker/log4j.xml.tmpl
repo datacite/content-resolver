@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
-<log4j:configuration>
+<log4j:configuration debug="true"
+  xmlns:log4j='http://jakarta.apache.org/log4j/'>
 
-  <appender name="SYSLOG" class="org.apache.log4j.net.SyslogAppender">
-    <errorHandler class="org.apache.log4j.helpers.OnlyOnceErrorHandler" />
-    <param name="Facility" value="LOCAL7"/>
-    <param name="FacilityPrinting" value="false"/>
-    <param name="Header" value="true"/>
-    <param name="SyslogHost" value="localhost"/>
+  <appender name="console" class="org.apache.log4j.ConsoleAppender">
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern" value="%p: %c{2} %x %m %n"/>
     </layout>
   </appender>
 
   <logger name="org.datacite.conres">
-    <level value="{{ default .Env.LOG_LEVEL "warn" }}"/>
+    <level value="{{ default .Env.LOG_LEVEL "info" }}"/>
   </logger>
 
   <root>
-    <priority value="info"></priority>
-    <appender-ref ref="SYSLOG" />
+    <level value="warn" />
+    <appender-ref ref="console" />
   </root>
 
 </log4j:configuration>

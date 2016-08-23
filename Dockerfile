@@ -39,6 +39,9 @@ RUN rm -rf /var/lib/tomcat7/webapps/docs* && \
     rm -rf /var/lib/tomcat7/webapps/examples* && \
     rm -rf /var/lib/tomcat7/webapps/ROOT*
 
+# set docBase
+COPY docker/server.xml /etc/tomcat7/server.xml
+
 # install dockerize
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
     tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz

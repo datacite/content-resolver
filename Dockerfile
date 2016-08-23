@@ -10,7 +10,6 @@ ENV CATALINA_PID /var/run/tomcat7.pid
 ENV CATALINA_SH /usr/share/tomcat7/bin/catalina.sh
 ENV CATALINA_TMPDIR /tmp/tomcat7-tomcat7-tmp
 ENV DOCKERIZE_VERSION v0.2.0
-ENV CATALINA_OPTS -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true
 
 # Use baseimage-docker's init process
 CMD ["/sbin/my_init"]
@@ -39,8 +38,6 @@ RUN ln -s /var/lib/tomcat7/common $CATALINA_HOME/common && \
 RUN rm -rf /var/lib/tomcat7/webapps/docs* && \
     rm -rf /var/lib/tomcat7/webapps/examples* && \
     rm -rf /var/lib/tomcat7/webapps/ROOT*
-
-#COPY tomcat7 /etc/default/tomcat7
 
 # install dockerize
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \

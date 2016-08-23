@@ -20,10 +20,10 @@ public class StatusController {
     @GET
     public Response get() throws URISyntaxException {
         CacheStats stats = SearchServiceImpl.solrResponsesCache.stats();
-        log4j.info("SOLR cache: number of times Cache lookup methods have returned a cached value = " + stats.hitCount());
-        log4j.info("SOLR cache: ratio of cache requests which were hits = " + stats.hitRate());
-        log4j.info("SOLR cache: number of times an entry has been evicted = " + stats.evictionCount());
-        log4j.info("SOLR cache: average time spent loading new values = " + stats.averageLoadPenalty());
+        log4j.debug("SOLR cache: number of times Cache lookup methods have returned a cached value = " + stats.hitCount());
+        log4j.debug("SOLR cache: ratio of cache requests which were hits = " + stats.hitRate());
+        log4j.debug("SOLR cache: number of times an entry has been evicted = " + stats.evictionCount());
+        log4j.debug("SOLR cache: average time spent loading new values = " + stats.averageLoadPenalty());
 
         Client client = Client.create();
         WebResource webResource = client.resource(Configuration.SOLR_STATUS_URL);

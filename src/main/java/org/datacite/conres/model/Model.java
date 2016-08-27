@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
 
+import org.datacite.conres.Configuration;
+
 /**
  * Represents model passed to Representation
  */
@@ -41,6 +43,7 @@ public class Model {
     private String cslStyle;
     private String cslLocale;
     private Date uploaded;
+    private String siteGa;
 
     public Model(String doi,
                  byte[] xml,
@@ -89,6 +92,8 @@ public class Model {
             this.relatedIdentifiers = extractRelatedIds();
             this.contributors = extractContributors();
         }
+
+        this.siteGa = Configuration.APP_GOOGLE_ANALYTICS;
     }
 
     private List<Pair> extractRelatedIds() {
@@ -298,6 +303,10 @@ public class Model {
 
     public Date getUploaded() {
         return uploaded;
+    }
+
+    public String getSiteGa() {
+        return siteGa;
     }
 
     public static final String escapeLatex(String text) {

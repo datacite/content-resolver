@@ -117,6 +117,8 @@ public class Model {
     }
 
     private List<Pair> extractContributors() {
+        String nameSpace = document.getRootElement().getNamespaceURI();
+
         Nodes nodes = document.query("//*[local-name() = 'contributor']");
         List<Pair> result = new ArrayList<Pair>();
         for(int i = 0; i < nodes.size(); i++){
@@ -126,7 +128,24 @@ public class Model {
             String conTypeStr = "";
             if (conType != null)
                 conTypeStr = conType.getValue().trim();
-            result.add(new Pair(conTypeStr, node.getValue().trim()));
+
+            Element contributorName = el.getFirstChildElement("contributorName", nameSpace);
+            String conString = contributorName.getValue().trim();
+
+            Element nameIdentifier = el.getFirstChildElement("nameIdentifier", nameSpace);
+            if (nameIdentifier != null) {
+                Attribute scheme = nameIdentifier.getAttribute("nameIdentifierScheme");
+                String schemeStr = "";
+                if (scheme != null)
+                    schemeStr = scheme.getValue().trim() + ": ";
+                conString += " (" + schemeStr + nameIdentifier.getValue().trim() + ")";
+            }
+
+            Element affiliation = el.getFirstChildElement("affiliation", nameSpace);
+            if (affiliation != null)
+                conString += ", " + affiliation.getValue().trim();
+
+            result.add(new Pair(conTypeStr, conString));
         }
 
         return result;

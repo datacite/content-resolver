@@ -12,7 +12,7 @@ before_install:
   - ./dockerize -template vendor/docker/config.properties.tmpl:src/main/resources/config.properties
   - ./dockerize -template vendor/docker/log4j.xml.tmpl:src/main/resources/log4j.xml
   - set -e
-  - if [ $TRAVIS_BRANCH" == "master" ]; then
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
       AWS_BUCKET="data.datacite.org";
     else
       AWS_BUCKET="data.labs.datacite.org";

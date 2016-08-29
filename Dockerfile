@@ -16,7 +16,7 @@ CMD ["/sbin/my_init"]
 
 # Install Java and Tomcat
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-    apt-get update && apt-get install -y wget apt-utils && \
+    apt-get update && apt-get install -y wget apt-utils build-essential zlib1g-dev ruby ruby-dev nodejs && \
     apt-get install -yqq software-properties-common && \
     add-apt-repository -y ppa:webupd8team/java && \
     apt-get update && \
@@ -55,6 +55,12 @@ COPY vendor/docker/ntp.conf /etc/ntp.conf
 # Copy webapp folder
 COPY . /home/app/
 WORKDIR /home/app
+
+# Build static site
+RUN gem install bundler && \
+    bundle install --without development && \
+    bundle exec middleman build -e production
+COPY build/index.html src/main/webapp/static/index.html
 
 # Add Runit script for tomcat
 RUN mkdir /etc/service/tomcat

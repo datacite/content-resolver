@@ -1,5 +1,6 @@
 language: java
 jdk: oraclejdk8
+cache: bundler
 cache:
   directories:
     - $HOME/.m2
@@ -10,9 +11,34 @@ before_install:
   - rm dockerize-linux-amd64-v0.2.0.tar.gz
   - ./dockerize -template docker/config.properties.tmpl:src/main/resources/config.properties
   - ./dockerize -template docker/log4j.xml.tmpl:src/main/resources/log4j.xml
+  - set -e
+  - if [ $TRAVIS_BRANCH" == "master" ]; then
+      AWS_BUCKET="data.datacite.org";
+    else
+      AWS_BUCKET="data.labs.datacite.org";
+    fi
+  - rvm install 2.3.1
+
+install:
+  - bundle install
 
 script:
+  - bundle exec middleman build -e production
+  - bundle exec rspec
   - mvn clean test
+
+deploy:
+  provider: s3
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  bucket: $AWS_BUCKET
+  local-dir: build
+  acl: public_read
+  skip_cleanup: true
+  region: eu-west-1
+  detect_encoding: true
+  on:
+    all_branches: true
 
 notifications:
   slack: datacite:Wt8En0ALoTA6Kjc5EOKNDWxN

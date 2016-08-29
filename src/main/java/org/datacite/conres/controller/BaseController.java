@@ -9,6 +9,7 @@ import org.datacite.conres.view.Representation;
 
 import javax.ws.rs.core.*;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 

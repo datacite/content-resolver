@@ -40,7 +40,7 @@ RUN rm -rf /var/lib/tomcat7/webapps/docs* && \
     rm -rf /var/lib/tomcat7/webapps/ROOT*
 
 # set docBase
-COPY docker/server.xml /etc/tomcat7/server.xml
+COPY vendor/docker/server.xml /etc/tomcat7/server.xml
 
 # install dockerize
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
@@ -50,7 +50,7 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 # Use Amazon NTP servers
-COPY docker/ntp.conf /etc/ntp.conf
+COPY vendor/docker/ntp.conf /etc/ntp.conf
 
 # Copy webapp folder
 COPY . /home/app/
@@ -58,13 +58,13 @@ WORKDIR /home/app
 
 # Add Runit script for tomcat
 RUN mkdir /etc/service/tomcat
-COPY docker/tomcat.sh /etc/service/tomcat/run
+COPY vendor/docker/tomcat.sh /etc/service/tomcat/run
 
 # Run additional scripts during container startup (i.e. not at build time)
 # Process templates using ENV variables
 # Compile project
 RUN mkdir -p /etc/my_init.d
-COPY docker/70_templates.sh /etc/my_init.d/70_templates.sh
-COPY docker/80_install.sh /etc/my_init.d/80_install.sh
+COPY vendor/docker/70_templates.sh /etc/my_init.d/70_templates.sh
+COPY vendor/docker/80_install.sh /etc/my_init.d/80_install.sh
 
 EXPOSE 8080

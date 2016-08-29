@@ -9,8 +9,8 @@ before_install:
   - wget https://github.com/jwilder/dockerize/releases/download/v0.2.0/dockerize-linux-amd64-v0.2.0.tar.gz
   - tar -xzvf dockerize-linux-amd64-v0.2.0.tar.gz
   - rm dockerize-linux-amd64-v0.2.0.tar.gz
-  - ./dockerize -template docker/config.properties.tmpl:src/main/resources/config.properties
-  - ./dockerize -template docker/log4j.xml.tmpl:src/main/resources/log4j.xml
+  - ./dockerize -template vendor/docker/config.properties.tmpl:src/main/resources/config.properties
+  - ./dockerize -template vendor/docker/log4j.xml.tmpl:src/main/resources/log4j.xml
   - set -e
   - if [ $TRAVIS_BRANCH" == "master" ]; then
       AWS_BUCKET="data.datacite.org";

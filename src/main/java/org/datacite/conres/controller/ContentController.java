@@ -21,13 +21,13 @@ public class ContentController extends BaseController {
     @GET
     public Response get(@Context Request r, @PathParam("doi")String doi) {
         if (model == null) {
-            log4j.info("No content for " + doi);
+            log4j.warn("No content for " + doi);
             return Response.status(404).build();
         }
 
         Variant v = r.selectVariant(allSupportedTypes());
         if (v == null) {
-            log4j.info("Not acceptable: " +  doi + " as " + acceptHeader);
+            log4j.error("Not acceptable: " +  doi + " as " + acceptHeader);
             return Response.notAcceptable(allSupportedTypes()).build();
         }
         return buildResponse(v);

@@ -67,7 +67,7 @@ public abstract class BaseController {
         // ...no, we have to act accordingly
         Representation r;
         if ((r = Representation.valueOf(v)) == null) {
-            log4j.info("Not acceptable: " +  model.getDoi() + " as " + acceptHeader);
+            log4j.error("Not acceptable: " +  model.getDoi() + " as " + acceptHeader);
             return Response.notAcceptable(allSupportedTypes()).build();
         }
 

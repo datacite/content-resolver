@@ -22,7 +22,7 @@ RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true 
     apt-get update && \
     apt-get install -yqq oracle-java8-installer && \
     apt-get install -yqq oracle-java8-set-default && \
-    apt-get -yqq install tomcat7 maven && \
+    apt-get -yqq install tomcat7 maven pandoc && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm -rf /var/cache/oracle-jdk8-installer

@@ -11,6 +11,11 @@ before_install:
   - rm dockerize-linux-amd64-v0.2.0.tar.gz
   - ./dockerize -template vendor/docker/config.properties.tmpl:src/main/resources/config.properties
   - ./dockerize -template vendor/docker/log4j.xml.tmpl:src/main/resources/log4j.xml
+
+  - wget https://github.com/jgm/pandoc/releases/download/1.15.2/pandoc-1.15.2-1-amd64.deb
+  - sudo dpkg -i pandoc-1.15.2-1-amd64.deb
+  - rm pandoc-1.15.2-1-amd64.deb
+
   - set -e
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
       AWS_BUCKET="data.datacite.org";

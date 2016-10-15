@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
 
+import org.datacite.conres.Configuration;
+
 /**
  * Represents model passed to Representation
  */
@@ -36,12 +38,12 @@ public class Model {
     private String allocatorName;
     private String datacentreName;
     private boolean xmlPresent;
-    private String randomId;
 
     private String contextPath;
     private String cslStyle;
     private String cslLocale;
     private Date uploaded;
+    private String siteGa;
 
     public Model(String doi,
                  byte[] xml,
@@ -53,7 +55,6 @@ public class Model {
                  String cslLocale,
                  Date uploaded) {
         this.doi = doi;
-        this.randomId = UUID.randomUUID().toString();
         this.xmlPresent = xml!=null && !"".equals(xml);
         this.userMedia = userMedia;
         this.contextPath = contextPath;
@@ -91,6 +92,8 @@ public class Model {
             this.relatedIdentifiers = extractRelatedIds();
             this.contributors = extractContributors();
         }
+
+        this.siteGa = Configuration.APP_GOOGLE_ANALYTICS;
     }
 
     private List<Pair> extractRelatedIds() {
@@ -114,6 +117,8 @@ public class Model {
     }
 
     private List<Pair> extractContributors() {
+        String nameSpace = document.getRootElement().getNamespaceURI();
+
         Nodes nodes = document.query("//*[local-name() = 'contributor']");
         List<Pair> result = new ArrayList<Pair>();
         for(int i = 0; i < nodes.size(); i++){
@@ -123,7 +128,24 @@ public class Model {
             String conTypeStr = "";
             if (conType != null)
                 conTypeStr = conType.getValue().trim();
-            result.add(new Pair(conTypeStr, node.getValue().trim()));
+
+            Element contributorName = el.getFirstChildElement("contributorName", nameSpace);
+            String conString = contributorName.getValue().trim();
+
+            Element nameIdentifier = el.getFirstChildElement("nameIdentifier", nameSpace);
+            if (nameIdentifier != null) {
+                Attribute scheme = nameIdentifier.getAttribute("nameIdentifierScheme");
+                String schemeStr = "";
+                if (scheme != null)
+                    schemeStr = scheme.getValue().trim() + ": ";
+                conString += " (" + schemeStr + nameIdentifier.getValue().trim() + ")";
+            }
+
+            Element affiliation = el.getFirstChildElement("affiliation", nameSpace);
+            if (affiliation != null)
+                conString += ", " + affiliation.getValue().trim();
+
+            result.add(new Pair(conTypeStr, conString));
         }
 
         return result;
@@ -145,7 +167,7 @@ public class Model {
 
         return result;
     }
-    
+
     private String getInnerXML(Node node) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < node.getChildCount(); i++) {
@@ -266,10 +288,6 @@ public class Model {
         return xmlPresent;
     }
 
-    public String getRandomId() {
-        return randomId;
-    }
-
     public String getCslStyle() {
         return cslStyle;
     }
@@ -304,5 +322,102 @@ public class Model {
 
     public Date getUploaded() {
         return uploaded;
+    }
+
+    public String getSiteGa() {
+        return siteGa;
+    }
+
+    public static final String escapeLatex(String text) {
+        StringBuilder sb=new StringBuilder(text.length());
+        boolean nl=false;
+        for (int i=0,c=text.length(); i<c; i++) {
+            char ch=text.charAt(i);
+            if (ch!=13 && ch!=10 && nl) {
+                sb.append("\\\\\n");
+                nl=false;
+            }
+            switch (ch) {
+                case '\u00E4': sb.append("{\\\"a}"); break;
+                case '\u00F6': sb.append("{\\\"o}"); break;
+                case '\u00FC': sb.append("{\\\"u}"); break;
+                case '\u00EB': sb.append("{\\\"e}"); break;
+                case '\u00EF': sb.append("{\\\"i}"); break;
+
+                case 196: sb.append("{\\\"A}"); break;
+                case 214: sb.append("{\\\"O}"); break;
+                case 220: sb.append("{\\\"U}"); break;
+                case 203: sb.append("{\\\"E}"); break;
+                case 207: sb.append("{\\\"I}"); break;
+
+                case 225: sb.append("{\\'a}"); break;
+                case 243: sb.append("{\\'o}"); break;
+                case 250: sb.append("{\\'u}"); break;
+                case 233: sb.append("{\\'e}"); break;
+                case 237: sb.append("{\\'i}"); break;
+
+                case 224: sb.append("{\\`a}"); break;
+                case 242: sb.append("{\\`o}"); break;
+                case 249: sb.append("{\\`u}"); break;
+                case 232: sb.append("{\\`e}"); break;
+                case 236: sb.append("{\\`i}"); break;
+
+                case 226: sb.append("{\\^a}"); break;
+                case 244: sb.append("{\\^o}"); break;
+                case 251: sb.append("{\\^u}"); break;
+                case 234: sb.append("{\\^e}"); break;
+                case 238: sb.append("{\\^i}"); break;
+
+                case 194: sb.append("{\\^A}"); break;
+                case 212: sb.append("{\\^O}"); break;
+                case 219: sb.append("{\\^U}"); break;
+                case 202: sb.append("{\\^E}"); break;
+                case 206: sb.append("{\\^I}"); break;
+
+                case 227: sb.append("{\\~a}"); break;
+                case 241: sb.append("{\\~n}"); break;
+                case 245: sb.append("{\\~o}"); break;
+
+                case 195: sb.append("{\\~A}"); break;
+                case 209: sb.append("{\\~N}"); break;
+                case 213: sb.append("{\\~O}"); break;
+
+                case '\u00DF': sb.append("{\\ss}"); break;
+                case '\u00A0': sb.append('~'); break; // &nbsp;
+                case '\u00BA':
+                case '\u00B0': sb.append("{\\textdegree}"); break;
+                case '"': sb.append("{\"}"); break;
+
+                case 13:
+                case 10:
+                    nl=true;
+                    break;
+
+                case '\'':
+                case '\u00B4':
+                case '`':
+                    sb.append("{\'}"); break;
+
+                // simple escapes:
+                case '\\':
+                case '~':
+                case '$':
+                case '%':
+                case '^':
+                case '&':
+                case '{':
+                case '}':
+                case '_':
+                    sb.append('\\').append(ch);
+                    break;
+                default:
+                    if (ch<0x80) {
+                        sb.append(ch);
+                    } else {
+                        sb.append(String.format(Locale.ROOT, "{\\char\"%04X}", Integer.valueOf(ch)));
+                    }
+            }
+        }
+        return sb.toString();
     }
 }

@@ -12,6 +12,7 @@ public class Configuration {
     public static final String SOLR_API_URL;
     public static final String SOLR_STATUS_URL;
     public static final String APP_CONTEXT;
+    public static final String APP_GOOGLE_ANALYTICS;
     public static final Properties prop;
     public static final int SOLR_CACHE_SIZE;
     public static final int SOLR_CACHE_EXPIRE;
@@ -28,6 +29,7 @@ public class Configuration {
             SOLR_API_URL = Configuration.SOLR_BASE_URL + "/api";
             SOLR_STATUS_URL = Configuration.SOLR_BASE_URL + "/status";
             APP_CONTEXT = (String) Configuration.prop.get("app.context");
+            APP_GOOGLE_ANALYTICS = (String) Configuration.prop.get("app.google_analytics");
             SOLR_CACHE_SIZE = Integer.parseInt((String) Configuration.prop.get("solr.cache.size.items"));
             SOLR_CACHE_EXPIRE = Integer.parseInt((String) Configuration.prop.get("solr.cache.expire.seconds"));
             CACHE_CONTROL_MAX_AGE = Integer.parseInt((String) Configuration.prop.get("cache.control.max.age.seconds"));

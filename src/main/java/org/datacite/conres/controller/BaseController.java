@@ -9,6 +9,7 @@ import org.datacite.conres.view.Representation;
 
 import javax.ws.rs.core.*;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +67,7 @@ public abstract class BaseController {
         // ...no, we have to act accordingly
         Representation r;
         if ((r = Representation.valueOf(v)) == null) {
-            log4j.info("Not acceptable: " +  model.getDoi() + " as " + acceptHeader);
+            log4j.error("Not acceptable: " +  model.getDoi() + " as " + acceptHeader);
             return Response.notAcceptable(allSupportedTypes()).build();
         }
 
@@ -76,10 +77,27 @@ public abstract class BaseController {
             log4j.info("Rendering: " +  model.getDoi() + " as " + type);
             CacheControl cc = new CacheControl();
             cc.setMaxAge(Configuration.CACHE_CONTROL_MAX_AGE);
+
+            // character encoding
+            String charset = "";
+            switch(type.toString()) {
+                case "text/x-bibliography" :
+                    charset = "; charset=iso-8859-1";
+                    break;
+                case "application/vnd.citationstyles.csl+json" :
+                case "application/citeproc+json" :
+                case "text/turtle" :
+                    charset = "; charset=UTF-8";
+                    break;
+                case "application/x-research-info-systems" :
+                    charset = "; charset=charset=windows-1252";
+            }
+
             return Response.ok(entity).
                     type(type).
                     cacheControl(cc).
                     lastModified(model.getUploaded()).
+                    header(HttpHeaders.CONTENT_TYPE, type + charset).
                     build();
         } else {
             log4j.info("No metadata for: " +  model.getDoi() + " as " + type);

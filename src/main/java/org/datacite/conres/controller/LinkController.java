@@ -27,7 +27,7 @@ public class LinkController extends BaseController {
     @GET
     public Response get(@PathParam("doi")String doi) {
         if (model == null){
-            log4j.info("No content for " + doi);
+            log4j.warn("No content for " + doi);
             return Response.status(404).build();
         }
 

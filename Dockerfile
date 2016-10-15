@@ -16,13 +16,13 @@ CMD ["/sbin/my_init"]
 
 # Install Java and Tomcat
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-    apt-get update && apt-get install -y wget apt-utils && \
+    apt-get update && apt-get install -y wget apt-utils build-essential zlib1g-dev ruby ruby-dev nodejs && \
     apt-get install -yqq software-properties-common && \
     add-apt-repository -y ppa:webupd8team/java && \
     apt-get update && \
     apt-get install -yqq oracle-java8-installer && \
     apt-get install -yqq oracle-java8-set-default && \
-    apt-get -yqq install tomcat7 maven && \
+    apt-get -yqq install tomcat7 maven pandoc git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm -rf /var/cache/oracle-jdk8-installer
@@ -39,7 +39,8 @@ RUN rm -rf /var/lib/tomcat7/webapps/docs* && \
     rm -rf /var/lib/tomcat7/webapps/examples* && \
     rm -rf /var/lib/tomcat7/webapps/ROOT*
 
-#COPY tomcat7 /etc/default/tomcat7
+# set docBase
+COPY vendor/docker/server.xml /etc/tomcat7/server.xml
 
 # install dockerize
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
@@ -49,24 +50,27 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 # Use Amazon NTP servers
-COPY docker/ntp.conf /etc/ntp.conf
+COPY vendor/docker/ntp.conf /etc/ntp.conf
 
 # Copy webapp folder
 COPY . /home/app/
 WORKDIR /home/app
 
-# Copy server configuration (for context path)
-COPY docker/server.xml /etc/tomcat7/server.xml
+# Build static site
+RUN gem install bundler && \
+    bundle install --without development && \
+    bundle exec middleman build -e production
+COPY build/index.html src/main/webapp/static/index.html
 
 # Add Runit script for tomcat
 RUN mkdir /etc/service/tomcat
-COPY docker/tomcat.sh /etc/service/tomcat/run
+COPY vendor/docker/tomcat.sh /etc/service/tomcat/run
 
 # Run additional scripts during container startup (i.e. not at build time)
 # Process templates using ENV variables
 # Compile project
 RUN mkdir -p /etc/my_init.d
-COPY docker/70_templates.sh /etc/my_init.d/70_templates.sh
-COPY docker/80_install.sh /etc/my_init.d/80_install.sh
+COPY vendor/docker/70_templates.sh /etc/my_init.d/70_templates.sh
+COPY vendor/docker/80_install.sh /etc/my_init.d/80_install.sh
 
 EXPOSE 8080

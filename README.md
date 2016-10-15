@@ -1,6 +1,6 @@
 # DataCite Content Resolver
 
-[![Build Status](https://travis-ci.org/datacite/content-resolver.svg?branch=master)](https://travis-ci.org/datacite/content-resolver)
+[![Build Status](https://travis-ci.org/datacite/content-resolver.svg)](https://travis-ci.org/datacite/content-resolver)
 
 This software is deployed at [https://data.datacite.org](https://data.datacite.org)
 
@@ -11,12 +11,12 @@ For documentation please check [http://crosscite.org/cn](http://crosscite.org/cn
 Using Docker.
 
 ```
-docker run -p 8080:8080 datacite/content-resolver
+docker run -p 8080:8080 --env-file .env datacite/content-resolver
 ```
 
 You can now point your browser to `http://localhost:8080` and use the application.
 
-For a more detailed configuration, including serving the application from the host for live editing, look at `docker-compose.yml` in the root folder.
+For a more detailed configuration, including using a lcoal Maven repository on the host, look at `docker-compose.yml` in the root folder.
 
 ## Development
 
@@ -32,6 +32,3 @@ Follow along via [Github Issues](https://github.com/datacite/content-resolver/is
 
 ## License
 **Content Resolver** is released under the [Apache 2 License](https://github.com/datacite/content-resolver/blob/master/LICENSE).
-
-
-

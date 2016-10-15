@@ -1,8 +1,8 @@
-@data{https://doi.org/${doi},
+@misc{https://doi.org/${doi},
   doi = {${doi}},
   url = {https://doi.org/${doi}},
-  author = {<#list creators! as c>${c}; </#list>},
-  publisher = {${publisher!}},
-  title = {${titles[0].value}},
+  author = {<#list creators! as c>${escapeLatex(c)}<#sep> and </#list>},
+  publisher = {${escapeLatex(publisher)!}},
+  title = {${escapeLatex(titles[0].value)}},
   year = {${publicationYear!}}
 }

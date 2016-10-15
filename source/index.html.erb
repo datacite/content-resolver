@@ -1,0 +1,39 @@
+---
+title: DataCite Content Resolver
+description: Content from the DataCite Metadata Store in multiple formats.
+---
+<div class="wrapper">
+  <!-- https://www.pexels.com/photo/night-music-band-microphone-9137/ -->
+  <div class="landing-header" style="background-image: url('//<%= ENV['CDN_HOST'] %>/images/assets/music.jpg');">
+    <div class="container">
+      <div class="motto">
+        <h1><%= current_page.data.title %></h1>
+        <p><%= current_page.data.description %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section-white">
+    <div class="row row-section">
+      <div class="container-fluid">
+        <div class="col-sm-6 info">
+          <h3>Content Negotiation</h3>
+          <p>In this method you will not access this service directly. Instead, you will make a DOI resolution via <a href="https://doi.org/">doi.org</a> using an HTTPs client (not your regular web browser!) which allows you to specify <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">HTTP Accept header</a>.</p>
+
+          <p>Content negotiation for DOI names is a collaborative effort of <a href="http://www.crossref.org/">CrossRef</a> and DataCite and it is endorsed by the <a href="http://doi.org/">International DOI Foundation</a>. For details on how to use DOI Content Negotiation documentation please be sure to check <a href="http://www.crosscite.org/cn">our documentation</a>.</p>
+        </div>
+        <div class="col-sm-6 info">
+          <h3>HTML Links</h3>
+          <p>This method can be used with a regular web browser. In order to get a specific format please construct a URL following this pattern:
+          <code>http://data.datacite.org/MIME_TYPE/DOI</code></p>
+
+          <p>This method allows DataCite data centres to link additional metadata and data itself using custom URLs, and using the primary URL for the DOI to point to the landing page of a data set.<p>
+
+          <p><a href="http://doi.org/10.5284/1015681">http://doi.org/10.5284/1015681</a> is for example a report in PDF format, and can be downloaded without first going to the landing page using:
+          <code>http://data.datacite.org/application/pdf/10.5284/1015681</code></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

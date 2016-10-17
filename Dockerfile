@@ -22,7 +22,7 @@ RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true 
     apt-get update && \
     apt-get install -yqq oracle-java8-installer && \
     apt-get install -yqq oracle-java8-set-default && \
-    apt-get -yqq install tomcat7 maven pandoc git && \
+    apt-get -yqq install tomcat7 maven git pandoc && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm -rf /var/cache/oracle-jdk8-installer
@@ -58,9 +58,9 @@ WORKDIR /home/app
 
 # Build static site
 RUN gem install bundler && \
-    bundle install --without development && \
-    bundle exec middleman build -e production
-COPY build/index.html src/main/webapp/static/index.html
+    bundle install && \
+    bundle exec middleman build -e $RACK_ENV && \
+    cp build/index.html src/main/webapp/static/index.html
 
 # Add Runit script for tomcat
 RUN mkdir /etc/service/tomcat

@@ -29,7 +29,7 @@
 <body>
 <div id="header">
 <h1>
-  <img src="${contextPath}/static/dc-logo.gif" alt="DataCite logo" /> DataCite Content Service <small>Beta</small>
+  <img src="${contextPath}/static/datacite.png" alt="DataCite logo" /> DataCite Content Service <small>Beta</small>
 </h1>
 <h2>doi:${doi}</h2>
 <#if xmlPresent><p>This page represents DataCite's metadata for <em>doi:${doi}</em>.</p></#if>

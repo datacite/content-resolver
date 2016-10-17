@@ -19,8 +19,10 @@ before_install:
   - set -e
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
       AWS_BUCKET="data.datacite.org";
+      RACK_ENV="production";
     else
       AWS_BUCKET="data.labs.datacite.org";
+      RACK_ENV="stage";
     fi
   - rvm install 2.3.1
 
@@ -28,7 +30,7 @@ install:
   - bundle install
 
 script:
-  - bundle exec middleman build -e production
+  - bundle exec middleman build -e $RACK_ENV
   - bundle exec rspec
   - mvn clean test
 

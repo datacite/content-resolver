@@ -18,7 +18,7 @@ public class CslFormatterServiceImpl implements CslFormatterService {
     @Override
     public String format(JSONObject cslJson, String cslStyle, String cslLocale) {
         if (cslStyle == null || cslStyle.equals(""))
-            cslStyle = "springer-author-date";
+            cslStyle = "springer-basic-author-date";
 
         if (cslLocale == null || cslLocale.equals(""))
             cslLocale = "en-US";

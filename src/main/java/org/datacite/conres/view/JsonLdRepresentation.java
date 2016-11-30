@@ -55,8 +55,7 @@ public class JsonLdRepresentation {
                 .put("author", authors)
                 .put("publisher", mr.getPublisher())
                 .put("datePublished", mr.getPublicationYear())
-                .put("version", mr.getVersion())
-                .put("description", mr.getDescriptions().get(0).getValue());
+                .put("version", mr.getVersion());
         } catch (JSONException je) {
             return null;
         }

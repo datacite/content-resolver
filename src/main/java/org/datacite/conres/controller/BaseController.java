@@ -86,6 +86,7 @@ public abstract class BaseController {
                     break;
                 case "application/vnd.citationstyles.csl+json" :
                 case "application/citeproc+json" :
+                case "application/ld+json" :
                 case "text/turtle" :
                     charset = "; charset=UTF-8";
                     break;

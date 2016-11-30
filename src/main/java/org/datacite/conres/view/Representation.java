@@ -71,6 +71,12 @@ public enum Representation {
             return CslJsonRepresentation.writeJSON(mr);
         }
     }),
+    JSON_LD("application", "ld+json", new Transformer() {
+        @Override
+        public Object transform(Model mr) {
+            return JsonLdRepresentation.writeJSON(mr);
+        }
+    }),
     TEXT_BIBLIOGRAPHY("text", "x-bibliography", new Transformer() {
         @Override
         public Object transform(Model mr) {

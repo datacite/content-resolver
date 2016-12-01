@@ -22,14 +22,10 @@ public class JsonLdRepresentation {
                         .put("givenName", pList.get(1)));
                 } else {
                     authors.put(new JSONObject()
-                        .put("@type", "Organisation")
+                        .put("@type", "Agent")
                         .put("name", p));
                 }
             }
-
-            JSONObject issued = new JSONObject();
-            Integer year = Integer.valueOf(mr.getPublicationYear());
-            issued.put("date-parts", new JSONArray().put(new JSONArray().put(year)));
 
             String type = "CreativeWork";
             for (Pair p : mr.getResourceTypes()) {
@@ -43,6 +39,14 @@ public class JsonLdRepresentation {
                 }
                 else if (p.getKey().toUpperCase().equals("SOFTWARE")) {
                     type = "SoftwareApplication";
+                    break;
+                }
+                else if (p.getKey().toUpperCase().equals("IMAGE")) {
+                    type = "ImageObject";
+                    break;
+                }
+                else if (p.getKey().toUpperCase().equals("COLLECTION")) {
+                    type = "Collection";
                     break;
                 }
             }

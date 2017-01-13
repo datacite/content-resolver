@@ -30,33 +30,42 @@ development_links:
    url: http://localhost:9010
    icon: bar-chart
 stage_links:
- - name: API
-   url: https://api.labs.datacite.org
-   icon: cogs
- - name: Blog
-   url: https://blog.labs.datacite.org
-   icon: rss
- - name: Citation Formatter
-   url: http://citation.labs.crosscite.org
-   icon: file-text-o
- - name: Content Resolver
-   url: https://data.labs.datacite.org
-   icon: repeat
  - name: Homepage
-   url: https://www.labs.datacite.org
+   url: https://www.test.datacite.org
    icon: globe
- - name: Profiles
-   url: https://profiles.labs.datacite.org
-   icon: user
+ - name: MDS
+   url: https://mds.test.datacite.org
+   icon: database
+ - name: Handle Server
+   url: https://handle.test.datacite.org
+   icon: mail-forward
  - name: Schema
-   url: https://schema.labs.datacite.org
+   url: https://schema.test.datacite.org
    icon: file-code-o
  - name: Search
-   url: https://search.labs.datacite.org
+   url: https://search.test.datacite.org
    icon: search
+ - name: OAI-PMH
+   url: https://oai.test.datacite.org
+   icon: table
+ - name: Content Resolver
+   url: https://data.test.datacite.org
+   icon: repeat
+ - name: Citation Formatter
+   url: http://citation.test.crosscite.org
+   icon: file-text-o
+ - name: REST API
+   url: https://api.test.datacite.org
+   icon: cogs
+ - name: Profiles
+   url: https://profiles.test.datacite.org
+   icon: user
  - name: Statistics
-   url: https://stats.labs.datacite.org
+   url: https://stats.test.datacite.org
    icon: bar-chart
+ - name: Blog
+   url: https://blog.test.datacite.org
+   icon: rss
 production_links:
  - name: API
    url: https://api.datacite.org

@@ -21,7 +21,7 @@ before_install:
       AWS_BUCKET="data.datacite.org";
       RACK_ENV="production";
     else
-      AWS_BUCKET="data.labs.datacite.org";
+      AWS_BUCKET="data.test.datacite.org";
       RACK_ENV="stage";
     fi
   - rvm install 2.3.1

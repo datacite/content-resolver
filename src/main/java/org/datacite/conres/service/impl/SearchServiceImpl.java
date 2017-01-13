@@ -7,6 +7,7 @@ import com.google.common.cache.LoadingCache;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import nu.xom.*;
+import org.codehaus.jettison.json.JSONObject;
 import org.datacite.conres.Configuration;
 import org.datacite.conres.model.Model;
 import org.datacite.conres.service.SearchService;
@@ -41,8 +42,7 @@ public class SearchServiceImpl implements SearchService {
     private Document document;
 
     private static String getUrl(String doi) throws UnsupportedEncodingException {
-        return Configuration.SOLR_API_URL +  "?q=doi:%22"+ URLEncoder.encode(doi, Charsets.UTF_8.name()) +
-                "%22&fl=allocator,datacentre,media,xml,uploaded&wt=xml";
+        return Configuration.API_URL + "/works/" + URLEncoder.encode(doi, Charsets.UTF_8.name());
     }
 
     private static String getRawMetadata(String doi) {
@@ -94,9 +94,21 @@ public class SearchServiceImpl implements SearchService {
         }
 
         if (rawMetadata != null && !"".equals(rawMetadata)){
+            String rawXml = null;
+
+            try {
+                JSONObject json = new JSONObject(rawMetadata);
+                rawXml = json.getJSONObject("data")
+                             .getJSONObject("attributes")
+                             .getJSONObject("xml")
+                             .toString();
+            } catch (org.codehaus.jettison.json.JSONException e) {
+                throw new RuntimeException(e);
+            }
+
             Builder parser = new Builder();
             try {
-                document = parser.build(rawMetadata, null);
+                document = parser.build(rawXml, null);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

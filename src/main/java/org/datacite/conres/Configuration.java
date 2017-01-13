@@ -8,9 +8,8 @@ import java.util.Properties;
  * Application-wide configuration
  */
 public class Configuration {
-    public static final String SOLR_BASE_URL;
-    public static final String SOLR_API_URL;
-    public static final String SOLR_STATUS_URL;
+    public static final String API_URL;
+    public static final String API_STATUS_URL;
     public static final String APP_CONTEXT;
     public static final String APP_GOOGLE_ANALYTICS;
     public static final Properties prop;
@@ -25,9 +24,8 @@ public class Configuration {
             throw new RuntimeException("Please setup valid config.properties");
         try {
             prop.load(in);
-            SOLR_BASE_URL = (String) Configuration.prop.get("solr.base.url");
-            SOLR_API_URL = Configuration.SOLR_BASE_URL + "/api";
-            SOLR_STATUS_URL = Configuration.SOLR_BASE_URL + "/status";
+            API_URL = (String) Configuration.prop.get("api.url");
+            API_STATUS_URL = Configuration.API_URL + "/heartbeat";
             APP_CONTEXT = (String) Configuration.prop.get("app.context");
             APP_GOOGLE_ANALYTICS = (String) Configuration.prop.get("app.google_analytics");
             SOLR_CACHE_SIZE = Integer.parseInt((String) Configuration.prop.get("solr.cache.size.items"));

@@ -19,7 +19,7 @@ public class StatusControllerTest extends JerseyTest {
 
     @Test
     public void test200() {
-        WebResource webResource = resource().path("/status");
+        WebResource webResource = resource().path("/heartbeat");
         webResource.addFilter(new LoggingFilter());
         ClientResponse response = webResource.get(ClientResponse.class);
         assertEquals(200, response.getStatus());

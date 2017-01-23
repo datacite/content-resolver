@@ -1,7 +1,7 @@
 package org.datacite.conres.controller;
 
 import org.apache.log4j.Logger;
-import com.bugsnag.Bugsnag;
+// import com.bugsnag.Bugsnag;
 import org.datacite.conres.Configuration;
 import org.datacite.conres.model.Model;
 import org.datacite.conres.service.SearchService;

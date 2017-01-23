@@ -5,7 +5,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import org.apache.log4j.Logger;
-// import com.bugsnag.Bugsnag;
+import com.bugsnag.Bugsnag;
 import org.datacite.conres.Configuration;
 import org.datacite.conres.service.impl.SearchServiceImpl;
 

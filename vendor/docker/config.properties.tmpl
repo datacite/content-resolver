@@ -5,4 +5,4 @@ cache.control.max.age.seconds=3600
 citeproc.server.url={{ default .Env.CITEPROC_URL "http://citation.datacite.org/format" }}
 app.context=/{{ default .Env.CONTEXT_NAME "content-resolver" }}
 app.google_analytics={{ .Env.SITE_GA }}
-bugsnag.key={{ .Env.BUGSNAG_KEY }}
+app.bugsnag.key={{ .Env.BUGSNAG_KEY }}

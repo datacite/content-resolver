@@ -5,6 +5,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import org.apache.log4j.Logger;
+import com.bugsnag.Bugsnag;
 import org.datacite.conres.Configuration;
 import org.datacite.conres.service.impl.SearchServiceImpl;
 
@@ -16,6 +17,7 @@ import java.net.URISyntaxException;
 @Path("/status")
 public class StatusController {
     private static final Logger log4j = Logger.getLogger(StatusController.class);
+    Bugsnag bugsnag = new Bugsnag(Configuration.BUGSNAG_KEY);
 
     @GET
     public Response get() throws URISyntaxException {

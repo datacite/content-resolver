@@ -1,6 +1,7 @@
 package org.datacite.conres.controller;
 
 import org.apache.log4j.Logger;
+import com.bugsnag.Bugsnag;
 import org.datacite.conres.Configuration;
 import org.datacite.conres.model.Model;
 import org.datacite.conres.service.SearchService;
@@ -15,6 +16,8 @@ import java.util.List;
 
 public abstract class BaseController {
     static final Logger log4j = Logger.getLogger(BaseController.class);
+    Bugsnag bugsnag = new Bugsnag(Configuration.BUGSNAG_KEY);
+
     private List<Variant> allVariants;
     protected Model model;
     protected final String acceptHeader;

@@ -16,7 +16,7 @@ import java.util.List;
 
 public abstract class BaseController {
     static final Logger log4j = Logger.getLogger(BaseController.class);
-    Bugsnag bugsnag = new Bugsnag(Configuration.BUGSNAG_KEY);
+    // Bugsnag bugsnag = new Bugsnag(Configuration.BUGSNAG_KEY);
 
     private List<Variant> allVariants;
     protected Model model;

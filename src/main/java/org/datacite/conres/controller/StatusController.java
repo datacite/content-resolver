@@ -17,7 +17,7 @@ import java.net.URISyntaxException;
 @Path("/status")
 public class StatusController {
     private static final Logger log4j = Logger.getLogger(StatusController.class);
-    Bugsnag bugsnag = new Bugsnag(Configuration.BUGSNAG_KEY);
+    // Bugsnag bugsnag = new Bugsnag(Configuration.BUGSNAG_KEY);
 
     @GET
     public Response get() throws URISyntaxException {

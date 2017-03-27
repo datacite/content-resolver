@@ -71,7 +71,7 @@ public enum Representation {
             return CslJsonRepresentation.writeJSON(mr);
         }
     }),
-    JSON_LD("application", "vnd.schemaorg.ld+json", new Transformer() {
+    SCHEMA_JSON_LD("application", "vnd.schemaorg.ld+json", new Transformer() {
         @Override
         public Object transform(Model mr) {
             return JsonLdRepresentation.writeJSON(mr);

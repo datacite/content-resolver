@@ -1,7 +1,15 @@
+<% if current_page.data.alert %>
+  <div class="alert alert-warning landing-alert">
+    <div class="container text-center">
+      <h5><%= current_page.data.alert %></h5>
+    </div>
+  </div>
+<% end %>
+
 <!-- header start -->
 
 <div class="header" id="navtop">
-  <div class="navbar navbar-ct-transparent" role="navigation">
+  <div class="navbar navbar-<%= current_page.url == "/" ? "default" : "white" %> navbar-static-top" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header"
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -10,6 +18,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
+        <a class="navbar-brand" href="/"><%= ENV['SITE_TITLE'] %></a>
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -24,32 +33,45 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="sites"><i class='fa fa-th'></i> <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <% if development? %>
+                <li class='dropdown-header'>Development</li>
                 <% data.links.development_links.each do |link| %>
-                  <li>
-                    <a href='<%= link.url %>'>
-                      <i class='fa fa-<%= link.icon %> fa-fw'></i>
-                      <%= link.name %>
-                    </a>
-                  </li>
+                  <% if link.name == "divider" %>
+                    <li class="divider"></li>
+                  <% else %>
+                    <li>
+                      <a href='<%= link.url %>'>
+                        <i class='fa fa-<%= link.icon %> fa-fw'></i>
+                        <%= link.name %>
+                      </a>
+                    </li>
+                  <% end %>
                 <% end %>
               <% elsif stage? %>
                 <li class='dropdown-header'>Test Services</li>
                 <% data.links.stage_links.each do |link| %>
-                  <li>
-                    <a href='<%= link.url %>'>
-                      <i class='fa fa-<%= link.icon %> fa-fw'></i>
-                      <%= link.name %>
-                    </a>
-                  </li>
+                  <% if link.name == "divider" %>
+                    <li class="divider"></li>
+                  <% else %>
+                    <li>
+                      <a href='<%= link.url %>'>
+                        <i class='fa fa-<%= link.icon %> fa-fw'></i>
+                        <%= link.name %>
+                      </a>
+                    </li>
+                  <% end %>
                 <% end %>
               <% else %>
                 <% data.links.production_links.each do |link| %>
-                  <li>
-                    <a href='<%= link.url %>'>
-                      <i class='fa fa-<%= link.icon %> fa-fw'></i>
-                      <%= link.name %>
-                    </a>
-                  </li>
+                  <% if link.name == "divider" %>
+                    <li class="divider"></li>
+                  <% else %>
+                    <li>
+                      <a href='<%= link.url %>'>
+                        <i class='fa fa-<%= link.icon %> fa-fw'></i>
+                        <%= link.name %>
+                      </a>
+                    </li>
+                  <% end %>
                 <% end %>
               <% end %>
             </ul>

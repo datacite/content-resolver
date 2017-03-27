@@ -16,6 +16,14 @@ configure :development do
   activate :livereload
 end
 
+# Load data
+activate :data_source do |c|
+  c.root = "#{ENV['CDN_URL']}/data"
+  c.files = [
+    "links.json"
+  ]
+end
+
 # Set markdown template engine
 set :markdown_engine, :pandoc
 set :markdown, smartypants: true
@@ -24,7 +32,7 @@ set :markdown, smartypants: true
 activate :dotenv
 
 # use asset host
-activate :asset_host, host: "//#{ENV['CDN_HOST']}"
+#activate :asset_host, host: "#{ENV['CDN_URL']}"
 
 ###
 # Helpers

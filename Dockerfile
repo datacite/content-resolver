@@ -10,6 +10,7 @@ ENV CATALINA_PID /var/run/tomcat7.pid
 ENV CATALINA_SH /usr/share/tomcat7/bin/catalina.sh
 ENV CATALINA_TMPDIR /tmp/tomcat7-tomcat7-tmp
 ENV DOCKERIZE_VERSION v0.2.0
+ENV RACK_ENV production
 
 # Use baseimage-docker's init process
 CMD ["/sbin/my_init"]

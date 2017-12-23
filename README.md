@@ -2,9 +2,7 @@
 
 [![Build Status](https://travis-ci.org/datacite/content-resolver.svg)](https://travis-ci.org/datacite/content-resolver)
 
-This software is deployed at [https://data.datacite.org](https://data.datacite.org)
-
-For documentation please check [http://crosscite.org/cn](http://crosscite.org/cn])
+This software is has been replaced by https://github.com/crosscite/content-negotiation in May 2017.
 
 ## Installation
 

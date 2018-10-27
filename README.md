@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/datacite/content-resolver.svg)](https://travis-ci.org/datacite/content-resolver)
 
-This software is has been replaced by https://github.com/crosscite/content-negotiation in May 2017.
+This software has been replaced by https://github.com/crosscite/content-negotiation in May 2017.
 
 ## Installation
 
